@@ -11,6 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import LogoutButton from "./LogoutButton";
 
 const UserDropdown = () => {
 	const { auth } = useSelector((state) => state.auth);
@@ -57,7 +58,7 @@ const UserDropdown = () => {
 
 				<DropdownMenuSeparator />
 
-				<DropdownMenuItem>Đăng xuất</DropdownMenuItem>
+				<LogoutButton />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
