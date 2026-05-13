@@ -109,11 +109,7 @@ export default function LoginPage() {
 								onClick={() => setShowPassword(!showPassword)}
 								type="button"
 							>
-								{showPassword ? (
-									<FiEyeOff size={20} />
-								) : (
-									<FiEye size={20} />
-								)}
+								{showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
 							</button>
 						</div>
 
