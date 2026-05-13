@@ -1,10 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ButtonLoading from "@/components/application/ButtonLoading";
@@ -24,6 +26,7 @@ export default function RegisterPage() {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors, isSubmitting },
 	} = useForm({
 		mode: "onChange",
@@ -31,7 +34,18 @@ export default function RegisterPage() {
 	});
 
 	const onSubmit = async (data) => {
-		console.log(data);
+		try {
+			const response = await axios.post("/api/auth/register", data);
+			toast.success(
+				response.data.message ||
+					"Đăng ký thành công! Vui lòng kiểm tra email để xác thực.",
+			);
+			reset();
+		} catch (error) {
+			toast.error(
+				error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại.",
+			);
+		}
 	};
 
 	return (
@@ -57,7 +71,8 @@ export default function RegisterPage() {
 						</label>
 
 						<input
-							className="mt-2 px-4 border rounded-md w-full h-11"
+							className="mt-2 px-4 border rounded-md w-full h-11 disabled:opacity-50"
+							disabled={isSubmitting}
 							id="name"
 							placeholder="Nhập tên của bạn"
 							type="text"
@@ -76,7 +91,8 @@ export default function RegisterPage() {
 						</label>
 
 						<input
-							className="mt-2 px-4 border rounded-md w-full h-11"
+							className="mt-2 px-4 border rounded-md w-full h-11 disabled:opacity-50"
+							disabled={isSubmitting}
 							id="email"
 							placeholder="Nhập email của bạn"
 							type="email"
@@ -98,7 +114,8 @@ export default function RegisterPage() {
 
 						<div className="relative mt-2">
 							<input
-								className="px-4 pr-12 border rounded-md w-full h-11"
+								className="px-4 pr-12 border rounded-md w-full h-11 disabled:opacity-50"
+								disabled={isSubmitting}
 								id="password"
 								placeholder="Nhập mật khẩu"
 								type={isTypePassword ? "password" : "text"}
@@ -106,7 +123,8 @@ export default function RegisterPage() {
 							/>
 
 							<button
-								className="top-1/2 right-4 absolute -translate-y-1/2"
+								className="top-1/2 right-4 absolute -translate-y-1/2 disabled:opacity-50"
+								disabled={isSubmitting}
 								onClick={() => setIsTypePassword(!isTypePassword)}
 								type="button"
 							>
@@ -129,7 +147,8 @@ export default function RegisterPage() {
 
 						<div className="relative mt-2">
 							<input
-								className="px-4 pr-12 border rounded-md w-full h-11"
+								className="px-4 pr-12 border rounded-md w-full h-11 disabled:opacity-50"
+								disabled={isSubmitting}
 								id="confirmPassword"
 								placeholder="Xác nhận mật khẩu"
 								type={isTypePassword ? "password" : "text"}
@@ -137,7 +156,8 @@ export default function RegisterPage() {
 							/>
 
 							<button
-								className="top-1/2 right-4 absolute -translate-y-1/2"
+								className="top-1/2 right-4 absolute -translate-y-1/2 disabled:opacity-50"
+								disabled={isSubmitting}
 								onClick={() => setIsTypePassword(!isTypePassword)}
 								type="button"
 							>
@@ -161,7 +181,7 @@ export default function RegisterPage() {
 					<div className="text-sm text-center">
 						Bạn đã có tài khoản?{" "}
 						<Link
-							className="font-medium text-primary"
+							className={`font-medium text-primary ${isSubmitting ? "pointer-events-none opacity-50" : ""}`}
 							href={WEBSITE_ROUTE.LOGIN}
 						>
 							Đăng nhập

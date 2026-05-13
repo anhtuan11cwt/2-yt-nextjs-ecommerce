@@ -3,27 +3,12 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
 	{
-		address: {
-			default: "",
-			type: String,
-		},
-
+		address: { default: "", type: String },
 		avatar: {
-			publicId: {
-				default: "",
-				type: String,
-			},
-			url: {
-				default: "",
-				type: String,
-			},
+			publicId: { default: "", type: String },
+			url: { default: "", type: String },
 		},
-
-		deletedAt: {
-			default: null,
-			type: Date,
-		},
-
+		deletedAt: { default: null, type: Date },
 		email: {
 			lowercase: true,
 			required: true,
@@ -31,49 +16,16 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 		},
-
-		isEmailVerified: {
-			default: false,
-			type: Boolean,
-		},
-
-		name: {
-			required: true,
-			trim: true,
-			type: String,
-		},
-
-		password: {
-			required: true,
-			select: false,
-			type: String,
-		},
-
-		phone: {
-			default: "",
-			type: String,
-		},
-		role: {
-			default: "user",
-			enum: ["admin", "user"],
-			type: String,
-		},
+		isEmailVerified: { default: false, type: Boolean },
+		name: { required: true, trim: true, type: String },
+		password: { required: true, select: false, type: String },
+		phone: { default: "", type: String },
+		role: { default: "user", enum: ["admin", "user"], type: String },
 	},
-	{
-		timestamps: true,
-	},
+	{ timestamps: true },
 );
 
-userSchema.pre("save", async function (next) {
-	if (!this.isModified("password")) {
-		return next();
-	}
-
-	this.password = await bcrypt.hash(this.password, 10);
-
-	next();
-});
-
+// Loại bỏ hoàn toàn middleware có lỗi
 userSchema.methods.comparePassword = async function (password) {
 	return await bcrypt.compare(password, this.password);
 };

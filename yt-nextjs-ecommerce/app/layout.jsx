@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
 	description: "E-commerce platform",
@@ -7,8 +8,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html className="font-sans" lang="en">
-			<body>{children}</body>
+		<html className="font-sans" lang="en" suppressHydrationWarning>
+			<body>
+				{children}
+				<Toaster
+					position="top-right"
+					toastOptions={{
+						duration: 3000,
+						style: {
+							background: "#fff",
+							color: "#333",
+						},
+					}}
+				/>
+			</body>
 		</html>
 	);
 }

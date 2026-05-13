@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 import connectDB from "@/lib/dbConnection";
 import emailVerificationLink from "@/lib/email/emailVerificationLink";
@@ -34,23 +35,26 @@ export async function POST(request) {
 			});
 		}
 
+		// Hash mật khẩu thủ công tại đây
+		const hashedPassword = await bcrypt.hash(password, 10);
+
 		const user = await User.create({
 			email,
 			name,
-			password,
+			password: hashedPassword,
 		});
 
 		// JWT Token
 		const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-		const verificationToken = await new SignJWT({ userId: user._id })
+		const verificationToken = await new SignJWT({ userId: user._id.toString() })
 			.setProtectedHeader({ alg: "HS256" })
 			.setIssuedAt()
 			.setExpirationTime("1h")
 			.sign(secret);
 
 		// Verify URL
-		const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${verificationToken}`;
+		const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
 
 		// Send email
 		await sendEmail({
@@ -68,8 +72,6 @@ export async function POST(request) {
 			success: true,
 		});
 	} catch (error) {
-		console.error(error);
-
 		// Duplicate email
 		if (error.code === 11000) {
 			return response({
