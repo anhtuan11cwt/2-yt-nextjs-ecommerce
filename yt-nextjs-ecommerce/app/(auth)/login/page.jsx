@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -18,10 +18,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import ADMIN_ROUTES from "@/routes/admin.routes";
+import WEBSITE_ROUTES from "@/routes/website.routes";
 import { loginSchema } from "@/validators/auth.validator";
 
 export default function LoginPage() {
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const callbackUrl = searchParams.get("callbackUrl");
 	const [showPassword, setShowPassword] = useState(false);
 	const [showOtpForm, setShowOtpForm] = useState(false);
 	const [userEmail, setUserEmail] = useState("");
@@ -53,10 +57,14 @@ export default function LoginPage() {
 	};
 
 	const handleVerifySuccess = (data) => {
-		if (data.data.user.role === "admin") {
-			router.push("/admin");
+		const user = data.data.user;
+
+		if (callbackUrl?.startsWith("/")) {
+			router.push(callbackUrl);
+		} else if (user.role === "admin") {
+			router.push(ADMIN_ROUTES.DASHBOARD);
 		} else {
-			router.push("/");
+			router.push(WEBSITE_ROUTES.MY_ACCOUNT);
 		}
 	};
 

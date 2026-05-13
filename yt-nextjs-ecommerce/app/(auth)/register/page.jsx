@@ -18,7 +18,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { registerSchema } from "@/lib/zodSchema";
-import { WEBSITE_ROUTE } from "@/routes/website.routes";
+import WEBSITE_ROUTES from "@/routes/website.routes";
 
 export default function RegisterPage() {
 	const [isTypePassword, setIsTypePassword] = useState(true);
@@ -182,7 +182,7 @@ export default function RegisterPage() {
 						Bạn đã có tài khoản?{" "}
 						<Link
 							className={`font-medium text-primary ${isSubmitting ? "pointer-events-none opacity-50" : ""}`}
-							href={WEBSITE_ROUTE.LOGIN}
+							href={WEBSITE_ROUTES.LOGIN}
 						>
 							Đăng nhập
 						</Link>
