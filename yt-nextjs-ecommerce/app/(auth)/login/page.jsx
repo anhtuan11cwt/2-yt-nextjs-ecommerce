@@ -115,6 +115,12 @@ export default function LoginPage() {
 								<label className="text-sm font-medium" htmlFor="password">
 									Mật khẩu
 								</label>
+								<Link
+									className="text-sm text-violet-600 hover:underline"
+									href="/reset-password"
+								>
+									Quên mật khẩu?
+								</Link>
 							</div>
 
 							<div className="relative mt-2">
