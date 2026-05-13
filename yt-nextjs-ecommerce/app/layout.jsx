@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en">
+		<html className="font-sans" lang="en">
 			<body>{children}</body>
 		</html>
 	);
