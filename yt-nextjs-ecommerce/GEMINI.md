@@ -75,7 +75,7 @@ npm run format   # Biome format
 - Use Tailwind CSS for styling.
 - Follow component naming conventions.
 
-### Code Review
+## Code Review
 
 - Flag potential performance issues.
 - Suggest security improvements.
