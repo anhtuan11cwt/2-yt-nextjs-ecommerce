@@ -1,12 +1,12 @@
+import AppSidebar from "@/components/application/admin/AppSidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+
 const AdminLayout = ({ children }) => {
 	return (
-		<div className="flex min-h-screen">
-			<div className="w-[250px] bg-black p-5 text-white">
-				<h2 className="text-xl font-bold">Admin Panel</h2>
-			</div>
-
-			<div className="flex-1 p-5">{children}</div>
-		</div>
+		<SidebarProvider>
+			<AppSidebar />
+			<main className="flex-1">{children}</main>
+		</SidebarProvider>
 	);
 };
 
