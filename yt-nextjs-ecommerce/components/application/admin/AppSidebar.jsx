@@ -28,8 +28,8 @@ const AppSidebar = () => {
 	return (
 		<Sidebar collapsible="icon">
 			{/* HEADER */}
-			<SidebarHeader className="border-b h-16 flex items-center px-4">
-				<div className="flex items-center justify-between w-full">
+			<SidebarHeader className="flex justify-center px-4 border-b h-[70px]">
+				<div className="flex justify-between items-center w-full">
 					{/* LOGO */}
 					<Link
 						className="flex items-center gap-2 font-bold text-xl"
@@ -58,7 +58,7 @@ const AppSidebar = () => {
 										<SidebarMenuItem key={menu.title}>
 											<SidebarMenuButton
 												asChild
-												className="h-11 rounded-xl transition-all duration-200"
+												className="rounded-xl h-11 transition-all duration-200"
 												isActive={isActive}
 											>
 												<Link
@@ -78,20 +78,20 @@ const AppSidebar = () => {
 									<Collapsible className="group/collapsible" key={menu.title}>
 										<SidebarMenuItem>
 											<CollapsibleTrigger asChild>
-												<SidebarMenuButton className="h-11 rounded-xl transition-all duration-200">
+												<SidebarMenuButton className="rounded-xl h-11 transition-all duration-200">
 													<menu.icon className="w-5 h-5" />
 													<span>{menu.title}</span>
-													<ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+													<ChevronRight className="ml-auto group-data-[state=open]/collapsible:rotate-90 transition-transform duration-200" />
 												</SidebarMenuButton>
 											</CollapsibleTrigger>
 											<CollapsibleContent>
-												<div className="ml-4 mt-1 space-y-1 border-l pl-3">
+												<div className="space-y-1 mt-1 ml-4 pl-3 border-l">
 													{menu.subMenu.map((sub) => {
 														const isSubActive = pathname === sub.url;
 														return (
 															<SidebarMenuButton
 																asChild
-																className="h-10 rounded-lg"
+																className="rounded-lg h-10"
 																isActive={isSubActive}
 																key={sub.title}
 															>
