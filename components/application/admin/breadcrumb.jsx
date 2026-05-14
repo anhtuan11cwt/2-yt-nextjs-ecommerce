@@ -13,9 +13,10 @@ const AdminBreadcrumb = ({ breadcrumbData = [] }) => {
 				{breadcrumbData.length > 0 &&
 					breadcrumbData.map((data, index) => {
 						const isLastItem = index === breadcrumbData.length - 1;
+						const itemKey = `${data.href}-${data.label}`;
 
 						return (
-							<div className="flex items-center" key={data.href}>
+							<div className="flex items-center" key={itemKey}>
 								<BreadcrumbItem>
 									<BreadcrumbLink href={data.href}>{data.label}</BreadcrumbLink>
 								</BreadcrumbItem>

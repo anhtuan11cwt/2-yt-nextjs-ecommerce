@@ -34,14 +34,14 @@ const MediaBlock = ({
 					...prev,
 					{
 						_id: media._id,
-						url: media.secureUrl,
+						url: mediaUrl,
 					},
 				]);
 			} else {
 				setSelectedMedia([
 					{
 						_id: media._id,
-						url: media.secureUrl,
+						url: mediaUrl,
 					},
 				]);
 			}
@@ -50,18 +50,21 @@ const MediaBlock = ({
 		}
 	};
 
-	const handleCopy = async () => {
-		await navigator.clipboard.writeText(media.secureUrl);
-		toast.success("URL đã sao chép vào clipboard");
-	};
-
-	const isChecked = selectedMedia.some((item) => item._id === media._id);
 	const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-	const imageUrl =
+	const mediaUrl =
 		media.secureUrl ||
 		(media.path
 			? `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${media.path}`
 			: null);
+
+	const handleCopy = async () => {
+		if (!mediaUrl) return;
+		await navigator.clipboard.writeText(mediaUrl);
+		toast.success("URL đã sao chép vào clipboard");
+	};
+
+	const isChecked = selectedMedia.some((item) => item._id === media._id);
+	const imageUrl = mediaUrl;
 
 	if (!imageUrl) {
 		return null;
