@@ -1,7 +1,6 @@
 const ADMIN_ROUTES = {
 	ADD_CATEGORY: "/admin/category/add",
 	ADD_COUPON: "/admin/coupons/add-coupon",
-	ADD_PRODUCT: "/admin/products/add-product",
 	CATEGORIES: "/admin/category/show",
 	CATEGORY_EDIT: "/admin/category/edit",
 	COUPONS: "/admin/coupons",
@@ -9,8 +8,11 @@ const ADMIN_ROUTES = {
 	DASHBOARD: "/admin/dashboard",
 	MEDIA: "/admin/media",
 	ORDERS: "/admin/orders",
+	PRODUCT_ADD: "/admin/product/add",
+	PRODUCT_EDIT: "/admin/product/edit",
+	PRODUCT_SHOW: "/admin/product/show",
 	PRODUCT_VARIANTS: "/admin/product-variants",
-	PRODUCTS: "/admin/products",
+	PRODUCTS: "/admin/product/show",
 	REVIEWS: "/admin/reviews",
 };
 

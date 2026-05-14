@@ -8,9 +8,11 @@ const AdminLayout = ({ children }) => {
 		<ThemeProvider>
 			<SidebarProvider>
 				<AppSidebar />
-				<SidebarInset>
+				<SidebarInset className="min-w-0">
 					<Topbar />
-					<main className="p-4 md:p-6">{children}</main>
+					<main className="min-w-0 flex-1 overflow-x-auto p-4 md:p-6">
+						{children}
+					</main>
 				</SidebarInset>
 			</SidebarProvider>
 		</ThemeProvider>

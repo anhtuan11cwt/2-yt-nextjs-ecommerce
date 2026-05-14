@@ -127,3 +127,25 @@
 		@apply font-sans;
 	}
 }
+
+.ck-editor__editable {
+	min-height: 300px;
+}
+
+.dark .ck-editor__editable {
+	color: #fff;
+	background: #0f172a;
+}
+
+.dark .ck-toolbar {
+	background: #1e293b;
+}
+
+.dark .ck-toolbar .ck-button {
+	color: #fff;
+}
+
+.dark .ck-body-wrapper {
+	color: #fff;
+	background: #0f172a;
+}
