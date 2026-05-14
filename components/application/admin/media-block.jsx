@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { Copy, MoreVertical, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -12,13 +12,21 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useDeleteMutation from "@/hooks/useDeleteMutation";
+import { cn } from "@/lib/utils";
 
 const MediaBlock = ({
 	media,
 	selectedMedia,
 	setSelectedMedia,
 	isMultiple = true,
+	isTrash = false,
 }) => {
+	const { mutate: handleMutation, isPending } = useDeleteMutation({
+		deleteEndpoint: "/api/media/delete",
+		queryKey: ["media"],
+	});
+
 	const handleCheck = (checked) => {
 		if (checked) {
 			if (isMultiple) {
@@ -64,11 +72,20 @@ const MediaBlock = ({
 			<div className="relative aspect-square overflow-hidden bg-muted">
 				<Image
 					alt={media.publicId || "media-image"}
-					className="object-cover transition duration-300 group-hover:scale-105"
+					className={cn(
+						"object-cover transition duration-300 group-hover:scale-105",
+						isTrash && "opacity-90 saturate-50",
+					)}
 					fill
 					sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
 					src={imageUrl}
 				/>
+
+				{isTrash ? (
+					<div className="pointer-events-none absolute left-3 top-10 z-10 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
+						Đã xóa
+					</div>
+				) : null}
 
 				<div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/40" />
 
@@ -93,22 +110,67 @@ const MediaBlock = ({
 						</DropdownMenuTrigger>
 
 						<DropdownMenuContent align="end">
-							<DropdownMenuItem asChild>
-								<Link href={`/admin/media/edit/${media._id}`}>
-									<Pencil className="mr-2 h-4 w-4" />
-									Chỉnh sửa
-								</Link>
-							</DropdownMenuItem>
+							{isTrash ? (
+								<>
+									<DropdownMenuItem
+										disabled={isPending}
+										onClick={() =>
+											handleMutation({
+												deleteType: "RSD",
+												ids: [media._id],
+											})
+										}
+									>
+										<RotateCcw className="mr-2 h-4 w-4" />
+										Khôi phục
+									</DropdownMenuItem>
+									<DropdownMenuItem onClick={handleCopy}>
+										<Copy className="mr-2 h-4 w-4" />
+										Sao chép Link
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										className="text-red-500"
+										disabled={isPending}
+										onClick={() =>
+											handleMutation({
+												deleteType: "PD",
+												ids: [media._id],
+											})
+										}
+									>
+										<Trash2 className="mr-2 h-4 w-4" />
+										Xóa vĩnh viễn
+									</DropdownMenuItem>
+								</>
+							) : (
+								<>
+									<DropdownMenuItem asChild>
+										<Link href={`/admin/media/edit/${media._id}`}>
+											<Pencil className="mr-2 h-4 w-4" />
+											Chỉnh sửa
+										</Link>
+									</DropdownMenuItem>
 
-							<DropdownMenuItem onClick={handleCopy}>
-								<Copy className="mr-2 h-4 w-4" />
-								Sao chép Link
-							</DropdownMenuItem>
+									<DropdownMenuItem onClick={handleCopy}>
+										<Copy className="mr-2 h-4 w-4" />
+										Sao chép Link
+									</DropdownMenuItem>
 
-							<DropdownMenuItem className="text-red-500">
-								<Trash2 className="mr-2 h-4 w-4" />
-								Chuyển vào Thùng rác
-							</DropdownMenuItem>
+									<DropdownMenuItem
+										className="text-red-500"
+										disabled={isPending}
+										onClick={() =>
+											handleMutation({
+												deleteType: "SD",
+												ids: [media._id],
+											})
+										}
+									>
+										<Trash2 className="mr-2 h-4 w-4" />
+										Chuyển vào Thùng rác
+									</DropdownMenuItem>
+								</>
+							)}
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
