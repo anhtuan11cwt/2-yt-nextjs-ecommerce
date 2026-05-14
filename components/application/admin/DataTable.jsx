@@ -7,7 +7,7 @@ import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { ExportToCsv } from "export-to-csv";
+import { download, generateCsv, mkConfig } from "export-to-csv";
 import {
 	MaterialReactTable,
 	MRT_ShowHideColumnsButton,
@@ -102,18 +102,18 @@ export default function DataTable({
 
 		renderTopToolbarCustomActions: ({ table }) => {
 			const handleExportRows = () => {
-				const selectedRows = table
-					.getSelectedRowModel()
-					.rows.map((row) => row.original);
+				const rows =
+					table.getSelectedRowModel().rows.length > 0
+						? table.getSelectedRowModel().rows.map((row) => row.original)
+						: data?.data || [];
 
-				const csvExporter = new ExportToCsv({
+				const csvConfig = mkConfig({
 					filename: "table-data",
 					useKeysAsHeaders: true,
 				});
 
-				csvExporter.generateCsv(
-					selectedRows.length > 0 ? selectedRows : data?.data || [],
-				);
+				const csv = generateCsv(csvConfig)(rows);
+				download(csvConfig)(csv);
 			};
 
 			return (

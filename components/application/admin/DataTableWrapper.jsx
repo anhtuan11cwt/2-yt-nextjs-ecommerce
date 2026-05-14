@@ -22,6 +22,13 @@ export default function DataTableWrapper({ children }) {
 
 	const muiTheme = createTheme({
 		components: {
+			MuiCssBaseline: {
+				styleOverrides: {
+					html: {
+						fontFamily: "inherit",
+					},
+				},
+			},
 			MuiPaper: {
 				styleOverrides: {
 					root: {
@@ -59,6 +66,9 @@ export default function DataTableWrapper({ children }) {
 							paper: "#ffffff",
 						},
 					}),
+		},
+		typography: {
+			fontFamily: "inherit",
 		},
 	});
 
