@@ -1,11 +1,14 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { CldUploadWidget } from "next-cloudinary";
 import toast from "react-hot-toast";
 import { FiPlus } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 
 const UploadMedia = () => {
+	const queryClient = useQueryClient();
+
 	const handleOnError = (error) => {
 		toast.error(error?.statusText || "Tải lên thất bại");
 	};
@@ -45,6 +48,7 @@ const UploadMedia = () => {
 			}
 
 			toast.success("Tải media lên thành công");
+			queryClient.invalidateQueries({ queryKey: ["media"] });
 		} catch (error) {
 			toast.error(error.message || "Đã xảy ra lỗi");
 		}

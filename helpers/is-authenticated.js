@@ -16,11 +16,11 @@ export const isAuthenticated = async (role = "user") => {
 
 		const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
 
-		if (!decoded?.id) {
+		if (!decoded?._id) {
 			throw new UnauthorizedError("Token Không Hợp Lệ");
 		}
 
-		const user = await UserModel.findById(decoded.id);
+		const user = await UserModel.findById(decoded._id);
 
 		if (!user) {
 			throw new UnauthorizedError("Không Tìm Thấy Người Dùng");
