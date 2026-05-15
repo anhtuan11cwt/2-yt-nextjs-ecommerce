@@ -80,9 +80,15 @@ export default function DataTable({
 
 		manualPagination: true,
 		manualSorting: true,
+		muiTableBodyCellProps: {
+			inputProps: undefined, // Loại bỏ inputProps nếu có
+		},
 
 		muiTableContainerProps: {
 			sx: { maxHeight: "600px" },
+		},
+		muiTableHeadCellProps: {
+			inputProps: undefined, // Loại bỏ inputProps nếu có
 		},
 
 		onColumnFiltersChange: setColumnFilters,
