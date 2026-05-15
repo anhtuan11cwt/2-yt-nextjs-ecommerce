@@ -39,7 +39,13 @@ const MediaPage = () => {
 		queryKey: ["media", mediaTab],
 	});
 
-	const mediaData = data?.pages.flatMap((page) => page.mediaData) || [];
+	const mediaData =
+		data?.pages
+			.flatMap((page) => page.mediaData)
+			.filter(
+				(item, index, self) =>
+					index === self.findIndex((t) => t._id === item._id),
+			) || [];
 	const selectAll =
 		mediaData.length > 0 && selectedMedia.length === mediaData.length;
 
@@ -171,7 +177,7 @@ const MediaPage = () => {
 						{mediaData.map((media) => (
 							<MediaBlock
 								isTrash={mediaTab === "deleted"}
-								key={media._id}
+								key={`${media._id}-${mediaTab}`}
 								media={media}
 								selectedMedia={selectedMedia}
 								setSelectedMedia={setSelectedMedia}

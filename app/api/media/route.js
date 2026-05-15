@@ -25,7 +25,7 @@ export async function GET(request) {
 
 		const totalCount = await MediaModel.countDocuments(filter);
 		const mediaData = await MediaModel.find(filter)
-			.sort({ createdAt: -1 })
+			.sort({ _id: -1, createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
 
