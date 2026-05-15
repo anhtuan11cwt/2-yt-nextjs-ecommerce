@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useDispatch } from "react-redux";
 import ButtonLoading from "@/components/application/ButtonLoading";
 import OtpVerification from "@/components/application/OtpVerification";
 import {
@@ -18,12 +19,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { login } from "@/redux/features/authSlice";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 import { loginSchema } from "@/validators/auth.validator";
 
 // Trang đăng nhập với OTP xác thực 2 bước
 export default function LoginPage() {
 	const _router = useRouter();
+	const dispatch = useDispatch();
 	const searchParams = useSearchParams();
 	const callbackUrl = searchParams.get("callbackUrl");
 	const [showPassword, setShowPassword] = useState(false);
@@ -60,6 +63,10 @@ export default function LoginPage() {
 	// Xử lý sau khi xác thực OTP thành công
 	const handleVerifySuccess = (data) => {
 		const user = data.data.user;
+		const token = data.data.token;
+
+		dispatch(login({ token, user }));
+
 		let targetUrl = "/";
 		if (callbackUrl?.startsWith("/")) {
 			targetUrl = callbackUrl;
