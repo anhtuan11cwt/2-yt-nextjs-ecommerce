@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { createStorage } from "@/lib/redux/storage";
+import cartReducer from "@/redux/features/cartSlice";
 import authReducer from "./reducers/authReducer";
 
 // Kết hợp tất cả reducer
 const rootReducer = combineReducers({
 	auth: authReducer,
+	cart: cartReducer,
 });
 
 const persistConfig = {
