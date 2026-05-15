@@ -1,9 +1,10 @@
 const ADMIN_ROUTES = {
 	ADD_CATEGORY: "/admin/category/add",
-	ADD_COUPON: "/admin/coupons/add-coupon",
+	ADMIN_COUPON_ADD: "/admin/coupons/add",
+	ADMIN_COUPON_EDIT: (id) => `/admin/coupons/edit/${id}`,
+	ADMIN_COUPON_SHOW: "/admin/coupons/show",
 	CATEGORIES: "/admin/category/show",
 	CATEGORY_EDIT: "/admin/category/edit",
-	COUPONS: "/admin/coupons",
 	CUSTOMERS: "/admin/customers",
 	DASHBOARD: "/admin/dashboard",
 	MEDIA: "/admin/media",
