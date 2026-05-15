@@ -1,24 +1,35 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiMenu, FiSearch, FiShoppingCart, FiUser, FiX } from "react-icons/fi";
 import { useSelector } from "react-redux";
 
 const Header = () => {
 	const [showSearch, setShowSearch] = useState(false);
 	const [isMobileMenu, setIsMobileMenu] = useState(false);
+	const [categoryLinks, setCategoryLinks] = useState([]);
 	const auth = useSelector((store) => store.auth);
+
+	useEffect(() => {
+		axios
+			.get("/api/category/get-category")
+			.then(({ data }) => {
+				const links = (data.categories || []).map((cat) => ({
+					href: `/website/shop?category=${cat.slug}`,
+					name: cat.name,
+				}));
+				setCategoryLinks(links);
+			})
+			.catch(() => {});
+	}, []);
 
 	const navLinks = [
 		{ href: "/website", name: "Trang chủ" },
-		{ href: "/shop", name: "Cửa hàng" },
-		{ href: "/shop/t-shirt", name: "Áo thun" },
-		{ href: "/shop/hoodie", name: "Áo Hoodie" },
-		{ href: "/shop/full-sleeves", name: "Áo tay dài" },
-		{ href: "/shop/polo", name: "Áo Polo" },
-		{ href: "/shop/oversized", name: "Áo Oversized" },
+		{ href: "/website/shop", name: "Cửa hàng" },
+		...categoryLinks,
 	];
 
 	return (
