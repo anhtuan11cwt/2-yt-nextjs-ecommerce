@@ -4,6 +4,7 @@ import AdminBreadcrumb from "@/components/application/admin/breadcrumb";
 import DataTable from "@/components/application/admin/DataTable";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
+// Trang quản lý đánh giá sản phẩm
 export default function ReviewPage() {
 	const breadcrumbData = [
 		{ href: ADMIN_ROUTES.DASHBOARD, label: "Bảng điều khiển" },

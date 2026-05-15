@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import SearchModal from "./search-modal";
 
+// Input tìm kiếm với phím tắt Ctrl+K
 export default function AdminSearch() {
 	const [open, setOpen] = useState(false);
 

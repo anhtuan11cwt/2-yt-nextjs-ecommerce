@@ -6,6 +6,7 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
+// Component breadcrumb dẫn đường
 const AdminBreadcrumb = ({ breadcrumbData = [] }) => {
 	return (
 		<Breadcrumb className="mb-5">

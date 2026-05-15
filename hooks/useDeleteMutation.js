@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
 
+// Hook mutation xóa dữ liệu với toast
 export default function useDeleteMutation({
 	queryKey,
 	deleteEndpoint,

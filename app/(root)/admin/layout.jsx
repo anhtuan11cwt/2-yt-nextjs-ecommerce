@@ -3,6 +3,7 @@ import ThemeProvider from "@/components/application/admin/ThemeProvider";
 import Topbar from "@/components/application/admin/Topbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
+// Layout admin với sidebar, topbar và theme provider
 const AdminLayout = ({ children }) => {
 	return (
 		<ThemeProvider>

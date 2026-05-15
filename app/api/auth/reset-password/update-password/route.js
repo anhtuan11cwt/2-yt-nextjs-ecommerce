@@ -4,6 +4,7 @@ import connectDB from "@/lib/dbConnection";
 import { response } from "@/lib/helpers";
 import User from "@/models/User.model";
 
+// API cập nhật mật khẩu mới với reset token
 export async function PUT(req) {
 	try {
 		await connectDB();

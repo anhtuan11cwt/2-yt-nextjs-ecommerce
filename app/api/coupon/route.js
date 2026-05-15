@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import CouponModel from "@/models/coupon.model";
 
+// API danh sách mã giảm giá
 export async function GET(request) {
 	try {
 		await connectDB();

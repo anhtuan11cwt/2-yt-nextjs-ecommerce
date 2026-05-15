@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import Category from "@/models/category.model";
 
+// API xóa danh mục (soft hoặc permanent)
 export async function DELETE(request) {
 	try {
 		await connectDB();

@@ -6,6 +6,7 @@ import Product from "@/models/product.model";
 import ProductVariant from "@/models/productVariant.model";
 import { productVariantFormSchema } from "@/validators/productVariant.validator";
 
+// API tạo biến thể sản phẩm
 export async function POST(request) {
 	try {
 		await isAuthenticated("admin");

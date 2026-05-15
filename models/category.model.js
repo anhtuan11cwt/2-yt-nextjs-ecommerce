@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema danh mục sản phẩm
 const categorySchema = new mongoose.Schema(
 	{
 		deletedAt: {

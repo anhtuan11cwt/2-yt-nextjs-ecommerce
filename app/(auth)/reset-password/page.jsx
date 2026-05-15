@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/input-otp";
 import { resetPasswordSchema } from "@/validators/auth.validator";
 
+// Trang đặt lại mật khẩu 3 bước: email -> OTP -> mật khẩu mới
 export default function ResetPasswordPage() {
 	const [step, setStep] = useState("email");
 	const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ export default function ResetPasswordPage() {
 		resolver: zodResolver(resetPasswordSchema),
 	});
 
+	// Gửi OTP đến email
 	const handleSendOtp = async (data) => {
 		try {
 			setLoading(true);
@@ -55,6 +57,7 @@ export default function ResetPasswordPage() {
 		}
 	};
 
+	// Xác thực OTP và nhận token đặt lại
 	const handleVerifyOtp = async () => {
 		try {
 			setLoading(true);
@@ -72,6 +75,7 @@ export default function ResetPasswordPage() {
 		}
 	};
 
+	// Bước 2: form xác thực OTP
 	if (step === "otp") {
 		return (
 			<Card>
@@ -126,6 +130,7 @@ export default function ResetPasswordPage() {
 		);
 	}
 
+	// Bước 3: form cập nhật mật khẩu
 	if (step === "update") {
 		return <UpdatePassword token={token} />;
 	}

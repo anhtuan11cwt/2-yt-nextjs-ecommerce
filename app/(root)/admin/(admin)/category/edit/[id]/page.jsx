@@ -9,6 +9,7 @@ import slugify from "slugify";
 import AdminBreadcrumb from "@/components/application/admin/breadcrumb";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
+// Form chỉnh sửa danh mục
 function CategoryEditForm({ category, id }) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -18,6 +19,7 @@ function CategoryEditForm({ category, id }) {
 		slug: category.slug || "",
 	});
 
+	// Tự động sinh slug từ tên danh mục
 	const handleNameChange = (e) => {
 		const value = e.target.value;
 		setFormData({
@@ -88,6 +90,7 @@ function CategoryEditForm({ category, id }) {
 	);
 }
 
+// Trang chỉnh sửa danh mục
 export default function EditCategoryPage() {
 	const { id } = useParams();
 

@@ -12,6 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// Dropdown chuyển đổi theme sáng/tối/hệ thống
 const ThemeSwitcher = () => {
 	const { setTheme } = useTheme();
 

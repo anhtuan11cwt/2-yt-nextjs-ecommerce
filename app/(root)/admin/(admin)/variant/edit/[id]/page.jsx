@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 
 import { VariantForm } from "@/components/application/admin/variant-form";
 
+// Trang chỉnh sửa biến thể sản phẩm
 export default function AdminVariantEditPage() {
 	const { id } = useParams();
 

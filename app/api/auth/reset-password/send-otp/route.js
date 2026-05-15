@@ -6,6 +6,7 @@ import sendEmail from "@/lib/sendEmail";
 import OTP from "@/models/OTP.model";
 import User from "@/models/User.model";
 
+// API gửi OTP đặt lại mật khẩu
 export async function POST(req) {
 	try {
 		await connectDB();

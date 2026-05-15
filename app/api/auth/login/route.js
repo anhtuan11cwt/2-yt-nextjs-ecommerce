@@ -7,6 +7,7 @@ import OTP from "@/models/OTP.model";
 import User from "@/models/User.model";
 import { loginSchema } from "@/validators/auth.validator";
 
+// API đăng nhập: kiểm tra email/mật khẩu, gửi OTP
 export async function POST(req) {
 	try {
 		await dbConnect();
@@ -27,6 +28,7 @@ export async function POST(req) {
 			});
 		}
 
+		// Yêu cầu xác thực email trước khi đăng nhập
 		if (!user.isEmailVerified) {
 			await sendEmail({
 				html: verifyEmailLink({

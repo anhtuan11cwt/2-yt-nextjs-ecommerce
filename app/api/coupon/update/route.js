@@ -4,6 +4,7 @@ import connectMongoDB from "@/lib/dbConnection";
 import CouponModel from "@/models/coupon.model";
 import { createCouponSchema } from "@/validators/coupon.validator";
 
+// API cập nhật mã giảm giá
 export async function PUT(request) {
 	try {
 		await connectMongoDB();

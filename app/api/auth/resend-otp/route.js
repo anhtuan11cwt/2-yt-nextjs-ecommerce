@@ -5,6 +5,7 @@ import sendEmail from "@/lib/sendEmail";
 import OTP from "@/models/OTP.model";
 import User from "@/models/User.model";
 
+// API gửi lại mã OTP
 export async function POST(req) {
 	try {
 		await dbConnect();

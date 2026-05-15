@@ -1,5 +1,6 @@
 import * as React from "react";
 
+// Điểm ngắt mobile
 const MOBILE_BREAKPOINT = 768;
 
 const getIsMobile = () => {
@@ -10,6 +11,7 @@ const getIsMobile = () => {
 	return window.innerWidth < MOBILE_BREAKPOINT;
 };
 
+// Hook phát hiện thiết bị mobile
 export function useIsMobile() {
 	const [isMobile, setIsMobile] = React.useState(getIsMobile);
 

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import connectDB from "@/lib/dbConnection";
 
+// API đăng xuất: xóa cookie access_token
 export async function POST() {
 	try {
 		await connectDB();

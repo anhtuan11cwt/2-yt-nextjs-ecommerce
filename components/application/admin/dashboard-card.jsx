@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 
+// Card thống kê có animation
 export default function DashboardCard({ title, value, icon, gradient }) {
 	return (
 		<motion.div

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import User from "@/models/User.model";
 
+// API xác thực email qua JWT token
 export async function GET(req) {
 	try {
 		await connectDB();

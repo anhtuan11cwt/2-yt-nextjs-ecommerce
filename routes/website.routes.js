@@ -1,3 +1,4 @@
+// Routes website (dùng chung để tránh hardcode)
 const WEBSITE_ROUTES = {
 	CART: "/cart",
 	CHECKOUT: "/checkout",

@@ -1,3 +1,4 @@
+// Error 500 - lỗi máy chủ nội bộ
 class ServerError extends Error {
 	constructor(message) {
 		super(message);

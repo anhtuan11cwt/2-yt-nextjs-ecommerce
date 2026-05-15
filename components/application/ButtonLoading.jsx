@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
 
+// Nút bấm có hiệu ứng loading
 export default function ButtonLoading({
 	type = "button",
 	text,

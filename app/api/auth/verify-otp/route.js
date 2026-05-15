@@ -6,6 +6,7 @@ import OTP from "@/models/OTP.model";
 import User from "@/models/User.model";
 import { verifyOtpSchema } from "@/validators/auth.validator";
 
+// API xác thực OTP, tạo JWT access token
 export async function POST(req) {
 	try {
 		await dbConnect();

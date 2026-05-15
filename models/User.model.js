@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+// Schema người dùng (admin/user)
 const userSchema = new mongoose.Schema(
 	{
 		address: { default: "", type: String },
@@ -25,7 +26,7 @@ const userSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-// Loại bỏ hoàn toàn middleware có lỗi
+// So sánh mật khẩu với hash
 userSchema.methods.comparePassword = async function (password) {
 	return await bcrypt.compare(password, this.password);
 };

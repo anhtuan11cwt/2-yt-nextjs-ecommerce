@@ -20,6 +20,7 @@ import {
 import { registerSchema } from "@/lib/zodSchema";
 import WEBSITE_ROUTES from "@/routes/website.routes";
 
+// Trang đăng ký tài khoản mới
 export default function RegisterPage() {
 	const [isTypePassword, setIsTypePassword] = useState(true);
 
@@ -33,6 +34,7 @@ export default function RegisterPage() {
 		resolver: zodResolver(registerSchema),
 	});
 
+	// Gửi yêu cầu đăng ký và gửi email xác thực
 	const onSubmit = async (data) => {
 		try {
 			const response = await axios.post("/api/auth/register", data);
@@ -64,7 +66,6 @@ export default function RegisterPage() {
 
 			<CardContent>
 				<form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-					{/* NAME */}
 					<div>
 						<label className="font-medium text-sm" htmlFor="name">
 							Tên
@@ -84,7 +85,6 @@ export default function RegisterPage() {
 						)}
 					</div>
 
-					{/* EMAIL */}
 					<div>
 						<label className="font-medium text-sm" htmlFor="email">
 							Email
@@ -106,7 +106,6 @@ export default function RegisterPage() {
 						)}
 					</div>
 
-					{/* PASSWORD */}
 					<div>
 						<label className="font-medium text-sm" htmlFor="password">
 							Mật khẩu
@@ -139,7 +138,6 @@ export default function RegisterPage() {
 						)}
 					</div>
 
-					{/* CONFIRM PASSWORD */}
 					<div>
 						<label className="font-medium text-sm" htmlFor="confirmPassword">
 							Xác nhận mật khẩu

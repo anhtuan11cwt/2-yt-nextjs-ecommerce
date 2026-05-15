@@ -13,6 +13,7 @@ const numberFromInput = z.preprocess((val) => {
 	return Number.isFinite(n) ? n : 0;
 }, z.number());
 
+// Schema validation form biến thể
 export const productVariantFormSchema = z
 	.object({
 		color: z.string().trim().min(1, "Nhập màu"),

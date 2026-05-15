@@ -3,6 +3,7 @@ import connectDB from "@/lib/dbConnection";
 
 export const dynamic = "force-dynamic";
 
+// Kiểm tra kết nối database
 export async function GET() {
 	try {
 		await connectDB();

@@ -13,6 +13,7 @@ import {
 	InputOTPSlot,
 } from "@/components/ui/input-otp";
 
+// Schema validation OTP 6 số
 const otpSchema = z.object({
 	otp: z
 		.string()
@@ -21,6 +22,7 @@ const otpSchema = z.object({
 		.regex(/^\d+$/, "OTP chỉ được chứa số"),
 });
 
+// Component xác thực OTP với form input
 export default function OtpVerification({ email, onVerifySuccess }) {
 	const [loading, setLoading] = useState(false);
 	const [resending, setResending] = useState(false);
@@ -41,6 +43,7 @@ export default function OtpVerification({ email, onVerifySuccess }) {
 		name: "otp",
 	});
 
+	// Xác thực OTP
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
@@ -57,6 +60,7 @@ export default function OtpVerification({ email, onVerifySuccess }) {
 		}
 	};
 
+	// Gửi lại mã OTP
 	const handleResendOtp = async () => {
 		try {
 			setResending(true);

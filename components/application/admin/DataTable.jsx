@@ -18,6 +18,7 @@ import {
 } from "material-react-table";
 import { useMemo, useState } from "react";
 
+// Bảng dữ liệu dùng MaterialReactTable, hỗ trợ sort/filter/export CSV
 export default function DataTable({
 	columns = [],
 	fetchUrl = "",

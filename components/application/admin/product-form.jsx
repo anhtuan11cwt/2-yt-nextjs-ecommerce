@@ -31,6 +31,7 @@ const AdminRichTextEditor = dynamic(
 	},
 );
 
+// Chuyển media document sang định dạng picker
 function mediaDocToPickerItem(doc) {
 	const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 	const url =
@@ -41,6 +42,7 @@ function mediaDocToPickerItem(doc) {
 	return { _id: String(doc._id), url };
 }
 
+// Khởi tạo giá trị mặc định cho form
 function buildDefaultsFromProduct(product) {
 	if (!product) {
 		return {
@@ -64,6 +66,7 @@ function buildDefaultsFromProduct(product) {
 	};
 }
 
+// Form tạo/chỉnh sửa sản phẩm
 export function ProductForm({ initialProduct }) {
 	const router = useRouter();
 	const queryClient = useQueryClient();

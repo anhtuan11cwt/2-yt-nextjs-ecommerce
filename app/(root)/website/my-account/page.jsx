@@ -1,3 +1,4 @@
+// Trang tài khoản người dùng (tạm thời)
 const MyAccountPage = () => {
 	return (
 		<div>

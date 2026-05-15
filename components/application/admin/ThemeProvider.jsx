@@ -2,6 +2,7 @@
 
 import { ThemeProvider as NextThemesProvider } from "@teispace/next-themes";
 
+// Theme provider cho dark/light mode
 const ThemeProvider = ({ children }) => {
 	return (
 		<NextThemesProvider

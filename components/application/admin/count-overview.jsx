@@ -4,8 +4,10 @@ import { FiBox, FiGrid, FiShoppingCart, FiUsers } from "react-icons/fi";
 import useSWR from "swr";
 import DashboardCard from "./dashboard-card";
 
+// Hàm fetch dữ liệu cho SWR
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
+// Hiển thị 4 thống kê chính (danh mục, sản phẩm, khách hàng, đơn hàng)
 export default function CountOverview() {
 	const { data, isLoading } = useSWR("/api/admin/dashboard/count", fetcher, {
 		refreshInterval: 5000,

@@ -7,6 +7,7 @@ import Product from "@/models/product.model";
 import ProductVariant from "@/models/productVariant.model";
 import { productVariantFormSchema } from "@/validators/productVariant.validator";
 
+// Tính phần trăm giảm giá
 function computeDiscountPercent(mrp, sellingPrice) {
 	if (!(mrp > 0)) {
 		return 0;
@@ -14,6 +15,7 @@ function computeDiscountPercent(mrp, sellingPrice) {
 	return Math.round(((mrp - sellingPrice) / mrp) * 100);
 }
 
+// API cập nhật biến thể
 export async function PUT(request, { params }) {
 	try {
 		await isAuthenticated("admin");

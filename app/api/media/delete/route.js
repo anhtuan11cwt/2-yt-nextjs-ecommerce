@@ -6,6 +6,7 @@ import cloudinary from "@/lib/cloudinary";
 import connectDB from "@/lib/dbConnection";
 import MediaModel from "@/models/Media.model";
 
+// API soft delete hoặc khôi phục media
 export async function PUT(request) {
 	try {
 		await isAuthenticated("admin");
@@ -28,6 +29,7 @@ export async function PUT(request) {
 			);
 		}
 
+		// Soft delete - chuyển vào thùng rác
 		if (deleteType === "SD") {
 			await MediaModel.updateMany(
 				{ _id: { $in: ids } },
@@ -40,6 +42,7 @@ export async function PUT(request) {
 			);
 		}
 
+		// Khôi phục từ thùng rác
 		if (deleteType === "RSD") {
 			await MediaModel.updateMany({ _id: { $in: ids } }, { deletedAt: null });
 
@@ -61,6 +64,7 @@ export async function PUT(request) {
 	}
 }
 
+// API xóa vĩnh viễn media (có transaction)
 export async function DELETE(request) {
 	const session = await mongoose.startSession();
 

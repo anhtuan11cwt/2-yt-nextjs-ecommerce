@@ -4,6 +4,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import ProductVariant from "@/models/productVariant.model";
 
+// Parse tham số sắp xếp
 function parseSort(sortingParam) {
 	try {
 		const arr = JSON.parse(sortingParam || "[]");
@@ -31,6 +32,7 @@ function parseSort(sortingParam) {
 	}
 }
 
+// API danh sách biến thể với aggregation
 export async function GET(request) {
 	try {
 		await isAuthenticated("admin");

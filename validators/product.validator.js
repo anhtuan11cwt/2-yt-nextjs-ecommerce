@@ -1,7 +1,9 @@
 import { z } from "zod";
 
+// Regex kiểm tra ObjectId MongoDB
 const objectIdString = z.string().regex(/^[a-f\d]{24}$/i, "ID không hợp lệ");
 
+// Xử lý input số từ form
 const numberFromInput = z.preprocess((val) => {
 	if (val === "" || val === undefined || val === null) {
 		return 0;
@@ -13,6 +15,7 @@ const numberFromInput = z.preprocess((val) => {
 	return Number.isFinite(n) ? n : 0;
 }, z.number());
 
+// Schema validation form sản phẩm
 export const productFormSchema = z
 	.object({
 		category: objectIdString,

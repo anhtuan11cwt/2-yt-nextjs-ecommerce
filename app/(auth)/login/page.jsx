@@ -21,6 +21,7 @@ import {
 import ADMIN_ROUTES from "@/routes/admin.routes";
 import { loginSchema } from "@/validators/auth.validator";
 
+// Trang đăng nhập với OTP xác thực 2 bước
 export default function LoginPage() {
 	const _router = useRouter();
 	const searchParams = useSearchParams();
@@ -39,6 +40,7 @@ export default function LoginPage() {
 		resolver: zodResolver(loginSchema),
 	});
 
+	// Gửi thông tin đăng nhập và nhận OTP
 	const onSubmit = async (data) => {
 		try {
 			setIsSubmitting(true);
@@ -55,6 +57,7 @@ export default function LoginPage() {
 		}
 	};
 
+	// Xử lý sau khi xác thực OTP thành công
 	const handleVerifySuccess = (data) => {
 		const user = data.data.user;
 		let targetUrl = "/";

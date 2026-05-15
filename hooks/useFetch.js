@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+// Hook fetch dữ liệu với abort controller và refresh
 const useFetch = ({ url, method = "GET", body = null, autoFetch = true }) => {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const abortRef = useRef(null);
 
+	// Hàm fetch có hỗ trợ cancel request trước đó
 	const fetchData = useCallback(
 		async (customBody = null) => {
 			if (abortRef.current) {

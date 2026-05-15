@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 import { productVariantFormSchema } from "@/validators/productVariant.validator";
 
+// Chuyển media document sang định dạng picker
 function mediaDocToPickerItem(doc) {
 	const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 	const url =
@@ -26,6 +27,7 @@ function mediaDocToPickerItem(doc) {
 	return { _id: String(doc._id), url };
 }
 
+// Khởi tạo giá trị mặc định cho form
 function buildDefaultsFromVariant(variant) {
 	if (!variant) {
 		return {
@@ -51,6 +53,7 @@ function buildDefaultsFromVariant(variant) {
 	};
 }
 
+// Tự sinh SKU từ tên sản phẩm, màu và kích cỡ
 function buildSuggestedSku(productSlug, color, size) {
 	const base = slugify(productSlug || "variant", {
 		lower: true,
@@ -70,6 +73,7 @@ function buildSuggestedSku(productSlug, color, size) {
 	return [base, c, s].filter(Boolean).join("-").slice(0, 120);
 }
 
+// Form tạo/chỉnh sửa biến thể sản phẩm
 export function VariantForm({ initialVariant }) {
 	const router = useRouter();
 	const queryClient = useQueryClient();

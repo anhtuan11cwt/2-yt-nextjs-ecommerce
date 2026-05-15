@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema biến thể sản phẩm (màu, size, SKU)
 const productVariantSchema = new mongoose.Schema(
 	{
 		color: {
@@ -54,7 +55,7 @@ const productVariantSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-// Tự tính % giảm theo MRP và giá bán trước khi lưu
+// Tự động tính % giảm giá trước khi lưu
 productVariantSchema.pre("save", function (next) {
 	if (this.mrp > 0 && Number.isFinite(this.sellingPrice)) {
 		this.discountPercent = Math.round(
@@ -68,6 +69,7 @@ productVariantSchema.pre("save", function (next) {
 	}
 });
 
+// Index unique cho combo (product + color + size)
 productVariantSchema.index(
 	{ color: 1, product: 1, size: 1 },
 	{
@@ -76,6 +78,7 @@ productVariantSchema.index(
 	},
 );
 
+// Index unique cho SKU
 productVariantSchema.index(
 	{ sku: 1 },
 	{

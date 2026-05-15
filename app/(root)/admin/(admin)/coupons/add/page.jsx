@@ -7,10 +7,12 @@ import AdminBreadcrumb from "@/components/application/admin/breadcrumb";
 import CouponForm from "@/components/application/admin/coupon-form";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
+// Trang thêm mã giảm giá
 export default function AddCouponPage() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 
+	// Xử lý tạo mã giảm giá
 	const handleSubmit = async (e, formData) => {
 		e.preventDefault();
 		try {

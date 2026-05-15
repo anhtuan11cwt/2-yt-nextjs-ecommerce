@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
+// Fetch media với phân trang cho modal picker
 async function fetchMediaPage(pageParam) {
 	const response = await fetch(
 		`/api/media?page=${pageParam}&limit=12&deleteType=active`,
@@ -26,6 +27,7 @@ async function fetchMediaPage(pageParam) {
 	return result;
 }
 
+// Sheet chọn media từ thư viện
 export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
 	const [draftSelection, setDraftSelection] = useState([]);
 
@@ -55,6 +57,7 @@ export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
 
 	const mediaList = data?.pages.flatMap((page) => page?.mediaData || []) || [];
 
+	// Xác nhận chọn media
 	const handleConfirm = () => {
 		const unique = [];
 		const seen = new Set();

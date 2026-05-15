@@ -11,6 +11,7 @@ import DataTable from "@/components/application/admin/DataTable";
 import DataTableWrapper from "@/components/application/admin/DataTableWrapper";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
+// Trang danh sách mã giảm giá
 export default function CouponShowPage() {
 	const queryClient = useQueryClient();
 

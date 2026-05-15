@@ -5,6 +5,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import Product from "@/models/product.model";
 
+// API lấy sản phẩm theo ID (có populate)
 export async function GET(_request, { params }) {
 	try {
 		await isAuthenticated("admin");

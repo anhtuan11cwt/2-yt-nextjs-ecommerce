@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { adminSidebarMenu } from "@/lib/adminSidebarMenu";
 
+// Sidebar admin với menu collapsible
 const AppSidebar = () => {
 	const pathname = usePathname();
 	const { toggleSidebar } = useSidebar();

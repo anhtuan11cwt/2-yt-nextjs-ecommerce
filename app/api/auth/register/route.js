@@ -7,6 +7,7 @@ import sendEmail from "@/lib/sendEmail";
 import User from "@/models/User.model";
 import { registerSchema } from "@/validators/auth.validator";
 
+// API đăng ký tài khoản mới, gửi email xác thực
 export async function POST(request) {
 	try {
 		await connectDB();
@@ -35,7 +36,7 @@ export async function POST(request) {
 			});
 		}
 
-		// Hash mật khẩu thủ công tại đây
+		// Hash mật khẩu trước khi lưu
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const user = await User.create({
@@ -44,7 +45,7 @@ export async function POST(request) {
 			password: hashedPassword,
 		});
 
-		// JWT Token
+		// Tạo JWT token xác thực email
 		const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 		const verificationToken = await new SignJWT({ userId: user._id.toString() })
@@ -53,10 +54,10 @@ export async function POST(request) {
 			.setExpirationTime("1h")
 			.sign(secret);
 
-		// Verify URL
+		// Tạo URL xác thực
 		const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
 
-		// Send email
+		// Gửi email xác thực
 		await sendEmail({
 			html: emailVerificationLink({
 				name: user.name,
@@ -72,7 +73,7 @@ export async function POST(request) {
 			success: true,
 		});
 	} catch (error) {
-		// Duplicate email
+		// Lỗi trùng email
 		if (error.code === 11000) {
 			return response({
 				message: "Email đã tồn tại",

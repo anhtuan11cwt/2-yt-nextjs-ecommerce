@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
+// Cấu hình cột bảng mã giảm giá
 export const getColumns = (onDelete) => [
 	{
 		accessorKey: "code",

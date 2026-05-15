@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema đơn hàng
 const orderSchema = new mongoose.Schema(
 	{
 		deletedAt: { default: null, type: Date },

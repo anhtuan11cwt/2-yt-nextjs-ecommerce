@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 
+// API tạo chữ ký upload Cloudinary
 export async function POST(request) {
 	try {
 		const body = await request.json();

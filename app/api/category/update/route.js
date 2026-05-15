@@ -5,6 +5,7 @@ import connectDB from "@/lib/dbConnection";
 import Category from "@/models/category.model";
 import { categorySchema } from "@/validators/category.validator";
 
+// API cập nhật danh mục
 export async function PUT(request) {
 	try {
 		await connectDB();

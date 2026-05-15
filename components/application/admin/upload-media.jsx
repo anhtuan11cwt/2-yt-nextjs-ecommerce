@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { FiPlus } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 
+// Widget upload media lên Cloudinary
 const UploadMedia = () => {
 	const queryClient = useQueryClient();
 

@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectMongoDB from "@/lib/dbConnection";
 import CouponModel from "@/models/coupon.model";
 
+// API lấy mã giảm giá theo ID
 export async function GET(_, { params }) {
 	try {
 		await connectMongoDB();

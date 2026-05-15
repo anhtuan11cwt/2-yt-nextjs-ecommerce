@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import useDeleteMutation from "@/hooks/useDeleteMutation";
 import { fetchMedia } from "@/lib/api/fetchMedia";
 
+// Trang quản lý media với thư viện ảnh và thùng rác
 const MediaPage = () => {
 	const [mediaTab, setMediaTab] = useState("active");
 	const [selectedMedia, setSelectedMedia] = useState([]);
@@ -42,6 +43,7 @@ const MediaPage = () => {
 	const selectAll =
 		mediaData.length > 0 && selectedMedia.length === mediaData.length;
 
+	// Chọn/bỏ chọn tất cả media
 	const handleSelectAll = (checked) => {
 		if (checked) {
 			setSelectedMedia(

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema mã giảm giá
 const couponSchema = new mongoose.Schema(
 	{
 		code: {

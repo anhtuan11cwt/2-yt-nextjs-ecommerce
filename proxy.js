@@ -1,11 +1,13 @@
 import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
+// Middleware xác thực route: kiểm tra JWT cookie và phân quyền
 export async function proxy(request) {
 	try {
 		const accessToken = request.cookies.get("access_token")?.value;
 		const pathname = request.nextUrl.pathname;
 
+		// Chưa đăng nhập - redirect đến login
 		if (!accessToken) {
 			if (pathname.startsWith("/admin") || pathname.startsWith("/my-account")) {
 				return NextResponse.redirect(new URL("/login", request.url));
@@ -17,6 +19,7 @@ export async function proxy(request) {
 		const { payload } = await jwtVerify(accessToken, secret);
 		const role = payload?.role;
 
+		// Admin route nhưng không phải admin
 		if (pathname.startsWith("/admin") && role !== "admin") {
 			return NextResponse.redirect(new URL("/login", request.url));
 		}
@@ -25,6 +28,7 @@ export async function proxy(request) {
 			return NextResponse.redirect(new URL("/login", request.url));
 		}
 
+		// Đã đăng nhập - redirect khỏi trang login/register
 		if (pathname === "/login" || pathname === "/register") {
 			if (role === "admin" && pathname !== "/admin/dashboard") {
 				return NextResponse.redirect(new URL("/admin/dashboard", request.url));

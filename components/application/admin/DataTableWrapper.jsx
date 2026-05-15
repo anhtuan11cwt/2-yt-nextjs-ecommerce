@@ -8,6 +8,7 @@ import { useSyncExternalStore } from "react";
 
 const emptySubscribe = () => () => {};
 
+// Kiểm tra hydration để tránh mismatch MUI theme
 function useHydrated() {
 	return useSyncExternalStore(
 		emptySubscribe,
@@ -16,6 +17,7 @@ function useHydrated() {
 	);
 }
 
+// Wrapper cung cấp MUI theme theo dark/light mode
 export default function DataTableWrapper({ children }) {
 	const { resolvedTheme } = useTheme();
 	const hydrated = useHydrated();

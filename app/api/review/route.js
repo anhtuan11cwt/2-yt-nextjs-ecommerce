@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectMongoDB from "@/lib/dbConnection";
 import ReviewModel from "@/models/review.model";
 
+// API danh sách đánh giá với lọc và phân trang
 export async function GET(request) {
 	try {
 		await connectMongoDB();

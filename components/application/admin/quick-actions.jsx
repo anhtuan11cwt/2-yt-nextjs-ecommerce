@@ -30,6 +30,7 @@ const actions = [
 	},
 ];
 
+// Các action nhanh trên dashboard
 export default function QuickActions() {
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-4 gap-5">

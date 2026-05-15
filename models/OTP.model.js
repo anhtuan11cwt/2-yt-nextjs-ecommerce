@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema lưu mã OTP với TTL tự động xóa
 const otpSchema = new mongoose.Schema(
 	{
 		email: {
@@ -24,6 +25,7 @@ const otpSchema = new mongoose.Schema(
 	},
 );
 
+// Index TTL tự động xóa OTP hết hạn
 otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 const OTP = mongoose.models.OTP || mongoose.model("OTP", otpSchema);

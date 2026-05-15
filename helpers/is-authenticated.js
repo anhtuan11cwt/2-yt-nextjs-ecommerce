@@ -4,6 +4,7 @@ import UnauthorizedError from "@/errors/unauthorized-error";
 import connectDB from "@/lib/dbConnection";
 import UserModel from "@/models/User.model";
 
+// Middleware xác thực: verify JWT và check role
 export const isAuthenticated = async (role = "user") => {
 	try {
 		await connectDB();

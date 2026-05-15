@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectMongoDB from "@/lib/dbConnection";
 import CouponModel from "@/models/coupon.model";
 
+// API xóa mã giảm giá (soft delete)
 export async function DELETE(request) {
 	try {
 		await connectMongoDB();

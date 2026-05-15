@@ -4,6 +4,7 @@ import connectDB from "@/lib/dbConnection";
 import { response } from "@/lib/helpers";
 import OTP from "@/models/OTP.model";
 
+// API xác thực OTP đặt lại mật khẩu, trả về reset token
 export async function POST(req) {
 	try {
 		await connectDB();

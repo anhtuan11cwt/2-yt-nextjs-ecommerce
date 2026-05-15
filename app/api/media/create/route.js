@@ -5,6 +5,7 @@ import cloudinary from "@/lib/cloudinary";
 import connectDB from "@/lib/dbConnection";
 import MediaModel from "@/models/Media.model";
 
+// API tạo media, rollback Cloudinary nếu lỗi DB
 export async function POST(request) {
 	try {
 		await isAuthenticated("admin");

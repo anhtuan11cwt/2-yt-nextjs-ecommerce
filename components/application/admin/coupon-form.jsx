@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+// Form tạo/chỉnh sửa mã giảm giá
 export default function CouponForm({ initialData = {}, onSubmit, loading }) {
 	const [formData, setFormData] = useState({
 		code: initialData.code || "",

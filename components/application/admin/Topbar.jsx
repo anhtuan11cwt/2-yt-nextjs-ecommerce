@@ -9,6 +9,7 @@ import AdminSearch from "./admin-search";
 import ThemeSwitcher from "./ThemeSwitcher";
 import UserDropdown from "./UserDropdown";
 
+// Topbar admin: search, theme, user dropdown
 const Topbar = () => {
 	const { toggleSidebar } = useSidebar();
 

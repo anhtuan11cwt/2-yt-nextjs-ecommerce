@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import Category from "@/models/category.model";
 
+// API danh sách danh mục, hỗ trợ phân trang và tìm kiếm
 export async function GET(request) {
 	try {
 		await connectDB();
@@ -10,6 +11,7 @@ export async function GET(request) {
 		const { searchParams } = new URL(request.url);
 		const id = searchParams.get("id");
 
+		// Lấy danh mục theo ID
 		if (id) {
 			const category = await Category.findById(id);
 			return NextResponse.json({

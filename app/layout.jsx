@@ -8,6 +8,7 @@ export const metadata = {
 	title: "E-commerce App",
 };
 
+// Root layout chứa Redux Provider, React Query Provider và Toaster
 export default function RootLayout({ children }) {
 	return (
 		<html className="font-sans" lang="en" suppressHydrationWarning>

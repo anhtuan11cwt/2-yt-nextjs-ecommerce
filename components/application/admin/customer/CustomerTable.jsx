@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import DataTable from "@/components/application/admin/DataTable";
 
+// Bảng danh sách khách hàng
 export default function CustomerTable() {
 	const [customers, setCustomers] = useState([]);
 	const [loading, setLoading] = useState(true);

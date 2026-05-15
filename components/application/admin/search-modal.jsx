@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { searchData } from "@/lib/search";
 
+// Modal tìm kiếm trang admin dùng Fuse.js
 export default function SearchModal({ open, setOpen }) {
 	const [query, setQuery] = useState("");
 	const fuse = useMemo(

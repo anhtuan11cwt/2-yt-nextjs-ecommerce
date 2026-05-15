@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectMongoDB from "@/lib/dbConnection";
 import User from "@/models/User.model";
 
+// API danh sách khách hàng (role: user)
 export async function GET() {
 	try {
 		await connectMongoDB();

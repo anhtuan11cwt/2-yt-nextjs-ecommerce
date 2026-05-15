@@ -4,6 +4,7 @@ const initialState = {
 	auth: null,
 };
 
+// Auth slice quản lý trạng thái đăng nhập
 const authSlice = createSlice({
 	initialState,
 	name: "auth",

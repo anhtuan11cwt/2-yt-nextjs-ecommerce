@@ -8,6 +8,7 @@ import { prepareDescriptionForStorage } from "@/lib/product-description";
 import Product from "@/models/product.model";
 import { productFormSchema } from "@/validators/product.validator";
 
+// Tính phần trăm giảm giá
 function computeDiscountPercent(mrp, sellingPrice) {
 	if (!(mrp > 0)) {
 		return 0;
@@ -15,6 +16,7 @@ function computeDiscountPercent(mrp, sellingPrice) {
 	return Math.round(((mrp - sellingPrice) / mrp) * 100);
 }
 
+// API cập nhật sản phẩm
 export async function PUT(request, { params }) {
 	try {
 		await isAuthenticated("admin");

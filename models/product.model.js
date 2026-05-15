@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema sản phẩm
 const productSchema = new mongoose.Schema(
 	{
 		category: {

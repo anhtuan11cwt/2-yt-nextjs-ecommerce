@@ -15,6 +15,7 @@ import {
 import useDeleteMutation from "@/hooks/useDeleteMutation";
 import { cn } from "@/lib/utils";
 
+// Component hiển thị một media item với actions
 const MediaBlock = ({
 	media,
 	selectedMedia,
@@ -27,6 +28,7 @@ const MediaBlock = ({
 		queryKey: ["media"],
 	});
 
+	// Xử lý chọn/bỏ chọn media
 	const handleCheck = (checked) => {
 		if (checked) {
 			if (isMultiple) {
@@ -57,6 +59,7 @@ const MediaBlock = ({
 			? `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${media.path}`
 			: null);
 
+	// Sao chép URL media vào clipboard
 	const handleCopy = async () => {
 		if (!mediaUrl) return;
 		await navigator.clipboard.writeText(mediaUrl);

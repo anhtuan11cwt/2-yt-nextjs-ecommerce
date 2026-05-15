@@ -5,6 +5,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import ProductVariant from "@/models/productVariant.model";
 
+// API khôi phục biến thể đã xóa mềm
 export async function PUT(request) {
 	try {
 		await isAuthenticated("admin");

@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import MediaModel from "@/models/Media.model";
 
+// API danh sách media với phân trang
 export async function GET(request) {
 	try {
 		await isAuthenticated("admin");

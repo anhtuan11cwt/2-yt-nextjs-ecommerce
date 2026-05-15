@@ -2,6 +2,7 @@
 
 import CustomerTable from "@/components/application/admin/customer/CustomerTable";
 
+// Trang quản lý khách hàng
 export default function CustomerShowPage() {
 	return (
 		<div className="p-5">

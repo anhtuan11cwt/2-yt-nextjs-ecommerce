@@ -4,6 +4,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import MediaModel from "@/models/Media.model";
 
+// API lấy media theo ID
 export async function GET(_request, { params }) {
 	try {
 		await isAuthenticated("admin");

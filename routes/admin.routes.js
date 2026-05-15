@@ -1,3 +1,4 @@
+// Routes admin (dùng chung để tránh hardcode)
 const ADMIN_ROUTES = {
 	ADD_CATEGORY: "/admin/category/add",
 	ADMIN_COUPON_ADD: "/admin/coupons/add",

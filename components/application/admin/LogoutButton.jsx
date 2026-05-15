@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { logout } from "@/store/reducers/authReducer";
 
+// Nút đăng xuất
 const LogoutButton = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 
+	// Gọi API logout và dispatch Redux action
 	const handleLogout = async () => {
 		try {
 			const response = await axios.post("/api/auth/logout");

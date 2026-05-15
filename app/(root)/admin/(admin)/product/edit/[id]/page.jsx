@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 
 import { ProductForm } from "@/components/application/admin/product-form";
 
+// Trang chỉnh sửa sản phẩm
 export default function AdminProductEditPage() {
 	const { id } = useParams();
 

@@ -5,6 +5,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import ProductVariant from "@/models/productVariant.model";
 
+// API lấy biến thể theo ID (có populate)
 export async function GET(_request, { params }) {
 	try {
 		await isAuthenticated("admin");

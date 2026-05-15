@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { updatePasswordSchema } from "@/validators/auth.validator";
 
+// Form cập nhật mật khẩu mới
 export default function UpdatePassword({ token }) {
 	const router = useRouter();
 	const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +30,7 @@ export default function UpdatePassword({ token }) {
 		resolver: zodResolver(updatePasswordSchema),
 	});
 
+	// Gửi mật khẩu mới lên server
 	const onSubmit = async (data) => {
 		try {
 			const response = await axios.put(

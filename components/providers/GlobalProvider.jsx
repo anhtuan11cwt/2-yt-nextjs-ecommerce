@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import "@/lib/console-patch";
 
+// React Query Provider cho toàn bộ ứng dụng
 const GlobalProvider = ({ children }) => {
 	const [queryClient] = useState(
 		() =>

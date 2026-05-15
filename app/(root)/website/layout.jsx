@@ -1,3 +1,4 @@
+// Layout trang website (phía người dùng)
 const WebsiteLayout = ({ children }) => {
 	return (
 		<div>

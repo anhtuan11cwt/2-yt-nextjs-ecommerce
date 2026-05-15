@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutButton from "./LogoutButton";
 
+// Dropdown thông tin người dùng
 const UserDropdown = () => {
 	const { auth } = useSelector((state) => state.auth);
 

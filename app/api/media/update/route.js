@@ -5,12 +5,14 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import MediaModel from "@/models/Media.model";
 
+// Schema validation cập nhật media
 const updateMediaSchema = z.object({
 	alt: z.string().optional().default(""),
 	id: z.string().min(1, "ID Media Bắt Buộc"),
 	title: z.string().optional().default(""),
 });
 
+// API cập nhật alt text và tiêu đề media
 export async function PUT(request) {
 	try {
 		await isAuthenticated("admin");

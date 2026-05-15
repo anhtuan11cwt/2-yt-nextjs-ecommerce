@@ -6,6 +6,7 @@ import Order from "@/models/order.model";
 import Product from "@/models/product.model";
 import User from "@/models/User.model";
 
+// API lấy số liệu thống kê dashboard
 export async function GET() {
 	try {
 		await connectMongoDB();

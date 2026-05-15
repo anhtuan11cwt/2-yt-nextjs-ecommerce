@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema lưu thông tin media từ Cloudinary
 const MediaSchema = new mongoose.Schema(
 	{
 		alt: {

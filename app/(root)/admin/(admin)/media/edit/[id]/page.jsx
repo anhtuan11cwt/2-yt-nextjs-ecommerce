@@ -15,6 +15,7 @@ const breadcrumbData = [
 	{ label: "Chỉnh sửa" },
 ];
 
+// Trang chỉnh sửa thông tin media
 const EditMediaPage = () => {
 	const params = useParams();
 	const router = useRouter();

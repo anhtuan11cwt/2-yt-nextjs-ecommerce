@@ -4,6 +4,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import ProductVariant from "@/models/productVariant.model";
 
+// API xóa biến thể (soft hoặc permanent)
 export async function DELETE(request) {
 	try {
 		await isAuthenticated("admin");

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Schema validation danh mục
 export const categorySchema = z.object({
 	name: z
 		.string()

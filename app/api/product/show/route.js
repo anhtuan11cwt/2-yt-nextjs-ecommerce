@@ -4,6 +4,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import Product from "@/models/product.model";
 
+// Parse tham số sắp xếp từ MRT
 function parseSort(sortingParam) {
 	try {
 		const arr = JSON.parse(sortingParam || "[]");
@@ -29,6 +30,7 @@ function parseSort(sortingParam) {
 	}
 }
 
+// API danh sách sản phẩm với aggregation
 export async function GET(request) {
 	try {
 		await isAuthenticated("admin");

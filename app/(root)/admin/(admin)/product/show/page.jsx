@@ -14,6 +14,7 @@ import ADMIN_ROUTES from "@/routes/admin.routes";
 
 const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+// Lấy URL thumbnail từ media document
 function mediaThumbUrl(doc) {
 	if (!doc) {
 		return null;
@@ -27,6 +28,7 @@ function mediaThumbUrl(doc) {
 	return null;
 }
 
+// Trang danh sách sản phẩm
 export default function ProductShowPage() {
 	const queryClient = useQueryClient();
 

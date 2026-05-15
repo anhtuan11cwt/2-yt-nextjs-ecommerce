@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useEffectEvent, useState } from "react";
 
+// Trang xác thực email qua token
 export default function VerifyEmailPage() {
 	const params = useParams();
 	const token = params.token;
@@ -14,6 +15,7 @@ export default function VerifyEmailPage() {
 	const [success, setSuccess] = useState(false);
 	const [message, setMessage] = useState("");
 
+	// Gọi API xác thực email với token
 	const verifyEmail = useEffectEvent(async (currentToken) => {
 		try {
 			setLoading(true);
@@ -30,6 +32,7 @@ export default function VerifyEmailPage() {
 		}
 	});
 
+	// Tự động xác thực khi token có sẵn
 	useEffect(() => {
 		if (!token) {
 			return;
@@ -42,6 +45,7 @@ export default function VerifyEmailPage() {
 		return () => clearTimeout(timeoutId);
 	}, [token]);
 
+	// Hiển thị loading khi đang xác thực
 	if (loading) {
 		return (
 			<div className="flex min-h-screen flex-col items-center justify-center gap-4">
