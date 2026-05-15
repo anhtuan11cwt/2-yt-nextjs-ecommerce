@@ -76,7 +76,7 @@ export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
 				</SheetHeader>
 
 				{isLoading ? (
-					<div className="grid grid-cols-2 gap-3 py-4 sm:grid-cols-3">
+					<div className="grid grid-cols-2 gap-3 py-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 						{[...Array(6)].map((_, i) => (
 							<div
 								className={cn(
@@ -97,7 +97,7 @@ export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
 				) : null}
 
 				{!isLoading && !isError ? (
-					<div className="grid grid-cols-2 gap-3 py-4 sm:grid-cols-3">
+					<div className="grid grid-cols-2 gap-3 py-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 						{mediaList.map((media) => (
 							<MediaBlock
 								isMultiple
@@ -120,7 +120,11 @@ export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
 					>
 						{isFetchingNextPage ? "Đang tải..." : "Tải thêm"}
 					</Button>
-				) : null}
+				) : (
+					<p className="py-4 text-center text-sm text-muted-foreground">
+						Không còn ảnh để tải
+					</p>
+				)}
 
 				{draftSelection.length > 0 ? (
 					<div className="flex flex-wrap gap-2 border-t pt-4">

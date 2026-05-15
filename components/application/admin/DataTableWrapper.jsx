@@ -77,7 +77,7 @@ export default function DataTableWrapper({ children }) {
 	return (
 		<ThemeProvider theme={muiTheme}>
 			<CssBaseline />
-			{children}
+			<div className="overflow-x-auto">{children}</div>
 		</ThemeProvider>
 	);
 }

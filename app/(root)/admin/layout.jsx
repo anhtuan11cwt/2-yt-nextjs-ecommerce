@@ -10,7 +10,7 @@ const AdminLayout = ({ children }) => {
 				<AppSidebar />
 				<SidebarInset className="min-w-0">
 					<Topbar />
-					<main className="min-w-0 flex-1 overflow-x-auto p-4 md:p-6">
+					<main className="min-w-0 flex-1 overflow-x-auto p-3 sm:p-5 lg:p-8">
 						{children}
 					</main>
 				</SidebarInset>
