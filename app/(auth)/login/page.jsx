@@ -19,11 +19,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import ADMIN_ROUTES from "@/routes/admin.routes";
-import WEBSITE_ROUTES from "@/routes/website.routes";
 import { loginSchema } from "@/validators/auth.validator";
 
 export default function LoginPage() {
-	const router = useRouter();
+	const _router = useRouter();
 	const searchParams = useSearchParams();
 	const callbackUrl = searchParams.get("callbackUrl");
 	const [showPassword, setShowPassword] = useState(false);
@@ -58,14 +57,14 @@ export default function LoginPage() {
 
 	const handleVerifySuccess = (data) => {
 		const user = data.data.user;
-
+		let targetUrl = "/";
 		if (callbackUrl?.startsWith("/")) {
-			router.push(callbackUrl);
+			targetUrl = callbackUrl;
 		} else if (user.role === "admin") {
-			router.push(ADMIN_ROUTES.DASHBOARD);
-		} else {
-			router.push(WEBSITE_ROUTES.MY_ACCOUNT);
+			targetUrl = ADMIN_ROUTES.DASHBOARD;
 		}
+
+		window.location.href = targetUrl;
 	};
 
 	return (
