@@ -56,7 +56,7 @@ export default function DataTable({
 
 	const { data, isLoading, isRefetching, refetch } = useQuery({
 		queryFn: fetchData,
-		queryKey: ["datatable", queryParams],
+		queryKey: ["datatable", fetchUrl, queryParams],
 	});
 
 	const table = useMaterialReactTable({
@@ -81,6 +81,10 @@ export default function DataTable({
 
 		manualPagination: true,
 		manualSorting: true,
+		muiSkeletonProps: {
+			animation: "pulse",
+			height: 28,
+		},
 		muiTableBodyCellProps: {
 			inputProps: undefined, // Loại bỏ inputProps nếu có
 		},
@@ -97,6 +101,11 @@ export default function DataTable({
 		onPaginationChange: setPagination,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
+		renderEmptyRowsFallback: () => (
+			<Box className="p-4 text-center">
+				<p>Không có dữ liệu hiển thị.</p>
+			</Box>
+		),
 
 		renderToolbarInternalActions: ({ table }) => (
 			<Box className="flex items-center gap-1">
@@ -171,6 +180,10 @@ export default function DataTable({
 			sorting,
 		},
 	});
+
+	if (isLoading) {
+		return <div className="p-4 text-center">Đang tải dữ liệu...</div>;
+	}
 
 	return <MaterialReactTable table={table} />;
 }
