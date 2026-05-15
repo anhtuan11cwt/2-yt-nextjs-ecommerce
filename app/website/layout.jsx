@@ -10,9 +10,8 @@ const kumbh = Kumbh_Sans({
 
 export default function WebsiteLayout({ children }) {
 	return (
-		<html lang="en">
-			<body
-				className={`
+		<div
+			className={`
           ${kumbh.className}
           min-h-screen
           bg-white
@@ -20,13 +19,12 @@ export default function WebsiteLayout({ children }) {
           m-0
           p-0
         `}
-			>
-				<Header />
+		>
+			<Header />
 
-				<main>{children}</main>
+			<main>{children}</main>
 
-				<Footer />
-			</body>
-		</html>
+			<Footer />
+		</div>
 	);
 }
