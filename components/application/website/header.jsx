@@ -4,11 +4,11 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FiMenu, FiSearch, FiShoppingCart, FiUser, FiX } from "react-icons/fi";
+import { FiMenu, FiShoppingCart, FiUser, FiX } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import Search from "../../website/search";
 
 const Header = () => {
-	const [showSearch, setShowSearch] = useState(false);
 	const [isMobileMenu, setIsMobileMenu] = useState(false);
 	const [categoryLinks, setCategoryLinks] = useState([]);
 	const auth = useSelector((store) => store.auth);
@@ -60,13 +60,7 @@ const Header = () => {
 
 					{/* ACTIONS */}
 					<div className="flex items-center gap-5">
-						<button
-							className="text-gray-600 transition hover:text-primary"
-							onClick={() => setShowSearch(!showSearch)}
-							type="button"
-						>
-							<FiSearch size={22} />
-						</button>
+						<Search />
 
 						<button
 							className="relative text-gray-600 transition hover:text-primary"
@@ -115,17 +109,6 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* SEARCH BOX */}
-			{showSearch && (
-				<div className="border-t bg-white px-4 py-4 lg:px-8">
-					<input
-						className="w-full rounded-md border px-4 py-3 outline-none focus:border-primary"
-						placeholder="Tìm kiếm sản phẩm..."
-						type="text"
-					/>{" "}
-				</div>
-			)}
 
 			{/* MOBILE OVERLAY */}
 			{isMobileMenu && (
