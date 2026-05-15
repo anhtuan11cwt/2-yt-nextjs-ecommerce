@@ -149,3 +149,16 @@
 	color: #fff;
 	background: #0f172a;
 }
+
+.slick-dots {
+	bottom: -15px;
+}
+
+.slick-dots li button:before {
+	font-size: 10px;
+	color: #000;
+}
+
+.slick-dots li.slick-active button:before {
+	color: #ef4444;
+}
