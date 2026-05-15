@@ -1,11 +1,11 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 
+import AdminSearch from "./admin-search";
 import ThemeSwitcher from "./ThemeSwitcher";
 import UserDropdown from "./UserDropdown";
 
@@ -47,22 +47,14 @@ const Topbar = () => {
 						<Menu className="w-5 h-5" />
 					</Button>
 
-					<Link
-						className="
-              text-lg
-              font-semibold
-              tracking-tight
-            "
-						href="/admin/dashboard"
-					>
-						Bảng điều khiển
-					</Link>
+					<div className="hidden md:block w-64">
+						<AdminSearch />
+					</div>
 				</div>
 
 				{/* RIGHT */}
 				<div className="flex items-center gap-3">
 					<ThemeSwitcher />
-
 					<UserDropdown />
 				</div>
 			</div>
