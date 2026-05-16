@@ -74,8 +74,7 @@ export async function POST(req) {
 		await OTP.deleteOne({ _id: otpRecord._id });
 
 		return res;
-	} catch (error) {
-		console.error(error);
+	} catch (_error) {
 		return response({
 			message: "Lỗi máy chủ nội bộ",
 			statusCode: 500,

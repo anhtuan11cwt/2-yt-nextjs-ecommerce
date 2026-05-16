@@ -150,9 +150,7 @@ export async function GET(request) {
 			nextPage: hasNextPage ? page + 1 : null,
 			products,
 		});
-	} catch (error) {
-		console.log(error);
-
+	} catch (_error) {
 		return NextResponse.json(
 			{ message: "Lỗi máy chủ nội bộ" },
 			{ status: 500 },

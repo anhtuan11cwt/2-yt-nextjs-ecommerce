@@ -76,8 +76,7 @@ export async function POST(req) {
 			statusCode: 200,
 			success: true,
 		});
-	} catch (error) {
-		console.error(error);
+	} catch (_error) {
 		return response({
 			message: "Lỗi máy chủ nội bộ",
 			statusCode: 500,

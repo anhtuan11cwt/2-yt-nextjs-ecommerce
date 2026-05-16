@@ -48,9 +48,7 @@ export default function FiltersSidebar() {
 				setCategories(categoryRes.data.categories);
 				setColors(colorRes.data.colors);
 				setSizes(sizeRes.data.sizes);
-			} catch (error) {
-				console.log(error);
-			}
+			} catch (_error) {}
 		};
 
 		fetchFilters();

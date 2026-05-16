@@ -37,11 +37,13 @@ export async function POST(req) {
 
 			if (!variant || variant.quantity <= 0) continue;
 
-			const safeQuantity = Math.min(item.quantity, variant.quantity);
+			const safeQuantity = Math.min(Number(item.quantity), variant.quantity);
+
+			if (safeQuantity <= 0) continue;
 
 			verifiedProducts.push({
 				color: variant.color,
-				image: variant.media?.[0]?.secureUrl || "",
+				image: variant.media?.[0]?.path || "",
 				name: variant.product.name,
 				price: variant.product.sellingPrice,
 				productId: variant.product._id,
@@ -64,8 +66,7 @@ export async function POST(req) {
 			success: true,
 			total,
 		});
-	} catch (error) {
-		console.error("Lỗi xác thực giỏ hàng:", error);
+	} catch (_error) {
 		return NextResponse.json(
 			{ message: "Lỗi máy chủ", success: false },
 			{ status: 500 },

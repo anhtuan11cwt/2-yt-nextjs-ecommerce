@@ -16,12 +16,8 @@ export function AdminRichTextEditor({ value, onChange }) {
 				onChange={(_event, editor) => {
 					onChange(editor.getData());
 				}}
-				onError={(error) => {
-					console.error("CKEditor error:", error);
-				}}
-				onReady={(_editor) => {
-					console.log("CKEditor ready");
-				}}
+				onError={(_error) => {}}
+				onReady={(_editor) => {}}
 			/>
 		</div>
 	);

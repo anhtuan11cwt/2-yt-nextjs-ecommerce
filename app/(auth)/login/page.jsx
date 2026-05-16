@@ -20,6 +20,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { login } from "@/redux/features/authSlice";
+import {
+	fetchCartFromServer,
+	syncCartToServer,
+} from "@/redux/features/cartSlice";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 import { loginSchema } from "@/validators/auth.validator";
 
@@ -61,11 +65,14 @@ export default function LoginPage() {
 	};
 
 	// Xử lý sau khi xác thực OTP thành công
-	const handleVerifySuccess = (data) => {
+	const handleVerifySuccess = async (data) => {
 		const user = data.data.user;
 		const token = data.data.token;
 
 		dispatch(login({ token, user }));
+
+		await dispatch(syncCartToServer());
+		await dispatch(fetchCartFromServer());
 
 		let targetUrl = "/";
 		if (callbackUrl?.startsWith("/")) {

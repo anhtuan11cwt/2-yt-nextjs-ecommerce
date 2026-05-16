@@ -62,8 +62,7 @@ export async function GET(req, { params }) {
 			success: true,
 			variant: selectedVariant,
 		});
-	} catch (error) {
-		console.error(error);
+	} catch (_error) {
 		return NextResponse.json(
 			{
 				message: "Đã xảy ra lỗi",

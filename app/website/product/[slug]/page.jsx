@@ -16,8 +16,7 @@ const getProductDetails = async (slug, searchParams) => {
 		);
 
 		return response.data;
-	} catch (error) {
-		console.error(error);
+	} catch (_error) {
 		return null;
 	}
 };

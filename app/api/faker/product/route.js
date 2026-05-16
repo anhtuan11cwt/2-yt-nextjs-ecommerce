@@ -87,8 +87,7 @@ export async function POST() {
 			},
 			success: true,
 		});
-	} catch (error) {
-		console.log(error);
+	} catch (_error) {
 		return NextResponse.json(
 			{ message: "Lỗi máy chủ nội bộ", success: false },
 			{ status: 500 },

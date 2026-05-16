@@ -19,14 +19,11 @@ export async function GET() {
 			},
 		]);
 
-		console.log(`Đã lấy sản phẩm nổi bật: ${products.length}`);
-
 		return NextResponse.json({
 			products,
 			success: true,
 		});
-	} catch (error) {
-		console.error("Lỗi khi lấy sản phẩm nổi bật:", error);
+	} catch (_error) {
 		return NextResponse.json(
 			{ message: "Không thể lấy sản phẩm nổi bật", success: false },
 			{ status: 500 },

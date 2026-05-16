@@ -23,8 +23,7 @@ export default function ProductGrid() {
 
 				setProducts(data.data);
 				setTotal(data.total);
-			} catch (error) {
-				console.log(error);
+			} catch (_error) {
 			} finally {
 				setLoading(false);
 			}

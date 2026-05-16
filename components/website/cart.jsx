@@ -25,7 +25,12 @@ const CLOUDINARY_BASE_URL =
 const WebsiteCart = () => {
 	const dispatch = useDispatch();
 
-	const { cart, count } = useSelector((store) => store.cart);
+	const cart = useSelector((store) => store.cart.cart);
+
+	const count = cart.reduce(
+		(total, item) => total + Math.max(Number(item.quantity) || 1, 0),
+		0,
+	);
 
 	const subtotal = cart.reduce((total, item) => {
 		return total + (Number(item.price) || 0) * (Number(item.quantity) || 1);

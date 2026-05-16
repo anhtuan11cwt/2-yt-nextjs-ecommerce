@@ -21,8 +21,7 @@ async function getFeaturedProducts() {
 		]);
 
 		return products || [];
-	} catch (error) {
-		console.error("Error fetching featured products:", error);
+	} catch (_error) {
 		return [];
 	}
 }

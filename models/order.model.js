@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
-// Schema đơn hàng
 const orderSchema = new mongoose.Schema(
 	{
+		couponCode: { default: "", type: String },
+		couponDiscount: { default: 0, type: Number },
 		deletedAt: { default: null, type: Date },
+		orderNote: { default: "", type: String },
 		orderStatus: {
 			default: "Pending",
 			enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
@@ -25,10 +27,21 @@ const orderSchema = new mongoose.Schema(
 				quantity: { required: true, type: Number },
 			},
 		],
+		shippingAddress: {
+			city: { type: String },
+			email: { type: String },
+			landmark: { type: String },
+			name: { type: String },
+			phone: { type: String },
+			pincode: { type: String },
+			state: { type: String },
+		},
+		stripePaymentIntentId: { default: "", type: String },
+		stripeSessionId: { default: "", type: String },
 		totalAmount: { required: true, type: Number },
 		user: {
+			default: null,
 			ref: "User",
-			required: true,
 			type: mongoose.Schema.Types.ObjectId,
 		},
 	},

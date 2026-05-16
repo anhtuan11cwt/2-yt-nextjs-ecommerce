@@ -55,8 +55,7 @@ export async function POST(req) {
 			couponDiscountAmount,
 			success: true,
 		});
-	} catch (error) {
-		console.error("Coupon error:", error);
+	} catch (_error) {
 		return NextResponse.json(
 			{ message: "Lỗi máy chủ", success: false },
 			{ status: 500 },

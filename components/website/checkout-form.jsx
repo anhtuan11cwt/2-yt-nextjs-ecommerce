@@ -1,12 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { checkoutSchema } from "@/schemas/checkoutSchema";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
+	const router = useRouter();
 	const auth = useSelector((store) => store.auth);
+	const cart = useSelector((store) => store.cart.cart);
+	const [loading, setLoading] = useState(false);
 
 	const {
 		register,
@@ -21,11 +27,43 @@ const CheckoutForm = () => {
 	});
 
 	const onSubmit = async (values) => {
-		const payload = {
-			...values,
-			userId: auth?.user?._id || null,
-		};
-		console.log("Checkout payload:", payload);
+		if (!cart.length) return;
+		try {
+			setLoading(true);
+
+			const payload = {
+				couponCode: appliedCoupon?.code || "",
+				couponDiscount,
+				orderNote: values.orderNote || "",
+				products: cart,
+				shippingAddress: {
+					city: values.city,
+					email: values.email,
+					landmark: values.landmark,
+					name: values.name,
+					phone: values.phone,
+					pincode: values.pincode,
+					state: values.state,
+				},
+				userId: auth?.user?._id || null,
+			};
+
+			const res = await axios.post(
+				"/api/payment/create-checkout-session",
+				payload,
+			);
+
+			if (res.data.success && res.data.url) {
+				router.push(res.data.url);
+			}
+		} catch (error) {
+			const message =
+				error?.response?.data?.message ||
+				"Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.";
+			alert(message);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -133,10 +171,11 @@ const CheckoutForm = () => {
 					/>
 				</div>
 				<button
-					className="h-12 px-8 rounded-xl bg-black text-white font-semibold w-full"
+					className="h-12 px-8 rounded-xl bg-black text-white font-semibold w-full disabled:opacity-50 disabled:cursor-not-allowed"
+					disabled={loading}
 					type="submit"
 				>
-					Đặt hàng
+					{loading ? "Đang xử lý..." : "Đặt hàng"}
 				</button>
 			</form>
 		</div>
