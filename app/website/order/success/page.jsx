@@ -3,7 +3,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/redux/features/cartSlice";
 
@@ -14,12 +14,16 @@ const OrderSuccessPage = () => {
 	const [order, setOrder] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
+	const confirmCalled = useRef(false);
 
 	useEffect(() => {
 		if (!sessionId) {
 			redirect("/website/cart");
 			return;
 		}
+
+		if (confirmCalled.current) return;
+		confirmCalled.current = true;
 
 		const confirmOrder = async () => {
 			try {

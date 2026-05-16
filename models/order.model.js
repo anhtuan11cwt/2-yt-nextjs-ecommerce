@@ -18,6 +18,9 @@ const orderSchema = new mongoose.Schema(
 		},
 		products: [
 			{
+				color: { type: String },
+				image: { default: "", type: String },
+				name: { default: "", type: String },
 				price: { required: true, type: Number },
 				product: {
 					ref: "Product",
@@ -25,6 +28,11 @@ const orderSchema = new mongoose.Schema(
 					type: mongoose.Schema.Types.ObjectId,
 				},
 				quantity: { required: true, type: Number },
+				size: { type: String },
+				variant: {
+					ref: "ProductVariant",
+					type: mongoose.Schema.Types.ObjectId,
+				},
 			},
 		],
 		shippingAddress: {

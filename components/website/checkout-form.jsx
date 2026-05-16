@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { checkoutSchema } from "@/schemas/checkoutSchema";
 
@@ -60,7 +61,7 @@ const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
 			const message =
 				error?.response?.data?.message ||
 				"Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.";
-			alert(message);
+			toast.error(message);
 		} finally {
 			setLoading(false);
 		}
@@ -171,7 +172,7 @@ const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
 					/>
 				</div>
 				<button
-					className="h-12 px-8 rounded-xl bg-black text-white font-semibold w-full disabled:opacity-50 disabled:cursor-not-allowed"
+					className="h-12 px-8 rounded-xl bg-black text-white font-semibold w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 					disabled={loading}
 					type="submit"
 				>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
+import { orderNotification } from "@/lib/email/orderNotification";
 import stripe from "@/lib/stripe";
 import Order from "@/models/order.model";
 
@@ -34,7 +35,7 @@ export async function POST(req) {
 				stripePaymentIntentId: session.payment_intent,
 			},
 			{ new: true },
-		);
+		).populate("products.product", "name slug");
 
 		if (!order) {
 			return NextResponse.json(
@@ -42,6 +43,11 @@ export async function POST(req) {
 				{ status: 404 },
 			);
 		}
+
+		// Gửi email xác nhận đơn hàng (chạy ngầm, không block response)
+		orderNotification({ order }).catch((err) =>
+			console.error("Lỗi gửi email xác nhận đơn hàng:", err),
+		);
 
 		return NextResponse.json({
 			order: {

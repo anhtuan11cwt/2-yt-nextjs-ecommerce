@@ -3,6 +3,16 @@ import connectDB from "@/lib/dbConnection";
 import stripe from "@/lib/stripe";
 import Order from "@/models/order.model";
 
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+const getFullImageUrl = (image) => {
+	if (!image) return "";
+	if (image.startsWith("http")) return image;
+	if (CLOUD_NAME)
+		return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${image}`;
+	return "";
+};
+
 export async function POST(req) {
 	try {
 		await connectDB();
@@ -95,9 +105,14 @@ export async function POST(req) {
 		});
 
 		const orderProducts = products.map((item) => ({
+			color: item.color || "",
+			image: getFullImageUrl(item.image),
+			name: item.name || "",
 			price: Number(item.price) || 0,
 			product: item.productId,
 			quantity: Number(item.quantity) || 1,
+			size: item.size || "",
+			variant: item.variantId || undefined,
 		}));
 
 		await Order.create({
