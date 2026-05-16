@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import ProductModel from "@/models/product.model";
 import ProductVariantModel from "@/models/productVariant.model";
+import "@/models/media.model";
 
 export async function POST(req) {
 	try {
