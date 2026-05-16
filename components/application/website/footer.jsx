@@ -10,9 +10,6 @@ import {
 
 import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
 
-// Tạm thời sử dụng một placeholder text nếu chưa có logo file
-const _logoPlaceholder = "/assets/images/logo-black.png";
-
 const Footer = () => {
 	return (
 		<footer className="bg-white border-t mt-20">
@@ -36,18 +33,18 @@ const Footer = () => {
 						<h2 className="text-lg font-semibold mb-5 uppercase">Danh mục</h2>
 						<ul className="space-y-3">
 							{[
-								"Áo thun",
-								"Hoodies",
-								"Áo tay dài",
-								"Áo Polo",
-								"Áo Oversized",
+								{ name: "Áo thun", slug: "t-shirts" },
+								{ name: "Hoodies", slug: "hoodies" },
+								{ name: "Áo tay dài", slug: "full-sleeves" },
+								{ name: "Áo Polo", slug: "polo" },
+								{ name: "Áo Oversized", slug: "oversized" },
 							].map((item) => (
-								<li key={item}>
+								<li key={item.slug}>
 									<Link
 										className="text-gray-600 hover:text-primary transition-all duration-300"
-										href="/website/shop"
+										href={`/website/shop?category=${item.slug}`}
 									>
-										{item}
+										{item.name}
 									</Link>
 								</li>
 							))}
@@ -61,9 +58,9 @@ const Footer = () => {
 						</h2>
 						<ul className="space-y-3">
 							{[
-								{ href: "/", name: "Trang chủ" },
-								{ href: "/shop", name: "Cửa hàng" },
-								{ href: "/about", name: "Về chúng tôi" },
+								{ href: "/website", name: "Trang chủ" },
+								{ href: "/website/shop", name: "Cửa hàng" },
+								{ href: "/website/about-us", name: "Về chúng tôi" },
 								{ href: "/register", name: "Đăng ký" },
 								{ href: "/login", name: "Đăng nhập" },
 							].map((link) => (
@@ -84,10 +81,10 @@ const Footer = () => {
 						<h2 className="text-lg font-semibold mb-5 uppercase">Hỗ trợ</h2>
 						<ul className="space-y-3">
 							{[
-								{ href: "/my-account", name: "Tài khoản của tôi" },
-								{ href: "/privacy-policy", name: "Chính sách bảo mật" },
+								{ href: "/website/user/dashboard", name: "Tài khoản của tôi" },
+								{ href: "/website/privacy-policy", name: "Chính sách bảo mật" },
 								{
-									href: "/terms-and-conditions",
+									href: "/website/terms-and-conditions",
 									name: "Điều khoản & Điều kiện",
 								},
 							].map((link) => (
