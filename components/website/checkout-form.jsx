@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -11,21 +11,29 @@ import { checkoutSchema } from "@/schemas/checkoutSchema";
 
 const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
 	const router = useRouter();
-	const auth = useSelector((store) => store.auth);
+	const authStore = useSelector((store) => store.auth);
 	const cart = useSelector((store) => store.cart.cart);
 	const [loading, setLoading] = useState(false);
 
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			email: auth?.user?.email || "",
-			name: auth?.user?.name || "",
+			email: authStore?.user?.email || "",
+			name: authStore?.user?.name || "",
 		},
 		resolver: zodResolver(checkoutSchema),
 	});
+
+	// Đồng bộ userId vào form khi auth state load xong
+	useEffect(() => {
+		if (authStore?.user?._id) {
+			setValue("userId", authStore.user._id.toString());
+		}
+	}, [authStore, setValue]);
 
 	const onSubmit = async (values) => {
 		if (!cart.length) return;
@@ -46,7 +54,7 @@ const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
 					pincode: values.pincode,
 					state: values.state,
 				},
-				userId: auth?.user?._id || null,
+				userId: authStore?.user?._id?.toString() || null,
 			};
 
 			const res = await axios.post(
