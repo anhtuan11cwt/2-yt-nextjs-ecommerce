@@ -86,6 +86,13 @@ const cartSlice = createSlice({
 			);
 			toast.success("Đã xóa sản phẩm khỏi giỏ hàng");
 		},
+		updateVerifiedCart: (state, action) => {
+			state.cart = action.payload.products;
+			state.count = action.payload.products.reduce(
+				(total, item) => total + item.quantity,
+				0,
+			);
+		},
 	},
 });
 
@@ -95,6 +102,7 @@ export const {
 	decreaseQuantity,
 	removeFromCart,
 	clearCart,
+	updateVerifiedCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
