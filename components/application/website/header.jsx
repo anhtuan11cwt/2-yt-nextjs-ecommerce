@@ -4,8 +4,9 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FiMenu, FiShoppingCart, FiUser, FiX } from "react-icons/fi";
+import { FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import WebsiteCart from "../../website/cart";
 import Search from "../../website/search";
 
 const Header = () => {
@@ -62,15 +63,7 @@ const Header = () => {
 					<div className="flex items-center gap-5">
 						<Search />
 
-						<button
-							className="relative text-gray-600 transition hover:text-primary"
-							type="button"
-						>
-							<FiShoppingCart size={22} />
-							<span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-white">
-								2
-							</span>
-						</button>
+						<WebsiteCart />
 
 						{/* ACCOUNT */}
 						{!auth ? (
@@ -100,7 +93,7 @@ const Header = () => {
 
 						{/* HAMBURGER */}
 						<button
-							className="block text-gray-700 lg:hidden"
+							className="block cursor-pointer text-gray-700 lg:hidden"
 							onClick={() => setIsMobileMenu(true)}
 							type="button"
 						>
@@ -114,7 +107,7 @@ const Header = () => {
 			{isMobileMenu && (
 				<button
 					aria-label="Close menu"
-					className="fixed inset-0 z-40 cursor-default bg-black/50"
+					className="fixed inset-0 z-40 cursor-pointer bg-black/50"
 					onClick={() => setIsMobileMenu(false)}
 					type="button"
 				/>
@@ -128,7 +121,11 @@ const Header = () => {
 			>
 				<div className="flex items-center justify-between border-b px-5 py-4">
 					<h2 className="text-lg font-semibold">Menu</h2>
-					<button onClick={() => setIsMobileMenu(false)} type="button">
+					<button
+						className="cursor-pointer"
+						onClick={() => setIsMobileMenu(false)}
+						type="button"
+					>
 						<FiX size={24} />
 					</button>
 				</div>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-hot-toast";
 
 const initialState = {
 	cart: [],
@@ -31,11 +32,13 @@ const cartSlice = createSlice({
 				(total, item) => total + item.quantity,
 				0,
 			);
+			toast.success("Sản phẩm đã được thêm vào giỏ hàng");
 		},
 
 		clearCart: (state) => {
 			state.cart = [];
 			state.count = 0;
+			toast.success("Giỏ hàng đã được xóa");
 		},
 
 		decreaseQuantity: (state, action) => {
@@ -47,12 +50,11 @@ const cartSlice = createSlice({
 
 			if (item && item.quantity > 1) {
 				item.quantity -= 1;
+				state.count = state.cart.reduce(
+					(total, item) => total + item.quantity,
+					0,
+				);
 			}
-
-			state.count = state.cart.reduce(
-				(total, item) => total + item.quantity,
-				0,
-			);
 		},
 
 		increaseQuantity: (state, action) => {
@@ -64,12 +66,11 @@ const cartSlice = createSlice({
 
 			if (item) {
 				item.quantity += 1;
+				state.count = state.cart.reduce(
+					(total, item) => total + item.quantity,
+					0,
+				);
 			}
-
-			state.count = state.cart.reduce(
-				(total, item) => total + item.quantity,
-				0,
-			);
 		},
 
 		removeFromCart: (state, action) => {
@@ -83,6 +84,7 @@ const cartSlice = createSlice({
 				(total, item) => total + item.quantity,
 				0,
 			);
+			toast.success("Đã xóa sản phẩm khỏi giỏ hàng");
 		},
 	},
 });
