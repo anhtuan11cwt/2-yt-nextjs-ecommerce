@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import CategoryModel from "@/models/category.model";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 import ProductModel from "@/models/product.model";
 import ProductVariantModel from "@/models/productVariant.model";
 

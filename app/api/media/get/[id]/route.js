@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 
 // API lấy media theo ID
 export async function GET(_request, { params }) {

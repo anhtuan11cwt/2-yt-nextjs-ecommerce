@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 
 // Schema validation cập nhật media
 const updateMediaSchema = z.object({

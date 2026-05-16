@@ -74,7 +74,7 @@ const Header = () => {
 								<FiUser size={22} />
 							</Link>
 						) : (
-							<Link href="/my-account">
+							<Link href="/website/my-account">
 								<div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border">
 									{auth?.avatar?.url ? (
 										<Image

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnection";
 import Product from "@/models/product.model";
 import ProductVariant from "@/models/productVariant.model";
-import "@/models/Media.model"; // Ensure Media is registered
+import "@/models/media.model"; // Ensure Media is registered
 import "@/models/category.model"; // Ensure Category is registered
 
 export async function GET(req, { params }) {

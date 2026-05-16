@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/helpers/is-authenticated";
 import cloudinary from "@/lib/cloudinary";
 import connectDB from "@/lib/dbConnection";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 
 // API soft delete hoặc khôi phục media
 export async function PUT(request) {

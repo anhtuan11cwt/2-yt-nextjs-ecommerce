@@ -45,7 +45,7 @@ const Footer = () => {
 								<li key={item}>
 									<Link
 										className="text-gray-600 hover:text-primary transition-all duration-300"
-										href="/shop"
+										href="/website/shop"
 									>
 										{item}
 									</Link>

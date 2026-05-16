@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 
 // API danh sách media với phân trang
 export async function GET(request) {

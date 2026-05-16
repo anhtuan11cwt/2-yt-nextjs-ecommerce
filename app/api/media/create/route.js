@@ -3,7 +3,7 @@ import ServerError from "@/errors/server-error";
 import { isAuthenticated } from "@/helpers/is-authenticated";
 import cloudinary from "@/lib/cloudinary";
 import connectDB from "@/lib/dbConnection";
-import MediaModel from "@/models/Media.model";
+import MediaModel from "@/models/media.model";
 
 // API tạo media, rollback Cloudinary nếu lỗi DB
 export async function POST(request) {

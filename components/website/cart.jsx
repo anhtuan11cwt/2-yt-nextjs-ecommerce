@@ -156,14 +156,14 @@ const WebsiteCart = () => {
 
 							<Link
 								className="w-full h-12 rounded-xl bg-primary text-white flex items-center justify-center font-medium hover:opacity-90 transition-all"
-								href="/checkout"
+								href="/website/cart"
 							>
-								Tiến hành thanh toán
+								Xem giỏ hàng
 							</Link>
 
 							<Link
 								className="w-full h-12 rounded-xl border flex items-center justify-center font-medium hover:bg-gray-50 transition-all"
-								href="/shop"
+								href="/website/shop"
 							>
 								Tiếp tục mua sắm
 							</Link>
