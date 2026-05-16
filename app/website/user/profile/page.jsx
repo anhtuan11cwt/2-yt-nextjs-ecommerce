@@ -2,9 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { User } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 import ButtonLoading from "@/components/application/ButtonLoading";
 import {
@@ -19,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import WebsiteBreadcrumb from "@/components/website/WebsiteBreadcrumb";
 import useFetch from "@/hooks/useFetch";
+import { login } from "@/redux/features/authSlice";
 
 // Schema xác thực form
 const profileSchema = z.object({
@@ -31,7 +35,11 @@ const profileSchema = z.object({
 export default function UserProfilePage() {
 	const breadcrumbLinks = [{ label: "Hồ sơ" }];
 	const [loading, setLoading] = useState(false);
+	const [preview, setPreview] = useState(null);
+	const [file, setFile] = useState(null);
 
+	const dispatch = useDispatch();
+	const authStore = useSelector((store) => store.auth);
 	const { data: profileData } = useFetch({ url: "/api/profile" });
 
 	const form = useForm({
@@ -43,7 +51,11 @@ export default function UserProfilePage() {
 		resolver: zodResolver(profileSchema),
 	});
 
+	// Ảnh avatar: ưu tiên preview mới, sau đó đến avatar từ API
+	const avatarUrl = preview || profileData?.data?.avatar?.url || null;
+
 	// Đổ dữ liệu profile vào form khi có data
+	// eslint-disable-next-line react-hooks/set-state-in-effect
 	useEffect(() => {
 		if (profileData?.data) {
 			form.reset({
@@ -54,13 +66,41 @@ export default function UserProfilePage() {
 		}
 	}, [profileData, form]);
 
+	// Xử lý chọn file avatar
+	const handleFileSelection = useCallback((acceptedFiles) => {
+		const selectedFile = acceptedFiles[0];
+		if (selectedFile) {
+			setFile(selectedFile);
+			setPreview(URL.createObjectURL(selectedFile));
+		}
+	}, []);
+
+	const { getInputProps, getRootProps } = useDropzone({
+		accept: { "image/*": [".jpeg", ".jpg", ".png", ".webp"] },
+		maxSize: 2 * 1024 * 1024,
+		multiple: false,
+		onDrop: handleFileSelection,
+	});
+
 	// Xử lý submit form
 	const updateProfileValues = async (values) => {
 		try {
 			setLoading(true);
-			const response = await axios.put("/api/profile/update", values);
+			const formData = new FormData();
+
+			if (file) {
+				formData.append("file", file);
+			}
+			formData.append("name", values.name);
+			formData.append("phone", values.phone);
+			formData.append("address", values.address);
+
+			const response = await axios.put("/api/profile/update", formData);
+
 			if (response.data.success) {
 				toast.success(response.data.message || "Cập nhật hồ sơ thành công");
+				dispatch(login({ token: authStore.token, user: response.data.data }));
+				setFile(null);
 			}
 		} catch (error) {
 			toast.error(error?.response?.data?.message || "Đã xảy ra lỗi gì đó");
@@ -80,6 +120,32 @@ export default function UserProfilePage() {
 
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(updateProfileValues)}>
+						{/* Avatar upload */}
+						<div className="flex justify-center mb-6">
+							<div
+								{...getRootProps()}
+								className="relative w-28 h-28 rounded-full border-2 border-dashed border-gray-300 cursor-pointer overflow-hidden group"
+							>
+								<input {...getInputProps()} />
+
+								{avatarUrl ? (
+									<img
+										alt="avatar-preview"
+										className="w-full h-full object-cover"
+										src={avatarUrl}
+									/>
+								) : (
+									<div className="w-full h-full flex items-center justify-center bg-gray-100">
+										<User className="w-10 h-10 text-gray-400" />
+									</div>
+								)}
+
+								<div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+									<User className="text-white w-6 h-6" />
+								</div>
+							</div>
+						</div>
+
 						<div className="grid md:grid-cols-2 grid-cols-1 gap-5">
 							{/* Tên */}
 							<FormField
