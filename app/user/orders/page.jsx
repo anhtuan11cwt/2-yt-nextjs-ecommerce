@@ -54,7 +54,7 @@ export default function UserOrdersPage() {
 											<td className="p-3 border-b">
 												<Link
 													className="underline underline-offset-2 hover:text-blue-500"
-													href={`/website/order-details/${order._id}`}
+													href={`/order-details/${order._id}`}
 												>
 													{order._id}
 												</Link>

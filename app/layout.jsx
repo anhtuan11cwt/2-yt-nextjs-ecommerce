@@ -1,3 +1,6 @@
+import { Kumbh_Sans } from "next/font/google";
+import Footer from "@/components/application/website/footer";
+import Header from "@/components/application/website/header";
 import GlobalProvider from "@/components/providers/GlobalProvider";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
@@ -5,19 +8,30 @@ import "slick-carousel/slick/slick-theme.css";
 import { Toaster } from "react-hot-toast";
 import GlobalStoreProvider from "@/components/application/GlobalStoreProvider";
 
+const kumbh = Kumbh_Sans({
+	display: "swap",
+	subsets: ["latin"],
+	weight: ["400", "500", "600", "700", "800"],
+});
+
 export const metadata = {
 	description: "E-commerce platform",
 	title: "E-commerce App",
 };
 
-// Root layout chứa Redux Provider, React Query Provider và Toaster
 export default function RootLayout({ children }) {
 	return (
-		<html className="font-sans" lang="en" suppressHydrationWarning>
-			<body>
+		<html
+			className={`${kumbh.className} font-sans`}
+			lang="en"
+			suppressHydrationWarning
+		>
+			<body className="min-h-screen bg-white text-black m-0 p-0">
 				<GlobalStoreProvider>
 					<GlobalProvider>
-						{children}
+						<Header />
+						<main>{children}</main>
+						<Footer />
 						<Toaster
 							position="top-right"
 							toastOptions={{

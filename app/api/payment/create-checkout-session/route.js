@@ -91,7 +91,7 @@ export async function POST(req) {
 		});
 
 		const session = await stripe.checkout.sessions.create({
-			cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/website/checkout?canceled=true`,
+			cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout?canceled=true`,
 			customer_email: shippingAddress.email,
 			line_items: lineItems,
 			metadata: {
@@ -101,7 +101,7 @@ export async function POST(req) {
 			},
 			mode: "payment",
 			payment_method_types: ["card"],
-			success_url: `${process.env.NEXT_PUBLIC_APP_URL}/website/order/success?session_id={CHECKOUT_SESSION_ID}`,
+			success_url: `${process.env.NEXT_PUBLIC_APP_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
 		});
 
 		const orderProducts = products.map((item) => ({

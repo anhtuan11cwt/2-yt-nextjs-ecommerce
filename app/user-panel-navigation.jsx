@@ -45,27 +45,21 @@ export default function UserPanelNavigation() {
 			<ul>
 				<li className="mb-2">
 					<Link
-						className={getLinkClass("/website/user/dashboard")}
-						href="/website/user/dashboard"
+						className={getLinkClass("/user/dashboard")}
+						href="/user/dashboard"
 					>
 						Tổng quan
 					</Link>
 				</li>
 
 				<li className="mb-2">
-					<Link
-						className={getLinkClass("/website/user/profile")}
-						href="/website/user/profile"
-					>
+					<Link className={getLinkClass("/user/profile")} href="/user/profile">
 						Hồ sơ
 					</Link>
 				</li>
 
 				<li className="mb-2">
-					<Link
-						className={getLinkClass("/website/user/orders")}
-						href="/website/user/orders"
-					>
+					<Link className={getLinkClass("/user/orders")} href="/user/orders">
 						Đơn hàng
 					</Link>
 				</li>

@@ -66,10 +66,7 @@ export default function ShopPage() {
 	return (
 		<div className="min-h-screen bg-white">
 			<WebsiteBreadcrumb
-				links={[
-					{ href: "/website", label: "Trang Chủ" },
-					{ label: "Cửa Hàng" },
-				]}
+				links={[{ href: "/", label: "Trang Chủ" }, { label: "Cửa Hàng" }]}
 			/>
 
 			<section className="px-4 py-8 lg:px-32">

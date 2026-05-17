@@ -28,6 +28,10 @@ export async function proxy(request) {
 			return NextResponse.redirect(new URL("/login", request.url));
 		}
 
+		if (pathname.startsWith("/user") && role !== "user") {
+			return NextResponse.redirect(new URL("/login", request.url));
+		}
+
 		// Đã đăng nhập - redirect khỏi trang login/register
 		if (pathname === "/login" || pathname === "/register") {
 			if (role === "admin" && pathname !== "/admin/dashboard") {
@@ -50,5 +54,6 @@ export const config = {
 		"/login/:path*",
 		"/register/:path*",
 		"/my-account/:path*",
+		"/user/:path*",
 	],
 };

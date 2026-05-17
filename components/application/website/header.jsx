@@ -19,7 +19,7 @@ const Header = () => {
 			.get("/api/category/get-category")
 			.then(({ data }) => {
 				const links = (data.categories || []).map((cat) => ({
-					href: `/website/shop?category=${cat.slug}`,
+					href: `/shop?category=${cat.slug}`,
 					name: cat.name,
 				}));
 				setCategoryLinks(links);
@@ -28,8 +28,8 @@ const Header = () => {
 	}, []);
 
 	const navLinks = [
-		{ href: "/website", name: "Trang chủ" },
-		{ href: "/website/shop", name: "Cửa hàng" },
+		{ href: "/", name: "Trang chủ" },
+		{ href: "/shop", name: "Cửa hàng" },
 		...categoryLinks,
 	];
 
@@ -37,7 +37,7 @@ const Header = () => {
 		<header className="w-full border-b bg-white">
 			<div className="flex items-center justify-between px-4 py-3 lg:px-8 lg:py-5">
 				{/* LEFT — LOGO */}
-				<Link href="/website">
+				<Link href="/">
 					<span className="text-2xl font-bold text-black">LOGO</span>
 				</Link>
 
@@ -74,7 +74,7 @@ const Header = () => {
 								<FiUser size={22} />
 							</Link>
 						) : (
-							<Link href="/website/my-account">
+							<Link href="/my-account">
 								<div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border">
 									{auth?.avatar?.url ? (
 										<Image

@@ -15,9 +15,9 @@ const WEBSITE_ROUTES = {
 
 	SHOP: "/shop",
 
-	USER_DASHBOARD: "/website/user/dashboard",
-	USER_ORDERS: "/website/user/orders",
-	USER_PROFILE: "/website/user/profile",
+	USER_DASHBOARD: "/user/dashboard",
+	USER_ORDERS: "/user/orders",
+	USER_PROFILE: "/user/profile",
 };
 
 export default WEBSITE_ROUTES;

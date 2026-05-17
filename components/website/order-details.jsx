@@ -120,7 +120,7 @@ const OrderDetails = ({ orderId }) => {
 		<div className="bg-gray-50 min-h-screen">
 			<WebsiteBreadcrumb
 				links={[
-					{ href: "/website", label: "Trang chủ" },
+					{ href: "/", label: "Trang chủ" },
 					{ label: "Chi tiết đơn hàng" },
 				]}
 			/>

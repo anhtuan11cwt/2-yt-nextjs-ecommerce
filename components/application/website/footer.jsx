@@ -42,7 +42,7 @@ const Footer = () => {
 								<li key={item.slug}>
 									<Link
 										className="text-gray-600 hover:text-primary transition-all duration-300"
-										href={`/website/shop?category=${item.slug}`}
+										href={`/shop?category=${item.slug}`}
 									>
 										{item.name}
 									</Link>
@@ -58,9 +58,9 @@ const Footer = () => {
 						</h2>
 						<ul className="space-y-3">
 							{[
-								{ href: "/website", name: "Trang chủ" },
-								{ href: "/website/shop", name: "Cửa hàng" },
-								{ href: "/website/about-us", name: "Về chúng tôi" },
+								{ href: "/", name: "Trang chủ" },
+								{ href: "/shop", name: "Cửa hàng" },
+								{ href: "/about-us", name: "Về chúng tôi" },
 								{ href: "/register", name: "Đăng ký" },
 								{ href: "/login", name: "Đăng nhập" },
 							].map((link) => (
@@ -81,10 +81,10 @@ const Footer = () => {
 						<h2 className="text-lg font-semibold mb-5 uppercase">Hỗ trợ</h2>
 						<ul className="space-y-3">
 							{[
-								{ href: "/website/user/dashboard", name: "Tài khoản của tôi" },
-								{ href: "/website/privacy-policy", name: "Chính sách bảo mật" },
+								{ href: "/user/dashboard", name: "Tài khoản của tôi" },
+								{ href: "/privacy-policy", name: "Chính sách bảo mật" },
 								{
-									href: "/website/terms-and-conditions",
+									href: "/terms-and-conditions",
 									name: "Điều khoản & Điều kiện",
 								},
 							].map((link) => (

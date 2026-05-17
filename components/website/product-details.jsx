@@ -77,9 +77,9 @@ const ProductDetails = ({ data }) => {
 				<div className="max-w-7xl mx-auto">
 					{/* Breadcrumb */}
 					<div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-						<Link href="/website">Trang Chủ</Link>
+						<Link href="/">Trang Chủ</Link>
 						<span>/</span>
-						<Link href="/website/shop">Sản Phẩm</Link>
+						<Link href="/shop">Sản Phẩm</Link>
 						<span>/</span>
 						<span className="text-black font-medium">{product.name}</span>
 					</div>
@@ -254,7 +254,7 @@ const ProductDetails = ({ data }) => {
 							) : (
 								<Link
 									className="inline-block rounded-full bg-primary px-10 py-4 text-white"
-									href="/website/cart"
+									href="/cart"
 								>
 									Xem Giỏ Hàng
 								</Link>

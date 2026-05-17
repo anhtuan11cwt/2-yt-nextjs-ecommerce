@@ -18,7 +18,7 @@ const OrderSuccessPage = () => {
 
 	useEffect(() => {
 		if (!sessionId) {
-			redirect("/website/cart");
+			redirect("/cart");
 			return;
 		}
 
@@ -64,7 +64,7 @@ const OrderSuccessPage = () => {
 					<p className="text-neutral-600 mb-6">{error}</p>
 					<Link
 						className="inline-block bg-black text-white px-8 py-3 rounded-xl font-medium"
-						href="/website/cart"
+						href="/cart"
 					>
 						Quay lại giỏ hàng
 					</Link>
@@ -89,7 +89,7 @@ const OrderSuccessPage = () => {
 				<div className="flex flex-col gap-3">
 					<Link
 						className="bg-black text-white px-8 py-3 rounded-xl font-medium"
-						href="/website/shop"
+						href="/shop"
 					>
 						Tiếp tục mua sắm
 					</Link>

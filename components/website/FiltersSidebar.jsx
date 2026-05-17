@@ -73,7 +73,7 @@ export default function FiltersSidebar() {
 		params.set("min", priceFilter[0]);
 		params.set("max", priceFilter[1]);
 
-		router.push(`/website/shop?${params.toString()}`);
+		router.push(`/shop?${params.toString()}`);
 	}, [selectedCategories, selectedColors, selectedSizes, priceFilter, router]);
 
 	const toggleCategory = (value) => {
@@ -105,7 +105,7 @@ export default function FiltersSidebar() {
 		setSelectedColors([]);
 		setSelectedSizes([]);
 		setPriceFilter([100, 5000]);
-		router.push("/website/shop");
+		router.push("/shop");
 	};
 
 	const hasActiveFilters =

@@ -39,7 +39,7 @@ export default function CartPage() {
 					</p>
 					<Link
 						className="inline-flex items-center justify-center mt-6 h-12 px-8 rounded-xl bg-black text-white hover:bg-gray-800 transition-all duration-300"
-						href="/website/shop"
+						href="/shop"
 					>
 						Tiếp tục mua sắm
 					</Link>
@@ -172,13 +172,13 @@ export default function CartPage() {
 								</div>
 								<Link
 									className="w-full h-14 rounded-xl bg-black text-white flex items-center justify-center font-medium hover:bg-gray-800 transition-all duration-300"
-									href="/website/checkout"
+									href="/checkout"
 								>
 									Tiến hành thanh toán
 								</Link>
 								<Link
 									className="w-full h-14 rounded-xl border flex items-center justify-center font-medium hover:bg-gray-50 transition-all duration-300"
-									href="/website/shop"
+									href="/shop"
 								>
 									Tiếp tục mua sắm
 								</Link>

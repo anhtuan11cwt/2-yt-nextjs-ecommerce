@@ -36,7 +36,7 @@ export default async function FeaturedProducts() {
 
 				<Link
 					className="text-sm font-medium hover:underline lg:text-base"
-					href="/website/shop"
+					href="/shop"
 				>
 					Xem Tất Cả
 				</Link>

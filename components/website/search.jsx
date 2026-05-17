@@ -23,7 +23,7 @@ const Search = () => {
 
 		if (!keyword.trim()) return;
 
-		router.push(`/website/shop?q=${keyword}`);
+		router.push(`/shop?q=${keyword}`);
 
 		setOpen(false);
 	};

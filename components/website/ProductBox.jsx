@@ -20,7 +20,7 @@ export default function ProductBox({ product }) {
 	return (
 		<Link
 			className="group overflow-hidden rounded-2xl border bg-white transition-all duration-300 hover:shadow-xl"
-			href={`/website/product/${product.slug}`}
+			href={`/product/${product.slug}`}
 		>
 			<div className="relative aspect-[4/5] overflow-hidden">
 				<Image

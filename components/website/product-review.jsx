@@ -113,7 +113,7 @@ function ReviewForm({ auth, productId, slug }) {
 		return (
 			<a
 				className="inline-flex items-center justify-center rounded-xl bg-black px-6 py-3 text-white"
-				href={`/login?callbackUrl=/website/product/${slug}`}
+				href={`/login?callbackUrl=/product/${slug}`}
 			>
 				Đăng nhập để đánh giá
 			</a>

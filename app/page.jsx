@@ -1,13 +1,19 @@
-// Trang test tạm thời
-export default function Page() {
+import AdvertisingBanner from "@/components/website/advertising-banner";
+import BannerSection from "@/components/website/BannerSection";
+import FeaturedProducts from "@/components/website/FeaturedProducts";
+import Features from "@/components/website/features";
+import MainSlider from "@/components/website/MainSlider";
+import Testimonial from "@/components/website/testimonial";
+
+export default function Home() {
 	return (
-		<div className="flex min-h-screen items-center justify-center">
-			<button
-				className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-				type="button"
-			>
-				Test Button
-			</button>
-		</div>
+		<>
+			<MainSlider />
+			<BannerSection />
+			<FeaturedProducts />
+			<AdvertisingBanner />
+			<Testimonial />
+			<Features />
+		</>
 	);
 }
