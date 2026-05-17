@@ -6,7 +6,7 @@ import MediaModel from "@/models/media.model";
 import ProductModel from "@/models/product.model";
 import ProductVariantModel from "@/models/productVariant.model";
 
-const COLORS = ["Black", "White", "Blue", "Red"];
+const COLORS = ["Đen", "Trắng", "Xanh dương", "Đỏ"];
 const SIZES = ["S", "M", "L", "XL", "XXL"];
 
 export async function POST() {
@@ -34,7 +34,7 @@ export async function POST() {
 
 		for (const category of categories) {
 			for (let i = 0; i < 5; i++) {
-				const mrp = faker.number.int({ max: 5000, min: 500 });
+				const mrp = faker.number.int({ max: 2000000, min: 100000 });
 				const discountPercent = faker.number.int({ max: 60, min: 5 });
 				const sellingPrice = Math.floor(mrp - (mrp * discountPercent) / 100);
 

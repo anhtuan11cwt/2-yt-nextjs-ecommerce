@@ -34,7 +34,7 @@ curl.exe -Method POST http://localhost:3000/api/faker/product
 ```json
 {
   "success": true,
-  "message": "Fake products generated successfully",
+  "message": "Đã tạo sản phẩm giả thành công",
   "stats": {
     "categories": 5,
     "products": 25,
@@ -48,15 +48,15 @@ curl.exe -Method POST http://localhost:3000/api/faker/product
 | Bảng              | Số lượng | Mô tả                              |
 | ----------------- | -------- | ---------------------------------- |
 | Categories        | có sẵn   | Lấy từ DB, không tạo mới           |
-| Products          | 25       | 5 sản phẩm / category              |
-| Product Variants  | 500      | 20 variants / product (4 màu × 5 size) |
+| Products          | 5/category | 5 sản phẩm / category              |
+| Product Variants  | 100/product | 20 variants / product (4 màu × 5 size) |
 
 ## Mỗi Product Gồm
 
 - `name` — tên sản phẩm ngẫu nhiên
 - `slug` — unique (có random suffix)
 - `category` — ObjectId tham chiếu category
-- `mrp` — giá gốc (500–5000)
+- `mrp` — giá gốc (100,000–2,000,000 VNĐ)
 - `sellingPrice` — giá bán sau giảm
 - `discountPercent` — % giảm (5–60%)
 - `description` — mô tả ngẫu nhiên
@@ -65,7 +65,7 @@ curl.exe -Method POST http://localhost:3000/api/faker/product
 ## Mỗi Variant Gồm
 
 - `product` — ObjectId tham chiếu product cha
-- `color` — Black / White / Blue / Red
+- `color` — Đen / Trắng / Xanh dương / Đỏ
 - `size` — S / M / L / XL / XXL
 - `sku` — mã ngẫu nhiên 10 ký tự (tự động uppercase)
 - `mrp`, `sellingPrice`, `discountPercent` — kế thừa từ product
