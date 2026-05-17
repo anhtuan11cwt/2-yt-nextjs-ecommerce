@@ -7,14 +7,12 @@ import { fetchCartFromServer } from "@/redux/features/cartSlice";
 const CartInit = () => {
 	const dispatch = useDispatch();
 	const token = useSelector((store) => store.auth?.token);
-	const localCart = useSelector((store) => store.cart.cart);
 
 	useEffect(() => {
-		if (!token) return;
-		if (localCart.length === 0) {
+		if (token) {
 			dispatch(fetchCartFromServer());
 		}
-	}, [token, localCart.length, dispatch]);
+	}, [token, dispatch]);
 
 	return null;
 };

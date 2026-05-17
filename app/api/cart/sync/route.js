@@ -25,11 +25,33 @@ export async function POST(req) {
 				variant: item.variantId,
 			}));
 
-		await Cart.findOneAndUpdate(
-			{ user: user._id },
-			{ items: mappedItems },
-			{ upsert: true },
-		);
+		const existingCart = await Cart.findOne({ user: user._id });
+
+		if (existingCart) {
+			const existingItemsMap = new Map();
+			existingCart.items.forEach((item) => {
+				const key = `${item.product.toString()}-${item.variant.toString()}`;
+				existingItemsMap.set(key, item);
+			});
+
+			mappedItems.forEach((newItem) => {
+				const key = `${newItem.product.toString()}-${newItem.variant.toString()}`;
+				const existingItem = existingItemsMap.get(key);
+
+				if (existingItem) {
+					existingItem.quantity = Math.max(
+						existingItem.quantity,
+						newItem.quantity,
+					);
+				} else {
+					existingCart.items.push(newItem);
+				}
+			});
+
+			await existingCart.save();
+		} else {
+			await Cart.create({ items: mappedItems, user: user._id });
+		}
 
 		return NextResponse.json({ success: true });
 	} catch (_error) {

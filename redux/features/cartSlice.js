@@ -47,8 +47,27 @@ const cartSlice = createSlice({
 			.addCase(fetchCartFromServer.fulfilled, (state, action) => {
 				const serverCart = action.payload;
 				if (serverCart.length > 0) {
-					state.cart = serverCart;
-					state.count = serverCart.reduce(
+					const localCart = [...state.cart];
+
+					serverCart.forEach((serverItem) => {
+						const existingIndex = localCart.findIndex(
+							(localItem) =>
+								localItem.productId === serverItem.productId &&
+								localItem.variantId === serverItem.variantId,
+						);
+
+						if (existingIndex === -1) {
+							localCart.push(serverItem);
+						} else {
+							localCart[existingIndex].quantity = Math.max(
+								localCart[existingIndex].quantity,
+								serverItem.quantity,
+							);
+						}
+					});
+
+					state.cart = localCart;
+					state.count = localCart.reduce(
 						(total, item) => total + (Number(item.quantity) || 0),
 						0,
 					);

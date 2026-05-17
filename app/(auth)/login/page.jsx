@@ -71,8 +71,8 @@ export default function LoginPage() {
 
 		dispatch(login({ token, user }));
 
-		await dispatch(syncCartToServer());
 		await dispatch(fetchCartFromServer());
+		await dispatch(syncCartToServer());
 
 		let targetUrl = "/";
 		if (callbackUrl?.startsWith("/")) {
