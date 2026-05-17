@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import { orderNotification } from "@/lib/email/orderNotification";
 import stripe from "@/lib/stripe";
+import Cart from "@/models/cart.model";
 import Order from "@/models/order.model";
 
 export async function POST(req) {
@@ -42,6 +43,11 @@ export async function POST(req) {
 				{ message: "Không tìm thấy đơn hàng", success: false },
 				{ status: 404 },
 			);
+		}
+
+		// Xóa giỏ hàng trong database sau khi thanh toán thành công
+		if (order.user) {
+			await Cart.findOneAndDelete({ user: order.user });
 		}
 
 		// Gửi email xác nhận đơn hàng (chạy ngầm, không block response)
