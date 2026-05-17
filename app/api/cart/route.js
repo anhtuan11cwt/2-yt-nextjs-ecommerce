@@ -38,9 +38,6 @@ export async function GET() {
 
 		return NextResponse.json({ cart: formatted, success: true });
 	} catch (_error) {
-		return NextResponse.json(
-			{ message: "Lỗi lấy giỏ hàng", success: false },
-			{ status: 500 },
-		);
+		return NextResponse.json({ cart: [], success: true });
 	}
 }

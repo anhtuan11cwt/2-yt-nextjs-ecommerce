@@ -11,8 +11,10 @@ const getProductDetails = async (slug, searchParams) => {
 		if (color) query.append("color", color);
 		if (size) query.append("size", size);
 
+		const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 		const response = await axios.get(
-			`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/product/details/${slug}?${query}`,
+			`${baseUrl}/api/product/details/${slug}?${query}`,
 		);
 
 		return response.data;
