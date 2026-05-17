@@ -7,12 +7,13 @@ import { fetchCartFromServer } from "@/redux/features/cartSlice";
 const CartInit = () => {
 	const dispatch = useDispatch();
 	const token = useSelector((store) => store.auth?.token);
+	const user = useSelector((store) => store.auth?.user);
 
 	useEffect(() => {
-		if (token) {
+		if (token && user && user.role === "user") {
 			dispatch(fetchCartFromServer());
 		}
-	}, [token, dispatch]);
+	}, [token, user, dispatch]);
 
 	return null;
 };

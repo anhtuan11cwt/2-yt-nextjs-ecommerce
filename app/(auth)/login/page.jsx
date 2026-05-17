@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -29,10 +29,8 @@ import { loginSchema } from "@/validators/auth.validator";
 
 // Trang đăng nhập với OTP xác thực 2 bước
 export default function LoginPage() {
-	const _router = useRouter();
 	const dispatch = useDispatch();
-	const searchParams = useSearchParams();
-	const callbackUrl = searchParams.get("callbackUrl");
+	const _searchParams = useSearchParams();
 	const [showPassword, setShowPassword] = useState(false);
 	const [showOtpForm, setShowOtpForm] = useState(false);
 	const [userEmail, setUserEmail] = useState("");
@@ -57,18 +55,7 @@ export default function LoginPage() {
 			if (response.data.data?.token && response.data.data?.user) {
 				const { token, user } = response.data.data;
 				dispatch(login({ token, user }));
-
-				await dispatch(fetchCartFromServer());
-				await dispatch(syncCartToServer());
-
-				let targetUrl = "/";
-				if (callbackUrl?.startsWith("/")) {
-					targetUrl = callbackUrl;
-				} else if (user.role === "admin") {
-					targetUrl = ADMIN_ROUTES.DASHBOARD;
-				}
-
-				router.push(targetUrl);
+				router.push(ADMIN_ROUTES.DASHBOARD);
 				return;
 			}
 
@@ -95,14 +82,7 @@ export default function LoginPage() {
 		await dispatch(fetchCartFromServer());
 		await dispatch(syncCartToServer());
 
-		let targetUrl = "/";
-		if (callbackUrl?.startsWith("/")) {
-			targetUrl = callbackUrl;
-		} else if (user.role === "admin") {
-			targetUrl = ADMIN_ROUTES.DASHBOARD;
-		}
-
-		router.push(targetUrl);
+		window.location.href = "/";
 	};
 
 	return (

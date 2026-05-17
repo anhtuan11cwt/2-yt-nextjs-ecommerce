@@ -16,7 +16,11 @@ export async function GET() {
 			],
 		});
 
-		const items = cart?.items || [];
+		if (!cart) {
+			return NextResponse.json({ cart: [], success: true });
+		}
+
+		const items = cart.items || [];
 
 		const formatted = items.map((item) => ({
 			color: item.variant.color,

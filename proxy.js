@@ -19,7 +19,15 @@ export async function proxy(request) {
 		const { payload } = await jwtVerify(accessToken, secret);
 		const role = payload?.role;
 
-		// Admin route nhưng không phải admin
+		// Admin: force redirect đến dashboard
+		if (role === "admin") {
+			if (!pathname.startsWith("/admin")) {
+				return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+			}
+			return NextResponse.next();
+		}
+
+		// User: không được truy cập admin
 		if (pathname.startsWith("/admin") && role !== "admin") {
 			return NextResponse.redirect(new URL("/login", request.url));
 		}
@@ -34,12 +42,10 @@ export async function proxy(request) {
 
 		// Đã đăng nhập - redirect khỏi trang login/register
 		if (pathname === "/login" || pathname === "/register") {
-			if (role === "admin" && pathname !== "/admin/dashboard") {
+			if (role === "admin") {
 				return NextResponse.redirect(new URL("/admin/dashboard", request.url));
 			}
-			if (role === "user" && pathname !== "/") {
-				return NextResponse.redirect(new URL("/", request.url));
-			}
+			return NextResponse.redirect(new URL("/", request.url));
 		}
 
 		return NextResponse.next();
@@ -50,6 +56,7 @@ export async function proxy(request) {
 
 export const config = {
 	matcher: [
+		"/",
 		"/admin/:path*",
 		"/login/:path*",
 		"/register/:path*",
