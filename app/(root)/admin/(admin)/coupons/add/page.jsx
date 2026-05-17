@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -10,6 +11,7 @@ import ADMIN_ROUTES from "@/routes/admin.routes";
 // Trang thêm mã giảm giá
 export default function AddCouponPage() {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const [loading, setLoading] = useState(false);
 
 	// Xử lý tạo mã giảm giá
@@ -32,6 +34,7 @@ export default function AddCouponPage() {
 				throw new Error(data.message);
 			}
 
+			queryClient.invalidateQueries({ queryKey: ["datatable"] });
 			toast.success("Tạo mã giảm giá thành công");
 			router.push(ADMIN_ROUTES.ADMIN_COUPON_SHOW);
 		} catch (error) {
