@@ -49,6 +49,7 @@ export async function POST(req) {
 		const res = NextResponse.json(
 			{
 				data: {
+					token: accessToken,
 					user: {
 						_id: user._id,
 						avatar: user.avatar,

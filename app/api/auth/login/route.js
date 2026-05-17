@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 import dbConnect from "@/lib/dbConnection";
 import verifyEmailLink from "@/lib/email/emailVerificationLink";
 import otpEmail from "@/lib/email/otpEmail";
@@ -7,7 +9,7 @@ import OTP from "@/models/OTP.model";
 import User from "@/models/User.model";
 import { loginSchema } from "@/validators/auth.validator";
 
-// API đăng nhập: kiểm tra email/mật khẩu, gửi OTP
+// API đăng nhập: kiểm tra email/mật khẩu, gửi OTP (user) hoặc tạo token trực tiếp (admin)
 export async function POST(req) {
 	try {
 		await dbConnect();
@@ -56,6 +58,44 @@ export async function POST(req) {
 			});
 		}
 
+		// Admin: tạo token trực tiếp, không cần OTP
+		if (user.role === "admin") {
+			const tokenPayload = {
+				_id: user._id.toString(),
+				email: user.email,
+				name: user.name,
+				role: user.role,
+			};
+
+			const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
+				expiresIn: "24h",
+			});
+
+			const cookieStore = await cookies();
+			cookieStore.set("access_token", token, {
+				httpOnly: true,
+				maxAge: 60 * 60 * 24,
+				path: "/",
+				sameSite: "strict",
+			});
+
+			return response({
+				data: {
+					token,
+					user: {
+						_id: user._id.toString(),
+						email: user.email,
+						name: user.name,
+						role: user.role,
+					},
+				},
+				message: "Đăng nhập thành công",
+				statusCode: 200,
+				success: true,
+			});
+		}
+
+		// User: gửi OTP xác thực
 		await OTP.deleteMany({ email: user.email });
 
 		const otp = generateOTP();

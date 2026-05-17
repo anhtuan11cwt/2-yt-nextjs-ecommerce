@@ -50,7 +50,7 @@ const UserDropdown = () => {
 				<DropdownMenuSeparator />
 
 				<DropdownMenuItem asChild>
-					<Link href="/admin/products/create">Thêm sản phẩm</Link>
+					<Link href="/admin/product/add">Thêm sản phẩm</Link>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem asChild>

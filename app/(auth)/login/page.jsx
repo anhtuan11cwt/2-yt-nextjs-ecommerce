@@ -47,11 +47,32 @@ export default function LoginPage() {
 		resolver: zodResolver(loginSchema),
 	});
 
-	// Gửi thông tin đăng nhập và nhận OTP
+	// Gửi thông tin đăng nhập và nhận OTP (user) hoặc token (admin)
 	const onSubmit = async (data) => {
 		try {
 			setIsSubmitting(true);
 			const response = await axios.post("/api/auth/login", data);
+
+			// Admin: đăng nhập thành công ngay, không cần OTP
+			if (response.data.data?.token && response.data.data?.user) {
+				const { token, user } = response.data.data;
+				dispatch(login({ token, user }));
+
+				await dispatch(fetchCartFromServer());
+				await dispatch(syncCartToServer());
+
+				let targetUrl = "/";
+				if (callbackUrl?.startsWith("/")) {
+					targetUrl = callbackUrl;
+				} else if (user.role === "admin") {
+					targetUrl = ADMIN_ROUTES.DASHBOARD;
+				}
+
+				router.push(targetUrl);
+				return;
+			}
+
+			// User: cần xác thực OTP
 			toast.success(response.data.message || "OTP đã được gửi!");
 			setUserEmail(data.email);
 			setShowOtpForm(true);
@@ -81,7 +102,7 @@ export default function LoginPage() {
 			targetUrl = ADMIN_ROUTES.DASHBOARD;
 		}
 
-		window.location.href = targetUrl;
+		router.push(targetUrl);
 	};
 
 	return (
