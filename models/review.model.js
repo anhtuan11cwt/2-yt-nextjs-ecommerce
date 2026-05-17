@@ -3,17 +3,12 @@ import mongoose from "mongoose";
 // Schema đánh giá sản phẩm
 const reviewSchema = new mongoose.Schema(
 	{
-		content: {
-			required: true,
-			trim: true,
-			type: String,
-		},
 		deletedAt: {
 			default: null,
 			index: true,
 			type: Date,
 		},
-		product: {
+		productId: {
 			index: true,
 			ref: "Product",
 			required: true,
@@ -26,12 +21,17 @@ const reviewSchema = new mongoose.Schema(
 			required: true,
 			type: Number,
 		},
+		review: {
+			required: true,
+			trim: true,
+			type: String,
+		},
 		title: {
 			required: true,
 			trim: true,
 			type: String,
 		},
-		user: {
+		userId: {
 			index: true,
 			ref: "User",
 			required: true,

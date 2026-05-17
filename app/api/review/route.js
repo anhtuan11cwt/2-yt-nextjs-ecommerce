@@ -12,31 +12,33 @@ export async function GET(request) {
 		const { searchParams } = new URL(request.url);
 		const page = Number(searchParams.get("page")) || 1;
 		const limit = Number(searchParams.get("limit")) || 10;
-		const search = searchParams.get("search") || "";
-		const sortField = searchParams.get("sortField") || "createdAt";
-		const sortOrder = searchParams.get("sortOrder") || "desc";
-		const isTrash = searchParams.get("trash") === "true";
-		const rating = searchParams.get("rating");
+		const globalFilter = searchParams.get("globalFilter") || "";
+		const deleteType = searchParams.get("deleteType") || "SD";
+		const sortingRaw = searchParams.get("sorting") || "";
 
 		const skip = (page - 1) * limit;
 		const filter = {};
 
-		if (isTrash) {
-			filter.deletedAt = { $ne: null };
-		} else {
+		if (deleteType === "SD") {
 			filter.deletedAt = null;
+		} else {
+			filter.deletedAt = { $ne: null };
 		}
 
-		if (rating) {
-			filter.rating = Number(rating);
+		if (globalFilter) {
+			const regex = new RegExp(globalFilter, "i");
+			filter.$or = [{ title: regex }, { review: regex }];
 		}
 
-		if (search) {
-			filter.$or = [
-				{ title: { $options: "i", $regex: search } },
-				{ content: { $options: "i", $regex: search } },
-			];
-		}
+		let sortField = "createdAt";
+		let sortOrder = -1;
+		try {
+			const sorting = JSON.parse(sortingRaw);
+			if (Array.isArray(sorting) && sorting.length > 0) {
+				sortField = sorting[0].id;
+				sortOrder = sorting[0].desc ? -1 : 1;
+			}
+		} catch {}
 
 		const pipeline = [
 			{ $match: filter },
@@ -45,29 +47,29 @@ export async function GET(request) {
 					as: "product",
 					foreignField: "_id",
 					from: "products",
-					localField: "product",
+					localField: "productId",
 				},
 			},
-			{ $unwind: "$product" },
+			{ $unwind: { path: "$product", preserveNullAndEmptyArrays: true } },
 			{
 				$lookup: {
 					as: "user",
 					foreignField: "_id",
 					from: "users",
-					localField: "user",
+					localField: "userId",
 				},
 			},
-			{ $unwind: "$user" },
-			{ $sort: { [sortField]: sortOrder === "asc" ? 1 : -1 } },
+			{ $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+			{ $sort: { [sortField]: sortOrder } },
 			{ $skip: skip },
 			{ $limit: limit },
 			{
 				$project: {
-					content: 1,
 					createdAt: 1,
 					deletedAt: 1,
 					"product.name": 1,
 					rating: 1,
+					review: 1,
 					title: 1,
 					"user.email": 1,
 					"user.name": 1,
@@ -75,18 +77,15 @@ export async function GET(request) {
 			},
 		];
 
-		const reviews = await ReviewModel.aggregate(pipeline);
-		const total = await ReviewModel.countDocuments(filter);
+		const [reviews, total] = await Promise.all([
+			ReviewModel.aggregate(pipeline),
+			ReviewModel.countDocuments(filter),
+		]);
 
 		return NextResponse.json({
 			data: reviews,
-			pagination: {
-				limit,
-				page,
-				pages: Math.ceil(total / limit),
-				total,
-			},
 			success: true,
+			total,
 		});
 	} catch (error) {
 		return NextResponse.json(

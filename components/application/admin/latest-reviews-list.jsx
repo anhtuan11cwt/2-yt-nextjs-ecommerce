@@ -3,7 +3,14 @@
 import Image from "next/image";
 import useSWR from "swr";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = async (url) => {
+	const res = await fetch(url);
+	const json = await res.json();
+	if (!res.ok || !json.success) {
+		throw new Error(json.message || "Lỗi khi tải dữ liệu");
+	}
+	return json;
+};
 
 // Component hiển thị số sao
 const StarRating = ({ rating }) => {
@@ -13,7 +20,7 @@ const StarRating = ({ rating }) => {
 
 // Danh sách 6 đánh giá mới nhất
 export default function LatestReviewsList() {
-	const { data, isLoading } = useSWR(
+	const { data, isLoading, error } = useSWR(
 		"/api/admin/dashboard/latest-reviews",
 		fetcher,
 	);
@@ -23,6 +30,14 @@ export default function LatestReviewsList() {
 		return (
 			<div className="flex h-[400px] items-center justify-center rounded-xl border border-gray-100 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
 				<div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600" />
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div className="flex h-[400px] items-center justify-center rounded-xl border border-gray-100 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+				<p className="text-sm text-red-500">Lỗi: {error.message}</p>
 			</div>
 		);
 	}
@@ -39,8 +54,7 @@ export default function LatestReviewsList() {
 					</p>
 				) : (
 					reviews.map((review) => {
-						const thumbnail =
-							review.productId?.media?.[0]?.secure_url || "/placeholder.jpg";
+						const thumbnail = review.thumbnail || "/placeholder.jpg";
 
 						return (
 							<div

@@ -2,6 +2,7 @@
 
 import AdminBreadcrumb from "@/components/application/admin/breadcrumb";
 import DataTable from "@/components/application/admin/DataTable";
+import DataTableWrapper from "@/components/application/admin/DataTableWrapper";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 
 // Trang quản lý đánh giá sản phẩm
@@ -13,20 +14,22 @@ export default function ReviewPage() {
 
 	const columns = [
 		{
-			accessorKey: "product.name",
+			accessorFn: (row) => row.product?.name || "—",
 			header: "Sản phẩm",
+			id: "productName",
 		},
 		{
-			accessorKey: "user.name",
+			accessorFn: (row) => row.user?.name || "—",
 			cell: ({ row }) => (
 				<div>
-					<div className="font-medium">{row.original.user?.name}</div>
+					<div className="font-medium">{row.original.user?.name || "—"}</div>
 					<div className="text-xs text-muted-foreground">
-						{row.original.user?.email}
+						{row.original.user?.email || "—"}
 					</div>
 				</div>
 			),
 			header: "Người dùng",
+			id: "userName",
 		},
 		{
 			accessorKey: "rating",
@@ -39,9 +42,9 @@ export default function ReviewPage() {
 		},
 		{ accessorKey: "title", header: "Tiêu đề" },
 		{
-			accessorKey: "content",
+			accessorKey: "review",
 			cell: ({ row }) => (
-				<div className="max-w-[300px] truncate">{row.original.content}</div>
+				<div className="max-w-[300px] truncate">{row.original.review}</div>
 			),
 			header: "Nội dung",
 		},
@@ -53,7 +56,9 @@ export default function ReviewPage() {
 			<div className="mb-5">
 				<h1 className="text-2xl font-semibold">Đánh giá</h1>
 			</div>
-			<DataTable columns={columns} fetchUrl="/api/review" />
+			<DataTableWrapper>
+				<DataTable columns={columns} fetchUrl="/api/review" />
+			</DataTableWrapper>
 		</div>
 	);
 }
