@@ -18,8 +18,8 @@ export async function GET(request) {
 		const color = searchParams.get("color");
 		const size = searchParams.get("size");
 
-		const minPrice = Number(searchParams.get("minPrice")) || 0;
-		const maxPrice = Number(searchParams.get("maxPrice")) || 999999;
+		const minPriceParam = searchParams.get("min");
+		const maxPriceParam = searchParams.get("max");
 
 		const q = searchParams.get("q");
 
@@ -32,7 +32,11 @@ export async function GET(request) {
 			matchStage.name = { $options: "i", $regex: q };
 		}
 
-		matchStage.sellingPrice = { $gte: minPrice, $lte: maxPrice };
+		if (minPriceParam || maxPriceParam) {
+			const minPrice = Number(minPriceParam) || 0;
+			const maxPrice = Number(maxPriceParam) || 999999;
+			matchStage.sellingPrice = { $gte: minPrice, $lte: maxPrice };
+		}
 
 		// Sort stage
 		const sortStage = {};
@@ -40,25 +44,27 @@ export async function GET(request) {
 		switch (sort) {
 			case "asc":
 				sortStage.name = 1;
+				sortStage._id = 1;
 				break;
 			case "desc":
 				sortStage.name = -1;
+				sortStage._id = 1;
 				break;
 			case "price-low-high":
 				sortStage.sellingPrice = 1;
+				sortStage._id = 1;
 				break;
 			case "price-high-low":
 				sortStage.sellingPrice = -1;
+				sortStage._id = 1;
 				break;
 			default:
 				sortStage.createdAt = -1;
+				sortStage._id = 1;
 		}
 
 		const pipeline = [
 			{ $match: matchStage },
-			{ $sort: sortStage },
-			{ $skip: skip },
-			{ $limit: limit + 1 },
 
 			// Lookup category
 			{
@@ -82,6 +88,9 @@ export async function GET(request) {
 					]
 				: []),
 
+			// Sort stage
+			{ $sort: sortStage },
+
 			// Lookup variants
 			{
 				$lookup: {
@@ -104,25 +113,31 @@ export async function GET(request) {
 			},
 
 			// Filter variants theo color/size
-			{
-				$addFields: {
-					variants: {
-						$filter: {
-							as: "variant",
-							cond: {
-								$and: [
-									color ? { $eq: ["$$variant.color", color] } : true,
-									size ? { $eq: ["$$variant.size", size] } : true,
-								],
+			...(color || size
+				? [
+						{
+							$addFields: {
+								variants: {
+									$filter: {
+										as: "variant",
+										cond: {
+											$and: [
+												color ? { $eq: ["$$variant.color", color] } : true,
+												size ? { $eq: ["$$variant.size", size] } : true,
+											],
+										},
+										input: "$variants",
+									},
+								},
 							},
-							input: "$variants",
 						},
-					},
-				},
-			},
+						{ $match: { variants: { $ne: [] } } },
+					]
+				: []),
 
-			// Loại sản phẩm không có variants khớp
-			{ $match: { variants: { $ne: [] } } },
+			// Skip và limit sau khi đã filter xong
+			{ $skip: skip },
+			{ $limit: limit + 1 },
 
 			// Project
 			{

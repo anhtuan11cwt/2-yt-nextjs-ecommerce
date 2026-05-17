@@ -16,7 +16,6 @@ export default function ShopPage() {
 	const { width } = useWindowSize();
 	const searchParams = useSearchParams();
 
-	const [limit, setLimit] = useState(12);
 	const [sorting, setSorting] = useState("default");
 	const [openFilterSheet, setOpenFilterSheet] = useState(false);
 
@@ -32,7 +31,7 @@ export default function ShopPage() {
 			params: {
 				category,
 				color,
-				limit,
+				limit: 12,
 				maxPrice,
 				minPrice,
 				page: pageParam,
@@ -51,7 +50,6 @@ export default function ShopPage() {
 			queryFn: fetchProducts,
 			queryKey: [
 				"shop-products",
-				limit,
 				sorting,
 				category,
 				color,
@@ -61,7 +59,10 @@ export default function ShopPage() {
 			],
 		});
 
-	const products = data?.pages?.flatMap((page) => page.products) || [];
+	const allProducts = data?.pages?.flatMap((page) => page.products) || [];
+	const products = Array.from(
+		new Map(allProducts.map((p) => [p._id, p])).values(),
+	);
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -112,8 +113,6 @@ export default function ShopPage() {
 					<div className={width >= 1024 ? "lg:col-span-9" : "col-span-1"}>
 						<Suspense>
 							<Sorting
-								limit={limit}
-								setLimit={setLimit}
 								setOpenFilterSheet={setOpenFilterSheet}
 								setSorting={setSorting}
 								sorting={sorting}

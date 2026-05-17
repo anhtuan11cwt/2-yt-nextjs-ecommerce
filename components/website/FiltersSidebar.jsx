@@ -32,7 +32,7 @@ export default function FiltersSidebar() {
 	const [priceFilter, setPriceFilter] = useState(() => {
 		const min = searchParams.get("min");
 		const max = searchParams.get("max");
-		return min && max ? [Number(min), Number(max)] : [100, 5000];
+		return min && max ? [Number(min), Number(max)] : null;
 	});
 
 	// Lấy dữ liệu filter từ API
@@ -70,8 +70,10 @@ export default function FiltersSidebar() {
 			params.set("size", selectedSizes.join(","));
 		}
 
-		params.set("min", priceFilter[0]);
-		params.set("max", priceFilter[1]);
+		if (priceFilter) {
+			params.set("min", priceFilter[0]);
+			params.set("max", priceFilter[1]);
+		}
 
 		router.push(`/shop?${params.toString()}`);
 	}, [selectedCategories, selectedColors, selectedSizes, priceFilter, router]);
@@ -104,7 +106,7 @@ export default function FiltersSidebar() {
 		setSelectedCategories([]);
 		setSelectedColors([]);
 		setSelectedSizes([]);
-		setPriceFilter([100, 5000]);
+		setPriceFilter(null);
 		router.push("/shop");
 	};
 
@@ -112,8 +114,7 @@ export default function FiltersSidebar() {
 		selectedCategories.length > 0 ||
 		selectedColors.length > 0 ||
 		selectedSizes.length > 0 ||
-		priceFilter[0] !== 100 ||
-		priceFilter[1] !== 5000;
+		(priceFilter && (priceFilter[0] !== 100 || priceFilter[1] !== 5000));
 
 	return (
 		<div className="space-y-4">
@@ -205,7 +206,7 @@ export default function FiltersSidebar() {
 							minStepsBetweenThumbs={1}
 							onValueChange={setPriceFilter}
 							step={100}
-							value={priceFilter}
+							value={priceFilter || [100, 5000]}
 						>
 							<Slider.Track className="relative h-2 grow rounded-full bg-gray-200">
 								<Slider.Range className="absolute h-full rounded-full bg-black" />
@@ -217,13 +218,13 @@ export default function FiltersSidebar() {
 
 						<div className="mt-4 flex justify-between text-sm">
 							<span>
-								{priceFilter[0].toLocaleString("vi-VN", {
+								{(priceFilter?.[0] ?? 100).toLocaleString("vi-VN", {
 									currency: "VND",
 									style: "currency",
 								})}
 							</span>
 							<span>
-								{priceFilter[1].toLocaleString("vi-VN", {
+								{(priceFilter?.[1] ?? 5000).toLocaleString("vi-VN", {
 									currency: "VND",
 									style: "currency",
 								})}
