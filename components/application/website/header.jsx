@@ -13,6 +13,7 @@ const Header = () => {
 	const [isMobileMenu, setIsMobileMenu] = useState(false);
 	const [categoryLinks, setCategoryLinks] = useState([]);
 	const auth = useSelector((store) => store.auth);
+	const isLoggedIn = !!auth?.user;
 
 	useEffect(() => {
 		axios
@@ -66,22 +67,23 @@ const Header = () => {
 						<WebsiteCart />
 
 						{/* ACCOUNT */}
-						{!auth ? (
+						{!isLoggedIn ? (
 							<Link
-								className="text-gray-600 transition hover:text-primary"
+								className="flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
 								href="/login"
 							>
-								<FiUser size={22} />
+								<FiUser size={18} />
+								<span>Đăng nhập</span>
 							</Link>
 						) : (
-							<Link href="/my-account">
+							<Link href="/user/profile">
 								<div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border">
-									{auth?.avatar?.url ? (
+									{auth?.user?.avatar?.url ? (
 										<Image
 											alt="avatar"
 											className="h-full w-full object-cover"
 											height={40}
-											src={auth.avatar.url}
+											src={auth.user.avatar.url}
 											width={40}
 										/>
 									) : (

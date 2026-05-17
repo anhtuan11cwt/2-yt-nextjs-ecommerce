@@ -1,6 +1,5 @@
 import { Kumbh_Sans } from "next/font/google";
-import Footer from "@/components/application/website/footer";
-import Header from "@/components/application/website/header";
+import WebsiteShell from "@/components/application/WebsiteShell";
 import GlobalProvider from "@/components/providers/GlobalProvider";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
@@ -29,9 +28,7 @@ export default function RootLayout({ children }) {
 			<body className="min-h-screen bg-white text-black m-0 p-0">
 				<GlobalStoreProvider>
 					<GlobalProvider>
-						<Header />
-						<main>{children}</main>
-						<Footer />
+						<WebsiteShell>{children}</WebsiteShell>
 						<Toaster
 							position="top-right"
 							toastOptions={{
