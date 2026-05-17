@@ -10,6 +10,7 @@ const ADMIN_ROUTES = {
 	CATEGORY_EDIT: "/admin/category/edit",
 	DASHBOARD: "/admin/dashboard",
 	MEDIA: "/admin/media",
+	ORDER_DETAILS: (id) => `/admin/orders/details/${id}`,
 	ORDERS: "/admin/orders",
 	PRODUCT_ADD: "/admin/product/add",
 	PRODUCT_EDIT: "/admin/product/edit",

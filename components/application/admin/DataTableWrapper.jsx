@@ -52,6 +52,7 @@ export default function DataTableWrapper({ children }) {
 					},
 				},
 			},
+			MuiTablePagination: {},
 		},
 		palette: {
 			mode: resolvedTheme === "dark" ? "dark" : "light",

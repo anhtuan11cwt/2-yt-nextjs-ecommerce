@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { User } from "lucide-react";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
@@ -55,7 +56,6 @@ export default function UserProfilePage() {
 	const avatarUrl = preview || profileData?.data?.avatar?.url || null;
 
 	// Đổ dữ liệu profile vào form khi có data
-	// eslint-disable-next-line react-hooks/set-state-in-effect
 	useEffect(() => {
 		if (profileData?.data) {
 			form.reset({
@@ -129,10 +129,13 @@ export default function UserProfilePage() {
 								<input {...getInputProps()} />
 
 								{avatarUrl ? (
-									<img
+									<Image
 										alt="avatar-preview"
-										className="w-full h-full object-cover"
+										className="object-cover"
+										fill
+										sizes="112px"
 										src={avatarUrl}
+										unoptimized
 									/>
 								) : (
 									<div className="w-full h-full flex items-center justify-center bg-gray-100">
