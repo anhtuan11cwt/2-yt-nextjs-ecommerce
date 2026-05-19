@@ -6,14 +6,14 @@ import { persistor, store } from "@/store";
 import CartInit from "./CartInit";
 
 const GlobalStoreProvider = ({ children }) => {
-	return (
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<CartInit />
-				{children}
-			</PersistGate>
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <CartInit />
+        {children}
+      </PersistGate>
+    </Provider>
+  );
 };
 
 export default GlobalStoreProvider;

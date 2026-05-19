@@ -7,40 +7,40 @@ import { categorySchema } from "@/validators/category.validator";
 
 // API tạo danh mục mới
 export async function POST(request) {
-	try {
-		await connectDB();
+  try {
+    await connectDB();
 
-		const body = await request.json();
-		const name = body?.name?.trim();
+    const body = await request.json();
+    const name = body?.name?.trim();
 
-		const slug = slugify(name, {
-			lower: true,
-			strict: true,
-			trim: true,
-		});
+    const slug = slugify(name, {
+      lower: true,
+      strict: true,
+      trim: true,
+    });
 
-		const validated = categorySchema.parse({ name, slug });
+    const validated = categorySchema.parse({ name, slug });
 
-		const alreadyExists = await Category.findOne({ slug: validated.slug });
+    const alreadyExists = await Category.findOne({ slug: validated.slug });
 
-		if (alreadyExists) {
-			return NextResponse.json(
-				{ message: "Danh mục đã tồn tại", success: false },
-				{ status: 400 },
-			);
-		}
+    if (alreadyExists) {
+      return NextResponse.json(
+        { message: "Danh mục đã tồn tại", success: false },
+        { status: 400 },
+      );
+    }
 
-		const category = await Category.create(validated);
+    const category = await Category.create(validated);
 
-		return NextResponse.json({
-			data: category,
-			message: "Tạo danh mục thành công",
-			success: true,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{ message: error.message, success: false },
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({
+      data: category,
+      message: "Tạo danh mục thành công",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error.message, success: false },
+      { status: 500 },
+    );
+  }
 }

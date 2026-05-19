@@ -11,11 +11,11 @@ import UserDropdown from "./UserDropdown";
 
 // Topbar admin: search, theme, user dropdown
 const Topbar = () => {
-	const { toggleSidebar } = useSidebar();
+  const { toggleSidebar } = useSidebar();
 
-	return (
-		<header
-			className="
+  return (
+    <header
+      className="
         sticky
         top-0
         z-30
@@ -24,9 +24,9 @@ const Topbar = () => {
         bg-background/95
         backdrop-blur
       "
-		>
-			<div
-				className="
+    >
+      <div
+        className="
           flex
           items-center
           justify-between
@@ -35,32 +35,32 @@ const Topbar = () => {
           md:px-6
           transition-all
         "
-			>
-				{/* LEFT */}
-				<div className="flex items-center gap-3">
-					{/* MOBILE SIDEBAR TOGGLE */}
-					<Button
-						className="md:hidden"
-						onClick={toggleSidebar}
-						size="icon"
-						variant="outline"
-					>
-						<Menu className="w-5 h-5" />
-					</Button>
+      >
+        {/* LEFT */}
+        <div className="flex items-center gap-3">
+          {/* MOBILE SIDEBAR TOGGLE */}
+          <Button
+            className="md:hidden"
+            onClick={toggleSidebar}
+            size="icon"
+            variant="outline"
+          >
+            <Menu className="w-5 h-5" />
+          </Button>
 
-					<div className="hidden md:block w-64">
-						<AdminSearch />
-					</div>
-				</div>
+          <div className="hidden md:block w-64">
+            <AdminSearch />
+          </div>
+        </div>
 
-				{/* RIGHT */}
-				<div className="flex items-center gap-3">
-					<ThemeSwitcher />
-					<UserDropdown />
-				</div>
-			</div>
-		</header>
-	);
+        {/* RIGHT */}
+        <div className="flex items-center gap-3">
+          <ThemeSwitcher />
+          <UserDropdown />
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default Topbar;

@@ -10,53 +10,53 @@ import ADMIN_ROUTES from "@/routes/admin.routes";
 
 // Trang thêm mã giảm giá
 export default function AddCouponPage() {
-	const router = useRouter();
-	const queryClient = useQueryClient();
-	const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
-	// Xử lý tạo mã giảm giá
-	const handleSubmit = async (e, formData) => {
-		e.preventDefault();
-		try {
-			setLoading(true);
+  // Xử lý tạo mã giảm giá
+  const handleSubmit = async (e, formData) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
 
-			const response = await fetch("/api/coupon/create", {
-				body: JSON.stringify(formData),
-				headers: {
-					"Content-Type": "application/json",
-				},
-				method: "POST",
-			});
+      const response = await fetch("/api/coupon/create", {
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
 
-			const data = await response.json();
+      const data = await response.json();
 
-			if (!response.ok) {
-				throw new Error(data.message);
-			}
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
 
-			queryClient.invalidateQueries({ queryKey: ["datatable"] });
-			toast.success("Tạo mã giảm giá thành công");
-			router.push(ADMIN_ROUTES.ADMIN_COUPON_SHOW);
-		} catch (error) {
-			toast.error(error.message);
-		} finally {
-			setLoading(false);
-		}
-	};
+      queryClient.invalidateQueries({ queryKey: ["datatable"] });
+      toast.success("Tạo mã giảm giá thành công");
+      router.push(ADMIN_ROUTES.ADMIN_COUPON_SHOW);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-	const breadcrumbData = [
-		{ href: ADMIN_ROUTES.DASHBOARD, label: "Bảng điều khiển" },
-		{ href: ADMIN_ROUTES.ADMIN_COUPON_SHOW, label: "Mã giảm giá" },
-		{ href: ADMIN_ROUTES.ADMIN_COUPON_ADD, label: "Thêm mã giảm giá" },
-	];
+  const breadcrumbData = [
+    { href: ADMIN_ROUTES.DASHBOARD, label: "Bảng điều khiển" },
+    { href: ADMIN_ROUTES.ADMIN_COUPON_SHOW, label: "Mã giảm giá" },
+    { href: ADMIN_ROUTES.ADMIN_COUPON_ADD, label: "Thêm mã giảm giá" },
+  ];
 
-	return (
-		<div className="p-5">
-			<AdminBreadcrumb breadcrumbData={breadcrumbData} />
-			<h1 className="text-2xl font-bold mb-5">Thêm mã giảm giá</h1>
-			<div className="max-w-3xl">
-				<CouponForm loading={loading} onSubmit={handleSubmit} />
-			</div>
-		</div>
-	);
+  return (
+    <div className="p-5">
+      <AdminBreadcrumb breadcrumbData={breadcrumbData} />
+      <h1 className="text-2xl font-bold mb-5">Thêm mã giảm giá</h1>
+      <div className="max-w-3xl">
+        <CouponForm loading={loading} onSubmit={handleSubmit} />
+      </div>
+    </div>
+  );
 }

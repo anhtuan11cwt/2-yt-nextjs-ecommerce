@@ -5,19 +5,19 @@ export const dynamic = "force-dynamic";
 
 // Kiểm tra kết nối database
 export async function GET() {
-	try {
-		await connectDB();
-		return NextResponse.json({
-			message: "Kết nối thành công",
-			success: true,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error: error.message,
-				success: false,
-			},
-			{ status: 500 },
-		);
-	}
+  try {
+    await connectDB();
+    return NextResponse.json({
+      message: "Kết nối thành công",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: error.message,
+        success: false,
+      },
+      { status: 500 },
+    );
+  }
 }

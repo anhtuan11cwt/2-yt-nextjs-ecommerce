@@ -2,16 +2,16 @@ import { Loader2 } from "lucide-react";
 
 // Nút bấm có hiệu ứng loading
 export default function ButtonLoading({
-	type = "button",
-	text,
-	loading,
-	onClick,
-	className,
-	...props
+  type = "button",
+  text,
+  loading,
+  onClick,
+  className,
+  ...props
 }) {
-	return (
-		<button
-			className={`
+  return (
+    <button
+      className={`
         h-11
         rounded-md
         bg-primary
@@ -26,14 +26,14 @@ export default function ButtonLoading({
         disabled:cursor-not-allowed
         ${className}
       `}
-			disabled={loading}
-			onClick={onClick}
-			type={type}
-			{...props}
-		>
-			{loading && <Loader2 className="animate-spin" size={18} />}
+      disabled={loading}
+      onClick={onClick}
+      type={type}
+      {...props}
+    >
+      {loading && <Loader2 className="animate-spin" size={18} />}
 
-			{text}
-		</button>
-	);
+      {text}
+    </button>
+  );
 }

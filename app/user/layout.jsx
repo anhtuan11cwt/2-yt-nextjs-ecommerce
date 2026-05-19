@@ -2,5 +2,5 @@
 import UserPanelLayout from "../user-panel-layout";
 
 export default function UserLayout({ children }) {
-	return <UserPanelLayout>{children}</UserPanelLayout>;
+  return <UserPanelLayout>{children}</UserPanelLayout>;
 }

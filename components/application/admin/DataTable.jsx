@@ -9,181 +9,181 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { download, generateCsv, mkConfig } from "export-to-csv";
 import {
-	MaterialReactTable,
-	MRT_ShowHideColumnsButton,
-	MRT_ToggleDensePaddingButton,
-	MRT_ToggleFiltersButton,
-	MRT_ToggleFullScreenButton,
-	useMaterialReactTable,
+  MaterialReactTable,
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
+  useMaterialReactTable,
 } from "material-react-table";
 import { useMemo, useState } from "react";
 
 // Bảng dữ liệu dùng MaterialReactTable, hỗ trợ sort/filter/export CSV
 export default function DataTable({
-	columns = [],
-	fetchUrl = "",
-	deleteType = "SD",
-	enableRowSelection = true,
+  columns = [],
+  fetchUrl = "",
+  deleteType = "SD",
+  enableRowSelection = true,
 }) {
-	const [columnFilters, setColumnFilters] = useState([]);
-	const [globalFilter, setGlobalFilter] = useState("");
-	const [sorting, setSorting] = useState([]);
-	const [pagination, setPagination] = useState({
-		pageIndex: 0,
-		pageSize: 10,
-	});
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [sorting, setSorting] = useState([]);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
-	const [rowSelection, setRowSelection] = useState({});
+  const [rowSelection, setRowSelection] = useState({});
 
-	const queryParams = useMemo(
-		() => ({
-			deleteType,
-			filters: JSON.stringify(columnFilters),
-			globalFilter,
-			limit: pagination.pageSize,
-			page: pagination.pageIndex + 1,
-			sorting: JSON.stringify(sorting),
-		}),
-		[pagination, globalFilter, sorting, columnFilters, deleteType],
-	);
+  const queryParams = useMemo(
+    () => ({
+      deleteType,
+      filters: JSON.stringify(columnFilters),
+      globalFilter,
+      limit: pagination.pageSize,
+      page: pagination.pageIndex + 1,
+      sorting: JSON.stringify(sorting),
+    }),
+    [pagination, globalFilter, sorting, columnFilters, deleteType],
+  );
 
-	const fetchData = async () => {
-		const response = await axios.get(fetchUrl, {
-			params: queryParams,
-		});
-		return response.data;
-	};
+  const fetchData = async () => {
+    const response = await axios.get(fetchUrl, {
+      params: queryParams,
+    });
+    return response.data;
+  };
 
-	const { data, isLoading, isRefetching, refetch } = useQuery({
-		queryFn: fetchData,
-		queryKey: ["datatable", fetchUrl, queryParams],
-	});
+  const { data, isLoading, isRefetching, refetch } = useQuery({
+    queryFn: fetchData,
+    queryKey: ["datatable", fetchUrl, queryParams],
+  });
 
-	const table = useMaterialReactTable({
-		columns,
-		data: data?.data || [],
-		enableColumnFilters: true,
-		enableColumnOrdering: true,
-		enableColumnPinning: true,
-		enableDensityToggle: true,
-		enableFullScreenToggle: true,
-		enableHiding: true,
+  const table = useMaterialReactTable({
+    columns,
+    data: data?.data || [],
+    enableColumnFilters: true,
+    enableColumnOrdering: true,
+    enableColumnPinning: true,
+    enableDensityToggle: true,
+    enableFullScreenToggle: true,
+    enableHiding: true,
 
-		enableRowSelection,
-		enableStickyFooter: true,
+    enableRowSelection,
+    enableStickyFooter: true,
 
-		enableStickyHeader: true,
+    enableStickyHeader: true,
 
-		initialState: {
-			density: "compact",
-		},
-		manualFiltering: true,
+    initialState: {
+      density: "compact",
+    },
+    manualFiltering: true,
 
-		manualPagination: true,
-		manualSorting: true,
-		muiSkeletonProps: {
-			animation: "pulse",
-			height: 28,
-		},
-		muiTableBodyCellProps: {
-			inputProps: undefined, // Loại bỏ inputProps nếu có
-		},
+    manualPagination: true,
+    manualSorting: true,
+    muiSkeletonProps: {
+      animation: "pulse",
+      height: 28,
+    },
+    muiTableBodyCellProps: {
+      inputProps: undefined, // Loại bỏ inputProps nếu có
+    },
 
-		muiTableContainerProps: {
-			sx: { maxHeight: "600px" },
-		},
-		muiTableHeadCellProps: {
-			inputProps: undefined, // Loại bỏ inputProps nếu có
-		},
+    muiTableContainerProps: {
+      sx: { maxHeight: "600px" },
+    },
+    muiTableHeadCellProps: {
+      inputProps: undefined, // Loại bỏ inputProps nếu có
+    },
 
-		onColumnFiltersChange: setColumnFilters,
-		onGlobalFilterChange: setGlobalFilter,
-		onPaginationChange: setPagination,
-		onRowSelectionChange: setRowSelection,
-		onSortingChange: setSorting,
-		renderEmptyRowsFallback: () => (
-			<Box className="p-4 text-center">
-				<p>Không có dữ liệu hiển thị.</p>
-			</Box>
-		),
+    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
+    renderEmptyRowsFallback: () => (
+      <Box className="p-4 text-center">
+        <p>Không có dữ liệu hiển thị.</p>
+      </Box>
+    ),
 
-		renderToolbarInternalActions: ({ table }) => (
-			<Box className="flex items-center gap-1">
-				<MRT_ToggleFiltersButton table={table} />
-				<MRT_ShowHideColumnsButton table={table} />
-				<MRT_ToggleDensePaddingButton table={table} />
-				<MRT_ToggleFullScreenButton table={table} />
-			</Box>
-		),
+    renderToolbarInternalActions: ({ table }) => (
+      <Box className="flex items-center gap-1">
+        <MRT_ToggleFiltersButton table={table} />
+        <MRT_ShowHideColumnsButton table={table} />
+        <MRT_ToggleDensePaddingButton table={table} />
+        <MRT_ToggleFullScreenButton table={table} />
+      </Box>
+    ),
 
-		renderTopToolbarCustomActions: ({ table }) => {
-			const handleExportRows = () => {
-				const rows =
-					table.getSelectedRowModel().rows.length > 0
-						? table.getSelectedRowModel().rows.map((row) => row.original)
-						: data?.data || [];
+    renderTopToolbarCustomActions: ({ table }) => {
+      const handleExportRows = () => {
+        const rows =
+          table.getSelectedRowModel().rows.length > 0
+            ? table.getSelectedRowModel().rows.map((row) => row.original)
+            : data?.data || [];
 
-				const csvConfig = mkConfig({
-					filename: "table-data",
-					useKeysAsHeaders: true,
-				});
+        const csvConfig = mkConfig({
+          filename: "table-data",
+          useKeysAsHeaders: true,
+        });
 
-				const csv = generateCsv(csvConfig)(rows);
-				download(csvConfig)(csv);
-			};
+        const csv = generateCsv(csvConfig)(rows);
+        download(csvConfig)(csv);
+      };
 
-			return (
-				<Box className="flex items-center gap-2">
-					<Button onClick={handleExportRows} variant="contained">
-						Xuất CSV
-					</Button>
+      return (
+        <Box className="flex items-center gap-2">
+          <Button onClick={handleExportRows} variant="contained">
+            Xuất CSV
+          </Button>
 
-					<Tooltip title="Làm mới">
-						<IconButton onClick={refetch}>
-							<RefreshIcon />
-						</IconButton>
-					</Tooltip>
+          <Tooltip title="Làm mới">
+            <IconButton onClick={refetch}>
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
 
-					{deleteType === "SD" ? (
-						<Tooltip title="Chuyển vào thùng rác">
-							<IconButton color="warning">
-								<DeleteIcon />
-							</IconButton>
-						</Tooltip>
-					) : (
-						<>
-							<Tooltip title="Khôi phục">
-								<IconButton color="success">
-									<RestoreFromTrashIcon />
-								</IconButton>
-							</Tooltip>
+          {deleteType === "SD" ? (
+            <Tooltip title="Chuyển vào thùng rác">
+              <IconButton color="warning">
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <>
+              <Tooltip title="Khôi phục">
+                <IconButton color="success">
+                  <RestoreFromTrashIcon />
+                </IconButton>
+              </Tooltip>
 
-							<Tooltip title="Xóa vĩnh viễn">
-								<IconButton color="error">
-									<DeleteSweepIcon />
-								</IconButton>
-							</Tooltip>
-						</>
-					)}
-				</Box>
-			);
-		},
-		rowCount: data?.total || 0,
+              <Tooltip title="Xóa vĩnh viễn">
+                <IconButton color="error">
+                  <DeleteSweepIcon />
+                </IconButton>
+              </Tooltip>
+            </>
+          )}
+        </Box>
+      );
+    },
+    rowCount: data?.total || 0,
 
-		state: {
-			columnFilters,
-			globalFilter,
-			isLoading,
-			pagination,
-			rowSelection,
-			showProgressBars: isRefetching,
-			sorting,
-		},
-	});
+    state: {
+      columnFilters,
+      globalFilter,
+      isLoading,
+      pagination,
+      rowSelection,
+      showProgressBars: isRefetching,
+      sorting,
+    },
+  });
 
-	if (isLoading) {
-		return <div className="p-4 text-center">Đang tải dữ liệu...</div>;
-	}
+  if (isLoading) {
+    return <div className="p-4 text-center">Đang tải dữ liệu...</div>;
+  }
 
-	return <MaterialReactTable table={table} />;
+  return <MaterialReactTable table={table} />;
 }

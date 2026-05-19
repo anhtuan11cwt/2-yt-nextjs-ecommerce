@@ -7,37 +7,37 @@ import ProductVariant from "@/models/productVariant.model";
 
 // API khôi phục biến thể đã xóa mềm
 export async function PUT(request) {
-	try {
-		await isAuthenticated("admin");
-		await connectDB();
+  try {
+    await isAuthenticated("admin");
+    await connectDB();
 
-		const body = await request.json();
-		const ids = Array.isArray(body?.ids) ? body.ids : [];
+    const body = await request.json();
+    const ids = Array.isArray(body?.ids) ? body.ids : [];
 
-		if (ids.length === 0) {
-			return NextResponse.json(
-				{ message: "Thiếu danh sách ID", success: false },
-				{ status: 400 },
-			);
-		}
+    if (ids.length === 0) {
+      return NextResponse.json(
+        { message: "Thiếu danh sách ID", success: false },
+        { status: 400 },
+      );
+    }
 
-		const objectIds = ids
-			.filter((x) => mongoose.Types.ObjectId.isValid(x))
-			.map((x) => new mongoose.Types.ObjectId(x));
+    const objectIds = ids
+      .filter((x) => mongoose.Types.ObjectId.isValid(x))
+      .map((x) => new mongoose.Types.ObjectId(x));
 
-		await ProductVariant.updateMany(
-			{ _id: { $in: objectIds } },
-			{ deletedAt: null },
-		);
+    await ProductVariant.updateMany(
+      { _id: { $in: objectIds } },
+      { deletedAt: null },
+    );
 
-		return NextResponse.json({
-			message: "Khôi phục biến thể thành công",
-			success: true,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{ message: error.message, success: false },
-			{ status: error?.statusCode || 500 },
-		);
-	}
+    return NextResponse.json({
+      message: "Khôi phục biến thể thành công",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error.message, success: false },
+      { status: error?.statusCode || 500 },
+    );
+  }
 }

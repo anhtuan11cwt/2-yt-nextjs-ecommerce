@@ -5,170 +5,170 @@ import Product from "@/models/product.model";
 
 // API shop với sorting, phân trang và filter variants
 export async function GET(request) {
-	try {
-		await connectDB();
+  try {
+    await connectDB();
 
-		const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url);
 
-		const page = Number(searchParams.get("page")) || 1;
-		const limit = Number(searchParams.get("limit")) || 12;
-		const sort = searchParams.get("sort") || "default";
+    const page = Number(searchParams.get("page")) || 1;
+    const limit = Number(searchParams.get("limit")) || 12;
+    const sort = searchParams.get("sort") || "default";
 
-		const category = searchParams.get("category");
-		const color = searchParams.get("color");
-		const size = searchParams.get("size");
+    const category = searchParams.get("category");
+    const color = searchParams.get("color");
+    const size = searchParams.get("size");
 
-		const minPriceParam = searchParams.get("min");
-		const maxPriceParam = searchParams.get("max");
+    const minPriceParam = searchParams.get("min");
+    const maxPriceParam = searchParams.get("max");
 
-		const q = searchParams.get("q");
+    const q = searchParams.get("q");
 
-		const skip = (page - 1) * limit;
+    const skip = (page - 1) * limit;
 
-		// Match stage
-		const matchStage = { deletedAt: null };
+    // Match stage
+    const matchStage = { deletedAt: null };
 
-		if (q) {
-			matchStage.name = { $options: "i", $regex: q };
-		}
+    if (q) {
+      matchStage.name = { $options: "i", $regex: q };
+    }
 
-		if (minPriceParam || maxPriceParam) {
-			const minPrice = Number(minPriceParam) || 0;
-			const maxPrice = Number(maxPriceParam) || 999999;
-			matchStage.sellingPrice = { $gte: minPrice, $lte: maxPrice };
-		}
+    if (minPriceParam || maxPriceParam) {
+      const minPrice = Number(minPriceParam) || 0;
+      const maxPrice = Number(maxPriceParam) || 999999;
+      matchStage.sellingPrice = { $gte: minPrice, $lte: maxPrice };
+    }
 
-		// Sort stage
-		const sortStage = {};
+    // Sort stage
+    const sortStage = {};
 
-		switch (sort) {
-			case "asc":
-				sortStage.name = 1;
-				sortStage._id = 1;
-				break;
-			case "desc":
-				sortStage.name = -1;
-				sortStage._id = 1;
-				break;
-			case "price-low-high":
-				sortStage.sellingPrice = 1;
-				sortStage._id = 1;
-				break;
-			case "price-high-low":
-				sortStage.sellingPrice = -1;
-				sortStage._id = 1;
-				break;
-			default:
-				sortStage.createdAt = -1;
-				sortStage._id = 1;
-		}
+    switch (sort) {
+      case "asc":
+        sortStage.name = 1;
+        sortStage._id = 1;
+        break;
+      case "desc":
+        sortStage.name = -1;
+        sortStage._id = 1;
+        break;
+      case "price-low-high":
+        sortStage.sellingPrice = 1;
+        sortStage._id = 1;
+        break;
+      case "price-high-low":
+        sortStage.sellingPrice = -1;
+        sortStage._id = 1;
+        break;
+      default:
+        sortStage.createdAt = -1;
+        sortStage._id = 1;
+    }
 
-		const pipeline = [
-			{ $match: matchStage },
+    const pipeline = [
+      { $match: matchStage },
 
-			// Lookup category
-			{
-				$lookup: {
-					as: "category",
-					foreignField: "_id",
-					from: "categories",
-					localField: "category",
-				},
-			},
-			{ $unwind: "$category" },
+      // Lookup category
+      {
+        $lookup: {
+          as: "category",
+          foreignField: "_id",
+          from: "categories",
+          localField: "category",
+        },
+      },
+      { $unwind: "$category" },
 
-			// Lọc theo category slug
-			...(category
-				? [
-						{
-							$match: {
-								"category.slug": { $in: category.split(",") },
-							},
-						},
-					]
-				: []),
+      // Lọc theo category slug
+      ...(category
+        ? [
+            {
+              $match: {
+                "category.slug": { $in: category.split(",") },
+              },
+            },
+          ]
+        : []),
 
-			// Sort stage
-			{ $sort: sortStage },
+      // Sort stage
+      { $sort: sortStage },
 
-			// Lookup variants
-			{
-				$lookup: {
-					as: "variants",
-					foreignField: "product",
-					from: "productvariants",
-					localField: "_id",
-					pipeline: [{ $match: { deletedAt: null } }],
-				},
-			},
+      // Lookup variants
+      {
+        $lookup: {
+          as: "variants",
+          foreignField: "product",
+          from: "productvariants",
+          localField: "_id",
+          pipeline: [{ $match: { deletedAt: null } }],
+        },
+      },
 
-			// Lookup media
-			{
-				$lookup: {
-					as: "media",
-					foreignField: "_id",
-					from: "media",
-					localField: "media",
-				},
-			},
+      // Lookup media
+      {
+        $lookup: {
+          as: "media",
+          foreignField: "_id",
+          from: "media",
+          localField: "media",
+        },
+      },
 
-			// Filter variants theo color/size
-			...(color || size
-				? [
-						{
-							$addFields: {
-								variants: {
-									$filter: {
-										as: "variant",
-										cond: {
-											$and: [
-												color ? { $eq: ["$$variant.color", color] } : true,
-												size ? { $eq: ["$$variant.size", size] } : true,
-											],
-										},
-										input: "$variants",
-									},
-								},
-							},
-						},
-						{ $match: { variants: { $ne: [] } } },
-					]
-				: []),
+      // Filter variants theo color/size
+      ...(color || size
+        ? [
+            {
+              $addFields: {
+                variants: {
+                  $filter: {
+                    as: "variant",
+                    cond: {
+                      $and: [
+                        color ? { $eq: ["$$variant.color", color] } : true,
+                        size ? { $eq: ["$$variant.size", size] } : true,
+                      ],
+                    },
+                    input: "$variants",
+                  },
+                },
+              },
+            },
+            { $match: { variants: { $ne: [] } } },
+          ]
+        : []),
 
-			// Skip và limit sau khi đã filter xong
-			{ $skip: skip },
-			{ $limit: limit + 1 },
+      // Skip và limit sau khi đã filter xong
+      { $skip: skip },
+      { $limit: limit + 1 },
 
-			// Project
-			{
-				$project: {
-					discountPercent: 1,
-					media: 1,
-					mrp: 1,
-					name: 1,
-					sellingPrice: 1,
-					slug: 1,
-					variants: 1,
-				},
-			},
-		];
+      // Project
+      {
+        $project: {
+          discountPercent: 1,
+          media: 1,
+          mrp: 1,
+          name: 1,
+          sellingPrice: 1,
+          slug: 1,
+          variants: 1,
+        },
+      },
+    ];
 
-		const products = await Product.aggregate(pipeline);
+    const products = await Product.aggregate(pipeline);
 
-		const hasNextPage = products.length > limit;
+    const hasNextPage = products.length > limit;
 
-		if (hasNextPage) {
-			products.pop();
-		}
+    if (hasNextPage) {
+      products.pop();
+    }
 
-		return NextResponse.json({
-			nextPage: hasNextPage ? page + 1 : null,
-			products,
-		});
-	} catch (_error) {
-		return NextResponse.json(
-			{ message: "Lỗi máy chủ nội bộ" },
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({
+      nextPage: hasNextPage ? page + 1 : null,
+      products,
+    });
+  } catch (_error) {
+    return NextResponse.json(
+      { message: "Lỗi máy chủ nội bộ" },
+      { status: 500 },
+    );
+  }
 }

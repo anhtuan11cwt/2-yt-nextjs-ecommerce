@@ -16,157 +16,157 @@ const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 // Lấy URL thumbnail từ media document
 function mediaThumbUrl(doc) {
-	if (!doc) {
-		return null;
-	}
-	if (doc.thumbnailUrl) {
-		return doc.thumbnailUrl;
-	}
-	if (doc.path && CLOUD) {
-		return `https://res.cloudinary.com/${CLOUD}/image/upload/${doc.path}`;
-	}
-	return null;
+  if (!doc) {
+    return null;
+  }
+  if (doc.thumbnailUrl) {
+    return doc.thumbnailUrl;
+  }
+  if (doc.path && CLOUD) {
+    return `https://res.cloudinary.com/${CLOUD}/image/upload/${doc.path}`;
+  }
+  return null;
 }
 
 // Trang danh sách biến thể sản phẩm
 export default function VariantShowPage() {
-	const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-	const deleteMutation = useMutation({
-		mutationFn: async (id) => {
-			const response = await fetch("/api/product-variant/delete", {
-				body: JSON.stringify({ id }),
-				headers: { "Content-Type": "application/json" },
-				method: "DELETE",
-			});
-			const result = await response.json();
-			if (!response.ok) {
-				throw new Error(result.message);
-			}
-			return result;
-		},
-		onError: (error) => toast.error(error?.message),
-		onSuccess: (data) => {
-			queryClient.invalidateQueries({ queryKey: ["datatable"] });
-			toast.success(data?.message);
-		},
-	});
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      const response = await fetch("/api/product-variant/delete", {
+        body: JSON.stringify({ id }),
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+      return result;
+    },
+    onError: (error) => toast.error(error?.message),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["datatable"] });
+      toast.success(data?.message);
+    },
+  });
 
-	const columns = [
-		{
-			Cell: ({ row }) => {
-				const first = row.original.media?.[0];
-				const src = mediaThumbUrl(first);
-				if (!src) {
-					return <span className="text-muted-foreground text-xs">—</span>;
-				}
-				return (
-					<div className="relative h-12 w-12 overflow-hidden rounded-md border">
-						<Image
-							alt=""
-							className="object-cover"
-							fill
-							sizes="48px"
-							src={src}
-						/>
-					</div>
-				);
-			},
-			enableColumnFilter: false,
-			enableSorting: false,
-			header: "Ảnh",
-			id: "thumbnail",
-			size: 72,
-		},
-		{
-			accessorFn: (row) => row.product?.name || "—",
-			header: "Tên sản phẩm",
-			id: "productName",
-		},
-		{
-			accessorKey: "color",
-			header: "Màu",
-		},
-		{
-			accessorKey: "size",
-			header: "Kích cỡ",
-		},
-		{
-			accessorKey: "sku",
-			header: "SKU",
-		},
-		{
-			accessorKey: "mrp",
-			header: "MRP",
-		},
-		{
-			accessorKey: "sellingPrice",
-			header: "Giá bán",
-		},
-		{
-			accessorKey: "discountPercent",
-			header: "Giảm %",
-		},
-		{
-			accessorFn: (row) => (row.deletedAt ? "Đã xóa" : "Hoạt động"),
-			header: "Trạng thái",
-			id: "status",
-		},
-		{
-			Cell: ({ row }) => (
-				<div className="flex items-center gap-1">
-					<Tooltip title="Chỉnh sửa">
-						<IconButton
-							component={Link}
-							href={`${ADMIN_ROUTES.VARIANT_EDIT}/${row.original._id}`}
-						>
-							<EditIcon />
-						</IconButton>
-					</Tooltip>
-					<Tooltip title="Xóa">
-						<IconButton
-							color="error"
-							onClick={() => deleteMutation.mutate(row.original._id)}
-						>
-							<DeleteIcon />
-						</IconButton>
-					</Tooltip>
-				</div>
-			),
-			enableColumnFilter: false,
-			enableSorting: false,
-			header: "Hành động",
-			id: "actions",
-		},
-	];
+  const columns = [
+    {
+      Cell: ({ row }) => {
+        const first = row.original.media?.[0];
+        const src = mediaThumbUrl(first);
+        if (!src) {
+          return <span className="text-muted-foreground text-xs">—</span>;
+        }
+        return (
+          <div className="relative h-12 w-12 overflow-hidden rounded-md border">
+            <Image
+              alt=""
+              className="object-cover"
+              fill
+              sizes="48px"
+              src={src}
+            />
+          </div>
+        );
+      },
+      enableColumnFilter: false,
+      enableSorting: false,
+      header: "Ảnh",
+      id: "thumbnail",
+      size: 72,
+    },
+    {
+      accessorFn: (row) => row.product?.name || "—",
+      header: "Tên sản phẩm",
+      id: "productName",
+    },
+    {
+      accessorKey: "color",
+      header: "Màu",
+    },
+    {
+      accessorKey: "size",
+      header: "Kích cỡ",
+    },
+    {
+      accessorKey: "sku",
+      header: "SKU",
+    },
+    {
+      accessorKey: "mrp",
+      header: "MRP",
+    },
+    {
+      accessorKey: "sellingPrice",
+      header: "Giá bán",
+    },
+    {
+      accessorKey: "discountPercent",
+      header: "Giảm %",
+    },
+    {
+      accessorFn: (row) => (row.deletedAt ? "Đã xóa" : "Hoạt động"),
+      header: "Trạng thái",
+      id: "status",
+    },
+    {
+      Cell: ({ row }) => (
+        <div className="flex items-center gap-1">
+          <Tooltip title="Chỉnh sửa">
+            <IconButton
+              component={Link}
+              href={`${ADMIN_ROUTES.VARIANT_EDIT}/${row.original._id}`}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Xóa">
+            <IconButton
+              color="error"
+              onClick={() => deleteMutation.mutate(row.original._id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+      ),
+      enableColumnFilter: false,
+      enableSorting: false,
+      header: "Hành động",
+      id: "actions",
+    },
+  ];
 
-	const breadcrumbData = [
-		{ href: ADMIN_ROUTES.DASHBOARD, label: "Bảng điều khiển" },
-		{ href: ADMIN_ROUTES.VARIANT_SHOW, label: "Biến thể" },
-	];
+  const breadcrumbData = [
+    { href: ADMIN_ROUTES.DASHBOARD, label: "Bảng điều khiển" },
+    { href: ADMIN_ROUTES.VARIANT_SHOW, label: "Biến thể" },
+  ];
 
-	return (
-		<div className="p-5">
-			<div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-				<div>
-					<AdminBreadcrumb breadcrumbData={breadcrumbData} />
-					<h1 className="mt-2 text-2xl font-bold">Biến thể sản phẩm</h1>
-				</div>
-				<Link
-					className="rounded-md bg-black px-4 py-2 text-sm text-white hover:bg-black/80"
-					href={ADMIN_ROUTES.VARIANT_ADD}
-				>
-					Thêm biến thể
-				</Link>
-			</div>
-			<DataTableWrapper>
-				<DataTable
-					columns={columns}
-					deleteType="SD"
-					enableRowSelection={false}
-					fetchUrl="/api/product-variant/show"
-				/>
-			</DataTableWrapper>
-		</div>
-	);
+  return (
+    <div className="p-5">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <AdminBreadcrumb breadcrumbData={breadcrumbData} />
+          <h1 className="mt-2 text-2xl font-bold">Biến thể sản phẩm</h1>
+        </div>
+        <Link
+          className="rounded-md bg-black px-4 py-2 text-sm text-white hover:bg-black/80"
+          href={ADMIN_ROUTES.VARIANT_ADD}
+        >
+          Thêm biến thể
+        </Link>
+      </div>
+      <DataTableWrapper>
+        <DataTable
+          columns={columns}
+          deleteType="SD"
+          enableRowSelection={false}
+          fetchUrl="/api/product-variant/show"
+        />
+      </DataTableWrapper>
+    </div>
+  );
 }

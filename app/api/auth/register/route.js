@@ -9,86 +9,86 @@ import { registerSchema } from "@/validators/auth.validator";
 
 // API đăng ký tài khoản mới, gửi email xác thực
 export async function POST(request) {
-	try {
-		await connectDB();
+  try {
+    await connectDB();
 
-		const body = await request.json();
+    const body = await request.json();
 
-		const validated = registerSchema.safeParse(body);
+    const validated = registerSchema.safeParse(body);
 
-		if (!validated.success) {
-			return response({
-				message: validated.error.issues[0]?.message || "Xác thực thất bại",
-				statusCode: 400,
-				success: false,
-			});
-		}
+    if (!validated.success) {
+      return response({
+        message: validated.error.issues[0]?.message || "Xác thực thất bại",
+        statusCode: 400,
+        success: false,
+      });
+    }
 
-		const { name, email, password } = validated.data;
+    const { name, email, password } = validated.data;
 
-		const existingUser = await User.exists({ email });
+    const existingUser = await User.exists({ email });
 
-		if (existingUser) {
-			return response({
-				message: "Email đã tồn tại",
-				statusCode: 409,
-				success: false,
-			});
-		}
+    if (existingUser) {
+      return response({
+        message: "Email đã tồn tại",
+        statusCode: 409,
+        success: false,
+      });
+    }
 
-		// Hash mật khẩu trước khi lưu
-		const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash mật khẩu trước khi lưu
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-		const user = await User.create({
-			email,
-			name,
-			password: hashedPassword,
-		});
+    const user = await User.create({
+      email,
+      name,
+      password: hashedPassword,
+    });
 
-		// Tạo JWT token xác thực email
-		const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    // Tạo JWT token xác thực email
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-		const verificationToken = await new SignJWT({ userId: user._id.toString() })
-			.setProtectedHeader({ alg: "HS256" })
-			.setIssuedAt()
-			.setExpirationTime("1h")
-			.sign(secret);
+    const verificationToken = await new SignJWT({ userId: user._id.toString() })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1h")
+      .sign(secret);
 
-		// Tạo URL xác thực
-		const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
+    // Tạo URL xác thực
+    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
 
-		// Gửi email xác thực
-		await sendEmail({
-			html: emailVerificationLink({
-				name: user.name,
-				verificationUrl,
-			}),
-			subject: "Xác Thực Email Của Bạn",
-			to: user.email,
-		});
+    // Gửi email xác thực
+    await sendEmail({
+      html: emailVerificationLink({
+        name: user.name,
+        verificationUrl,
+      }),
+      subject: "Xác Thực Email Của Bạn",
+      to: user.email,
+    });
 
-		return response({
-			message: "Đăng ký thành công. Email xác thực đã được gửi.",
-			statusCode: 201,
-			success: true,
-		});
-	} catch (error) {
-		// Lỗi trùng email
-		if (error.code === 11000) {
-			return response({
-				message: "Email đã tồn tại",
-				statusCode: 409,
-				success: false,
-			});
-		}
+    return response({
+      message: "Đăng ký thành công. Email xác thực đã được gửi.",
+      statusCode: 201,
+      success: true,
+    });
+  } catch (error) {
+    // Lỗi trùng email
+    if (error.code === 11000) {
+      return response({
+        message: "Email đã tồn tại",
+        statusCode: 409,
+        success: false,
+      });
+    }
 
-		return response({
-			message:
-				process.env.NODE_ENV === "development"
-					? error.message
-					: "Lỗi máy chủ nội bộ",
-			statusCode: 500,
-			success: false,
-		});
-	}
+    return response({
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Lỗi máy chủ nội bộ",
+      statusCode: 500,
+      success: false,
+    });
+  }
 }

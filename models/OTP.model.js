@@ -2,27 +2,27 @@ import mongoose from "mongoose";
 
 // Schema lưu mã OTP với TTL tự động xóa
 const otpSchema = new mongoose.Schema(
-	{
-		email: {
-			lowercase: true,
-			required: true,
-			trim: true,
-			type: String,
-		},
+  {
+    email: {
+      lowercase: true,
+      required: true,
+      trim: true,
+      type: String,
+    },
 
-		expiresAt: {
-			default: () => Date.now() + 10 * 60 * 1000,
-			type: Date,
-		},
+    expiresAt: {
+      default: () => Date.now() + 10 * 60 * 1000,
+      type: Date,
+    },
 
-		otp: {
-			required: true,
-			type: String,
-		},
-	},
-	{
-		timestamps: true,
-	},
+    otp: {
+      required: true,
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  },
 );
 
 // Index TTL tự động xóa OTP hết hạn

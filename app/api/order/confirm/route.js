@@ -6,68 +6,68 @@ import Cart from "@/models/cart.model";
 import Order from "@/models/order.model";
 
 export async function POST(req) {
-	try {
-		await connectDB();
+  try {
+    await connectDB();
 
-		const body = await req.json();
-		const { sessionId } = body;
+    const body = await req.json();
+    const { sessionId } = body;
 
-		if (!sessionId) {
-			return NextResponse.json(
-				{ message: "Thiếu session ID", success: false },
-				{ status: 400 },
-			);
-		}
+    if (!sessionId) {
+      return NextResponse.json(
+        { message: "Thiếu session ID", success: false },
+        { status: 400 },
+      );
+    }
 
-		const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-		if (session.payment_status !== "paid") {
-			return NextResponse.json(
-				{ message: "Thanh toán chưa hoàn tất", success: false },
-				{ status: 400 },
-			);
-		}
+    if (session.payment_status !== "paid") {
+      return NextResponse.json(
+        { message: "Thanh toán chưa hoàn tất", success: false },
+        { status: 400 },
+      );
+    }
 
-		const order = await Order.findOneAndUpdate(
-			{ stripeSessionId: sessionId },
-			{
-				orderStatus: "Processing",
-				paymentStatus: "Paid",
-				stripePaymentIntentId: session.payment_intent,
-			},
-			{ new: true },
-		).populate("products.product", "name slug");
+    const order = await Order.findOneAndUpdate(
+      { stripeSessionId: sessionId },
+      {
+        orderStatus: "Processing",
+        paymentStatus: "Paid",
+        stripePaymentIntentId: session.payment_intent,
+      },
+      { new: true },
+    ).populate("products.product", "name slug");
 
-		if (!order) {
-			return NextResponse.json(
-				{ message: "Không tìm thấy đơn hàng", success: false },
-				{ status: 404 },
-			);
-		}
+    if (!order) {
+      return NextResponse.json(
+        { message: "Không tìm thấy đơn hàng", success: false },
+        { status: 404 },
+      );
+    }
 
-		// Xóa giỏ hàng trong database sau khi thanh toán thành công
-		if (order.user) {
-			await Cart.findOneAndDelete({ user: order.user });
-		}
+    // Xóa giỏ hàng trong database sau khi thanh toán thành công
+    if (order.user) {
+      await Cart.findOneAndDelete({ user: order.user });
+    }
 
-		// Gửi email xác nhận đơn hàng (chạy ngầm, không block response)
-		orderNotification({ order }).catch((err) =>
-			console.error("Lỗi gửi email xác nhận đơn hàng:", err),
-		);
+    // Gửi email xác nhận đơn hàng (chạy ngầm, không block response)
+    orderNotification({ order }).catch((err) =>
+      console.error("Lỗi gửi email xác nhận đơn hàng:", err),
+    );
 
-		return NextResponse.json({
-			order: {
-				_id: order._id,
-				orderStatus: order.orderStatus,
-				paymentStatus: order.paymentStatus,
-				totalAmount: order.totalAmount,
-			},
-			success: true,
-		});
-	} catch (_error) {
-		return NextResponse.json(
-			{ message: "Lỗi xác nhận đơn hàng", success: false },
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({
+      order: {
+        _id: order._id,
+        orderStatus: order.orderStatus,
+        paymentStatus: order.paymentStatus,
+        totalAmount: order.totalAmount,
+      },
+      success: true,
+    });
+  } catch (_error) {
+    return NextResponse.json(
+      { message: "Lỗi xác nhận đơn hàng", success: false },
+      { status: 500 },
+    );
+  }
 }

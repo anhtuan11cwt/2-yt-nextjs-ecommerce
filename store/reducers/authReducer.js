@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	auth: null,
+  auth: null,
 };
 
 // Auth slice quản lý trạng thái đăng nhập
 const authSlice = createSlice({
-	initialState,
-	name: "auth",
-	reducers: {
-		login: (state, action) => {
-			state.auth = action.payload;
-		},
-		logout: (state) => {
-			state.auth = null;
-		},
-	},
+  initialState,
+  name: "auth",
+  reducers: {
+    login: (state, action) => {
+      state.auth = action.payload;
+    },
+    logout: (state) => {
+      state.auth = null;
+    },
+  },
 });
 
 export const { login, logout } = authSlice.actions;

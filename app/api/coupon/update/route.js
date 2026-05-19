@@ -6,39 +6,39 @@ import { createCouponSchema } from "@/validators/coupon.validator";
 
 // API cập nhật mã giảm giá
 export async function PUT(request) {
-	try {
-		await connectMongoDB();
-		await isAuthenticated("admin");
+  try {
+    await connectMongoDB();
+    await isAuthenticated("admin");
 
-		const body = await request.json();
-		const { id } = body;
+    const body = await request.json();
+    const { id } = body;
 
-		const validatedData = createCouponSchema.parse({
-			...body,
-			discountPercent: Number(body.discountPercent),
-			minimumShoppingAmount: Number(body.minimumShoppingAmount),
-		});
+    const validatedData = createCouponSchema.parse({
+      ...body,
+      discountPercent: Number(body.discountPercent),
+      minimumShoppingAmount: Number(body.minimumShoppingAmount),
+    });
 
-		const updatedCoupon = await CouponModel.findByIdAndUpdate(
-			id,
-			{
-				...validatedData,
-				code: validatedData.code.toUpperCase(),
-			},
-			{
-				new: true,
-			},
-		);
+    const updatedCoupon = await CouponModel.findByIdAndUpdate(
+      id,
+      {
+        ...validatedData,
+        code: validatedData.code.toUpperCase(),
+      },
+      {
+        new: true,
+      },
+    );
 
-		return NextResponse.json({
-			coupon: updatedCoupon,
-			message: "Cập nhật mã giảm giá thành công",
-			success: true,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{ message: error?.errors?.[0]?.message || error.message, success: false },
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({
+      coupon: updatedCoupon,
+      message: "Cập nhật mã giảm giá thành công",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error?.errors?.[0]?.message || error.message, success: false },
+      { status: 500 },
+    );
+  }
 }

@@ -4,17 +4,17 @@ import connectDB from "@/lib/dbConnection";
 import Cart from "@/models/cart.model";
 
 export async function DELETE() {
-	try {
-		await connectDB();
-		const user = await isAuthenticated();
+  try {
+    await connectDB();
+    const user = await isAuthenticated();
 
-		await Cart.findOneAndDelete({ user: user._id });
+    await Cart.findOneAndDelete({ user: user._id });
 
-		return NextResponse.json({ success: true });
-	} catch (_error) {
-		return NextResponse.json(
-			{ message: "Lỗi xóa giỏ hàng", success: false },
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({ success: true });
+  } catch (_error) {
+    return NextResponse.json(
+      { message: "Lỗi xóa giỏ hàng", success: false },
+      { status: 500 },
+    );
+  }
 }

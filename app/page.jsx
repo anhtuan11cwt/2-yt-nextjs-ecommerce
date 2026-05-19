@@ -6,14 +6,14 @@ import MainSlider from "@/components/website/MainSlider";
 import Testimonial from "@/components/website/testimonial";
 
 export default function Home() {
-	return (
-		<>
-			<MainSlider />
-			<BannerSection />
-			<FeaturedProducts />
-			<AdvertisingBanner />
-			<Testimonial />
-			<Features />
-		</>
-	);
+  return (
+    <>
+      <MainSlider />
+      <BannerSection />
+      <FeaturedProducts />
+      <AdvertisingBanner />
+      <Testimonial />
+      <Features />
+    </>
+  );
 }

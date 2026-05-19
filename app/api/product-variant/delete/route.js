@@ -6,34 +6,34 @@ import ProductVariant from "@/models/productVariant.model";
 
 // API xóa biến thể (soft hoặc permanent)
 export async function DELETE(request) {
-	try {
-		await isAuthenticated("admin");
-		await connectDB();
+  try {
+    await isAuthenticated("admin");
+    await connectDB();
 
-		const body = await request.json();
-		const { id, deleteType } = body;
+    const body = await request.json();
+    const { id, deleteType } = body;
 
-		if (!id) {
-			return NextResponse.json(
-				{ message: "Thiếu ID biến thể", success: false },
-				{ status: 400 },
-			);
-		}
+    if (!id) {
+      return NextResponse.json(
+        { message: "Thiếu ID biến thể", success: false },
+        { status: 400 },
+      );
+    }
 
-		if (deleteType === "PD") {
-			await ProductVariant.findByIdAndDelete(id);
-		} else {
-			await ProductVariant.findByIdAndUpdate(id, { deletedAt: new Date() });
-		}
+    if (deleteType === "PD") {
+      await ProductVariant.findByIdAndDelete(id);
+    } else {
+      await ProductVariant.findByIdAndUpdate(id, { deletedAt: new Date() });
+    }
 
-		return NextResponse.json({
-			message: "Xóa biến thể thành công",
-			success: true,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{ message: error.message, success: false },
-			{ status: error?.statusCode || 500 },
-		);
-	}
+    return NextResponse.json({
+      message: "Xóa biến thể thành công",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error.message, success: false },
+      { status: error?.statusCode || 500 },
+    );
+  }
 }

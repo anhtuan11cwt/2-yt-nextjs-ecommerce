@@ -3,27 +3,27 @@ import cloudinary from "@/lib/cloudinary";
 
 // API tạo chữ ký upload Cloudinary
 export async function POST(request) {
-	try {
-		const body = await request.json();
-		const paramsToSign = body?.paramsToSign;
+  try {
+    const body = await request.json();
+    const paramsToSign = body?.paramsToSign;
 
-		const signature = cloudinary.utils.api_sign_request(
-			paramsToSign,
-			process.env.CLOUDINARY_API_SECRET,
-		);
+    const signature = cloudinary.utils.api_sign_request(
+      paramsToSign,
+      process.env.CLOUDINARY_API_SECRET,
+    );
 
-		return NextResponse.json({
-			signature,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{
-				message: error.message,
-				success: false,
-			},
-			{
-				status: 500,
-			},
-		);
-	}
+    return NextResponse.json({
+      signature,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: error.message,
+        success: false,
+      },
+      {
+        status: 500,
+      },
+    );
+  }
 }
