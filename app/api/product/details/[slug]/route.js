@@ -5,6 +5,7 @@ import ProductVariant from "@/models/productVariant.model";
 import "@/models/media.model"; // Ensure Media is registered
 import "@/models/category.model"; // Ensure Category is registered
 
+// Chi tiết sản phẩm theo slug — trả về variant theo color/size query
 export async function GET(req, { params }) {
   try {
     await dbConnect();
@@ -36,6 +37,7 @@ export async function GET(req, { params }) {
     const uniqueColors = [...new Set(variants.map((v) => v.color))];
     const uniqueSizes = [...new Set(variants.map((v) => v.size))];
 
+    // Chọn variant ưu tiên: color+size → color → variant đầu tiên
     let selectedVariant = null;
 
     if (color && size) {

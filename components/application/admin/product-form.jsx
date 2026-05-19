@@ -18,6 +18,7 @@ import { decodeDescriptionFromStorage } from "@/lib/product-description";
 import ADMIN_ROUTES from "@/routes/admin.routes";
 import { productFormSchema } from "@/validators/product.validator";
 
+// CKEditor chỉ load client-side (tránh SSR lỗi window)
 const AdminRichTextEditor = dynamic(
   async () => {
     const mod = await import("@/components/application/admin/editor");
@@ -106,6 +107,7 @@ export function ProductForm({ initialProduct }) {
   const mrpWatch = useWatch({ control, name: "mrp" });
   const sellingWatch = useWatch({ control, name: "sellingPrice" });
 
+  // Slug chỉ preview — server tự sinh khi lưu từ tên sản phẩm
   const slugPreview = useMemo(
     () =>
       slugify(nameWatch || "ten-san-pham", {
@@ -116,6 +118,7 @@ export function ProductForm({ initialProduct }) {
     [nameWatch],
   );
 
+  // Tự tính % giảm khi admin nhập MRP và giá bán
   useEffect(() => {
     const m =
       typeof mrpWatch === "number"
@@ -131,6 +134,7 @@ export function ProductForm({ initialProduct }) {
     }
   }, [mrpWatch, sellingWatch, setValue]);
 
+  // Đồng bộ mảng ID media từ picker vào react-hook-form
   useEffect(() => {
     setValue(
       "media",
@@ -180,6 +184,7 @@ export function ProductForm({ initialProduct }) {
     },
   });
 
+  // Phân nhánh create/update theo mode chỉnh sửa
   const onValid = (data) => {
     if (isEdit) {
       updateMut.mutate(data);

@@ -4,6 +4,7 @@ import { IoStar } from "react-icons/io5";
 import { RiDoubleQuotesL } from "react-icons/ri";
 import Slider from "react-slick";
 
+// Dữ liệu đánh giá khách hàng mẫu
 const testimonials = [
   {
     name: "Nguyễn Minh Anh",
@@ -73,6 +74,7 @@ const settings = {
   speed: 500,
 };
 
+// Carousel testimonial khách hàng
 export default function Testimonial() {
   return (
     <section className="w-full py-16 bg-neutral-50 overflow-hidden">

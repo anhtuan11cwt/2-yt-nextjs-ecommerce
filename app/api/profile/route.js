@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import UserModel from "@/models/User.model";
 
+// Lấy thông tin hồ sơ user đang đăng nhập
 export async function GET() {
   try {
     await connectDB();

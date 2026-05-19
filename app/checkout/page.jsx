@@ -4,6 +4,7 @@ import { useState } from "react";
 import CheckoutForm from "@/components/website/checkout-form";
 import OrderSummary from "@/components/website/order-summary";
 
+// Trang thanh toán — form địa chỉ + tóm tắt đơn hàng
 const CheckoutPage = () => {
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);

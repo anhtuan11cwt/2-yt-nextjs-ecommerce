@@ -9,6 +9,7 @@ import CouponForm from "./coupon-form";
 const CLOUDINARY_BASE_URL =
   "https://res.cloudinary.com/deef71c3q/image/upload/";
 
+// Tóm tắt đơn hàng bên checkout — verify giỏ, coupon, tổng tiền
 const OrderSummary = ({
   appliedCoupon,
   couponDiscount,
@@ -18,6 +19,7 @@ const OrderSummary = ({
   const cartState = useSelector((store) => store.cart);
   const cart = cartState.cart;
 
+  // Serialize để useEffect chỉ chạy khi nội dung giỏ thay đổi
   const cartItems = JSON.stringify(cart);
 
   const subtotal = useMemo(() => {
@@ -28,6 +30,7 @@ const OrderSummary = ({
     );
   }, [cart]);
 
+  // Gọi API kiểm tra tồn kho mỗi khi giỏ thay đổi (trước thanh toán)
   useEffect(() => {
     const products = JSON.parse(cartItems);
     const verifyCart = async () => {

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import WebsiteBreadcrumb from "@/components/website/WebsiteBreadcrumb";
 
+// Style badge theo trạng thái đơn hàng
 const statusStyles = {
   Cancelled: "bg-red-50 text-red-700 border-red-200",
   Delivered: "bg-green-50 text-green-700 border-green-200",
@@ -14,6 +15,7 @@ const statusStyles = {
   Shipped: "bg-purple-50 text-purple-700 border-purple-200",
 };
 
+// Nhãn tiếng Việt cho orderStatus
 const statusLabels = {
   Cancelled: "Đã hủy",
   Delivered: "Đã giao",
@@ -22,12 +24,14 @@ const statusLabels = {
   Shipped: "Đã gửi hàng",
 };
 
+// Style badge theo trạng thái thanh toán
 const paymentStyles = {
   Failed: "bg-red-50 text-red-700 border-red-200",
   Paid: "bg-green-50 text-green-700 border-green-200",
   Pending: "bg-amber-50 text-amber-700 border-amber-200",
 };
 
+// Nhãn tiếng Việt cho paymentStatus
 const paymentLabels = {
   Failed: "Thất bại",
   Paid: "Đã thanh toán",
@@ -40,11 +44,13 @@ const formatCurrency = (amount) =>
     style: "currency",
   });
 
+// Hiển thị và in hóa đơn đơn hàng theo orderId
 const OrderDetails = ({ orderId }) => {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const printRef = useRef(null);
 
+  // Mở cửa sổ mới chứa nội dung hóa đơn rồi gọi window.print()
   const handlePrint = () => {
     const printContent = printRef.current?.innerHTML;
     if (!printContent) return;
@@ -111,6 +117,7 @@ const OrderDetails = ({ orderId }) => {
     );
   }
 
+  // Tổng trước giảm giá coupon (nếu có)
   const subTotal = order.products.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,

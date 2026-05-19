@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import Product from "@/models/product.model";
 
+// Lấy ngẫu nhiên 8 sản phẩm nổi bật cho trang chủ
 export async function GET() {
   try {
     await connectDB();

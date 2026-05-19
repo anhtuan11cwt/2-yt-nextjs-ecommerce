@@ -13,6 +13,7 @@ import { reviewSchema } from "@/validators/review.validator";
 
 dayjs.extend(relativeTime);
 
+// Hiển thị điểm trung bình và phân bố sao
 function ReviewSummary({ summary }) {
   if (!summary || summary.totalReviews === 0) {
     return (
@@ -53,6 +54,7 @@ function ReviewSummary({ summary }) {
   );
 }
 
+// Form gửi đánh giá mới (yêu cầu đăng nhập)
 function ReviewForm({ auth, productId, slug }) {
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
@@ -88,6 +90,7 @@ function ReviewForm({ auth, productId, slug }) {
     },
   });
 
+  // Validate client bằng Zod trước khi gọi API tạo review
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = reviewSchema.safeParse({ rating, review, title });
@@ -161,6 +164,7 @@ function ReviewForm({ auth, productId, slug }) {
   );
 }
 
+// Card hiển thị một đánh giá đơn lẻ
 function ReviewItem({ review }) {
   return (
     <div className="space-y-4 rounded-2xl border p-5">
@@ -194,6 +198,7 @@ function ReviewItem({ review }) {
   );
 }
 
+// Section đánh giá sản phẩm — tổng hợp, form, danh sách phân trang
 export default function ProductReview({ auth, productId, slug }) {
   const [page, setPage] = useState(1);
   const limit = 5;

@@ -4,6 +4,7 @@ import Link from "next/link";
 const PLACEHOLDER = "https://placehold.co/600x800/png";
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+// Định dạng giá VND
 function formatPrice(price) {
   return Number(price).toLocaleString("vi-VN", {
     currency: "VND",
@@ -11,6 +12,7 @@ function formatPrice(price) {
   });
 }
 
+// Card hiển thị sản phẩm trong grid (ảnh, tên, giá)
 export default function ProductBox({ product }) {
   const imagePath = product?.media?.[0]?.path;
   const image = imagePath

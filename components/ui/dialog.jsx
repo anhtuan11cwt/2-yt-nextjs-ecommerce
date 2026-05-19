@@ -6,6 +6,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+// Component Dialog (shadcn/ui)
 const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+// Banner quảng cáo full-width giữa các section trang chủ
 export default function AdvertisingBanner() {
   return (
     <section className="w-full py-10 lg:py-16">

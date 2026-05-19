@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import Coupon from "@/models/coupon.model";
 
+// Áp dụng mã giảm giá — kiểm tra hạn, đơn tối thiểu và tính số tiền giảm
 export async function POST(req) {
   try {
     await connectDB();

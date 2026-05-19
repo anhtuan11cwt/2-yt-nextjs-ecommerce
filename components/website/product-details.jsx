@@ -12,6 +12,7 @@ import ProductReview from "./product-review";
 
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+// Ưu tiên secureUrl Cloudinary, fallback path hoặc placeholder
 const getImageUrl = (item) => {
   if (item.secureUrl) return item.secureUrl;
   if (item.path)
@@ -19,6 +20,7 @@ const getImageUrl = (item) => {
   return "https://placehold.co/600x800/png";
 };
 
+// Trang chi tiết sản phẩm — chọn màu/size qua query, thêm giỏ Redux
 const ProductDetails = ({ data }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,6 +34,7 @@ const ProductDetails = ({ data }) => {
   const [loadingVariant, setLoadingVariant] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
 
+  // Gallery: ảnh biến thể nếu có, không thì dùng ảnh sản phẩm gốc
   const images = useMemo(() => {
     if (variant?.media?.length > 0) {
       return variant.media;
@@ -39,6 +42,7 @@ const ProductDetails = ({ data }) => {
     return product.media;
   }, [variant, product]);
 
+  // Đổi color/size → cập nhật URL → server component fetch lại variant
   const updateVariant = (key, value) => {
     setLoadingVariant(true);
 
@@ -46,14 +50,17 @@ const ProductDetails = ({ data }) => {
     params.set(key, value);
     router.push(`?${params.toString()}`);
 
+    // Giữ trạng thái loading ngắn trong lúc navigation re-render
     setTimeout(() => {
       setLoadingVariant(false);
     }, 500);
   };
 
+  // Phần trăm giảm từ MRP và giá bán
   const discount =
     Math.round(((product.mrp - product.sellingPrice) / product.mrp) * 100) || 0;
 
+  // Payload đồng bộ với cấu trúc cartSlice / API sync
   const cartProduct = {
     color: variant?.color,
     image: images?.[0]?.secureUrl || images?.[0]?.path,
@@ -68,6 +75,7 @@ const ProductDetails = ({ data }) => {
 
   const handleAddToCart = () => {
     dispatch(addToCart(cartProduct));
+    // Đổi nút sang link xem giỏ sau khi thêm thành công
     setAddedToCart(true);
   };
 

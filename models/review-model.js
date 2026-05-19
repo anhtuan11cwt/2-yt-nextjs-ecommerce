@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema đánh giá sản phẩm từ người dùng
 const reviewSchema = new mongoose.Schema(
   {
     productId: {

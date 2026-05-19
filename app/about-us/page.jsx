@@ -1,3 +1,4 @@
+// Trang giới thiệu cửa hàng
 const AboutUsPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-5 my-20">

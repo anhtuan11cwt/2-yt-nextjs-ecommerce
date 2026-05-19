@@ -1,6 +1,7 @@
 import axios from "axios";
 import ProductDetails from "@/components/website/product-details";
 
+// Gọi API lấy chi tiết sản phẩm theo slug và filter color/size
 const getProductDetails = async (slug, searchParams) => {
   try {
     const color = searchParams?.color || "";
@@ -23,6 +24,7 @@ const getProductDetails = async (slug, searchParams) => {
   }
 };
 
+// Trang chi tiết sản phẩm theo slug
 const Page = async ({ params, searchParams }) => {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;

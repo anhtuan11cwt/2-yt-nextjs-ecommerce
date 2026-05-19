@@ -4,6 +4,7 @@ import { Avatar as AvatarPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
+// Component Avatar (shadcn/ui)
 function Avatar({ className, size = "default", ...props }) {
   return (
     <AvatarPrimitive.Root

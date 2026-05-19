@@ -18,6 +18,7 @@ export const metadata = {
   title: "E-commerce App",
 };
 
+// Layout gốc — font, Redux, providers, shell website
 export default function RootLayout({ children }) {
   return (
     <html

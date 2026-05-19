@@ -35,6 +35,7 @@ const CheckoutForm = ({ appliedCoupon, couponDiscount }) => {
     }
   }, [authStore, setValue]);
 
+  // Gửi đơn → tạo Stripe Checkout Session → redirect sang trang thanh toán
   const onSubmit = async (values) => {
     if (!cart.length) return;
     try {

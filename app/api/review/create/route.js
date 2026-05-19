@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnection";
 import ReviewModel from "@/models/review-model";
 
+// Tạo đánh giá mới cho sản phẩm
 export async function POST(request) {
   try {
     await connectDB();

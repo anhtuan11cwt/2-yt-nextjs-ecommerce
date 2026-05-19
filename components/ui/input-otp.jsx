@@ -5,6 +5,7 @@ import { MinusIcon } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+// Component InputOTP (shadcn/ui) — nhập mã OTP
 function InputOTP({ className, containerClassName, ...props }) {
   return (
     <OTPInput

@@ -1,6 +1,7 @@
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
+// Component Form (shadcn/ui) — tích hợp react-hook-form
 const Form = FormProvider;
 
 const FormField = ({ control, name, render }) => {

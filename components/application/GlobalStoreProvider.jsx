@@ -5,6 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store";
 import CartInit from "./CartInit";
 
+// Bọc app với Redux + redux-persist và đồng bộ giỏ hàng
 const GlobalStoreProvider = ({ children }) => {
   return (
     <Provider store={store}>

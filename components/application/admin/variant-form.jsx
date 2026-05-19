@@ -121,11 +121,13 @@ export function VariantForm({ initialVariant }) {
   const mrpWatch = useWatch({ control, name: "mrp" });
   const sellingWatch = useWatch({ control, name: "sellingPrice" });
 
+  // Sản phẩm đang chọn — dùng slug khi tự sinh SKU
   const selectedProduct = useMemo(
     () => products.find((p) => String(p._id) === String(productIdWatch)),
     [products, productIdWatch],
   );
 
+  // Tự tính % giảm từ MRP và giá bán (giống product-form)
   useEffect(() => {
     const m =
       typeof mrpWatch === "number"
@@ -141,6 +143,7 @@ export function VariantForm({ initialVariant }) {
     }
   }, [mrpWatch, sellingWatch, setValue]);
 
+  // Đồng bộ ID media từ picker vào form
   useEffect(() => {
     setValue(
       "media",
@@ -200,6 +203,7 @@ export function VariantForm({ initialVariant }) {
 
   const pending = createMut.isPending || updateMut.isPending;
 
+  // Gợi ý SKU: slug-sản-phẩm + màu + size (tối đa 120 ký tự)
   const applySuggestedSku = () => {
     const slug = selectedProduct?.slug || "variant";
     const next = buildSuggestedSku(slug, colorWatch, sizeWatch);

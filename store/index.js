@@ -5,6 +5,7 @@ import { createStorage } from "@/lib/redux/storage";
 import authReducer from "@/redux/features/authSlice";
 import cartReducer, { CART_MUTATION_TYPES } from "@/redux/features/cartSlice";
 
+// Gộp reducer auth và cart
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
@@ -17,6 +18,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Đồng bộ giỏ hàng lên server sau mỗi thao tác cart khi user đã đăng nhập
 const cartSyncMiddleware = (store) => (next) => (action) => {
   const result = next(action);
 

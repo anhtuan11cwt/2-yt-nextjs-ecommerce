@@ -17,6 +17,7 @@ export default function CouponForm({ initialData = {}, onSubmit, loading }) {
     validity: initialData.validity ? new Date(initialData.validity) : null,
   });
 
+  // Cập nhật state controlled cho các input text/number
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema mục trong giỏ hàng (sản phẩm + biến thể + số lượng)
 const cartItemSchema = new mongoose.Schema(
   {
     product: {
@@ -17,6 +18,7 @@ const cartItemSchema = new mongoose.Schema(
   { _id: false },
 );
 
+// Schema giỏ hàng — mỗi user chỉ có một giỏ
 const cartSchema = new mongoose.Schema(
   {
     items: [cartItemSchema],

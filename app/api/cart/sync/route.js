@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import Cart from "@/models/cart.model";
 
+// Đồng bộ giỏ hàng từ client lên DB (merge theo product + variant)
 export async function POST(req) {
   try {
     await connectDB();

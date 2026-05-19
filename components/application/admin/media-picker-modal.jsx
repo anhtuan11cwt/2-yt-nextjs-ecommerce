@@ -31,6 +31,7 @@ async function fetchMediaPage(pageParam) {
 export function MediaPickerModal({ open, onOpenChange, value, onChange }) {
   const [draftSelection, setDraftSelection] = useState([]);
 
+  // Khi mở modal: copy selection hiện tại vào draft (chưa commit)
   const handleOpenChange = (next) => {
     if (next) {
       setDraftSelection(value?.length ? [...value] : []);

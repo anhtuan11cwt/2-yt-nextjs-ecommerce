@@ -3,6 +3,7 @@ import connectDB from "@/lib/dbConnection";
 import Product from "@/models/product.model";
 import ProductBox from "./ProductBox";
 
+// Lấy 8 sản phẩm ngẫu nhiên từ DB (server component)
 async function getFeaturedProducts() {
   try {
     await connectDB();
@@ -26,6 +27,7 @@ async function getFeaturedProducts() {
   }
 }
 
+// Section sản phẩm nổi bật trên trang chủ
 export default async function FeaturedProducts() {
   const products = await getFeaturedProducts();
 

@@ -3,11 +3,13 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { REHYDRATE } from "redux-persist";
 
+// State giỏ hàng lưu local (redux-persist) và đồng bộ với server
 const initialState = {
   cart: [],
   count: 0,
 };
 
+// Lấy giỏ hàng từ API khi user đăng nhập
 export const fetchCartFromServer = createAsyncThunk(
   "cart/fetchFromServer",
   async (_, { rejectWithValue }) => {
@@ -21,6 +23,7 @@ export const fetchCartFromServer = createAsyncThunk(
   },
 );
 
+// Đẩy giỏ hàng local lên server
 export const syncCartToServer = createAsyncThunk(
   "cart/syncToServer",
   async (_, { getState, rejectWithValue }) => {
@@ -49,6 +52,7 @@ const cartSlice = createSlice({
         if (serverCart.length > 0) {
           const localCart = [...state.cart];
 
+          // Gộp giỏ server với local — giữ số lượng lớn hơn cho cùng variant
           serverCart.forEach((serverItem) => {
             const existingIndex = localCart.findIndex(
               (localItem) =>
@@ -155,6 +159,7 @@ const cartSlice = createSlice({
       );
       toast.success("Đã xóa sản phẩm khỏi giỏ hàng");
     },
+    // Cập nhật giỏ sau khi API verification kiểm tra tồn kho
     updateVerifiedCart: (state, action) => {
       state.cart = action.payload.products;
       state.count = action.payload.products.reduce(
@@ -174,6 +179,7 @@ export const {
   updateVerifiedCart,
 } = cartSlice.actions;
 
+// Danh sách action trigger đồng bộ giỏ lên server (middleware)
 export const CART_MUTATION_TYPES = [
   "cart/addToCart",
   "cart/decreaseQuantity",

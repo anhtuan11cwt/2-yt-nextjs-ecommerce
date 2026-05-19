@@ -4,6 +4,7 @@ import * as ProgressPrimitive from "@radix-ui/react-progress";
 
 import { cn } from "@/lib/utils";
 
+// Component Progress (shadcn/ui)
 const Progress = ({ className, value, ...props }) => (
   <ProgressPrimitive.Root
     className={cn(

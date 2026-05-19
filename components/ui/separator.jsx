@@ -4,6 +4,7 @@ import { Separator as SeparatorPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
+// Component Separator (shadcn/ui)
 function Separator({
   className,
   orientation = "horizontal",

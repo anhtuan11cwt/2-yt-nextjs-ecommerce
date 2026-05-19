@@ -1,3 +1,4 @@
+// Trang điều khoản và điều kiện sử dụng
 const TermsAndConditionsPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-5 my-20">

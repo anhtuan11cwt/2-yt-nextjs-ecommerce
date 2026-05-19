@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/redux/features/cartSlice";
 
+// Trang xác nhận thanh toán Stripe thành công — xác nhận đơn và xóa giỏ
 const OrderSuccessPage = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");

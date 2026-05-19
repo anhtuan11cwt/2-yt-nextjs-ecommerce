@@ -5,6 +5,7 @@ import {
   TbTruckDelivery,
 } from "react-icons/tb";
 
+// Danh sách ưu điểm cửa hàng hiển thị cuối trang chủ
 const features = [
   {
     description: "Đổi trả dễ dàng trong vòng 7 ngày",
@@ -28,6 +29,7 @@ const features = [
   },
 ];
 
+// Section icon tính năng (đổi trả, vận chuyển, hỗ trợ...)
 export default function Features() {
   return (
     <section className="w-full py-16 border-t bg-neutral-50">

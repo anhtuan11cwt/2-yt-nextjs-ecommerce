@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+// Component Skeleton (shadcn/ui) — placeholder loading
 function Skeleton({ className, ...props }) {
   return (
     <div

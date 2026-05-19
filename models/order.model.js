@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Schema đơn hàng (sản phẩm, địa chỉ giao, thanh toán Stripe)
 const orderSchema = new mongoose.Schema(
   {
     couponCode: { default: "", type: String },

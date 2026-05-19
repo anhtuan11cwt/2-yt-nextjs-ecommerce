@@ -2,6 +2,7 @@ import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 import { Slot } from "radix-ui";
 import { cn } from "@/lib/utils";
 
+// Component Breadcrumb (shadcn/ui)
 function Breadcrumb({ className, ...props }) {
   return (
     <nav

@@ -13,6 +13,7 @@ import {
 const CLOUDINARY_BASE_URL =
   "https://res.cloudinary.com/deef71c3q/image/upload/";
 
+// Trang giỏ hàng — danh sách sản phẩm, sửa số lượng, tổng tiền
 export default function CartPage() {
   const dispatch = useDispatch();
   const cart = useSelector((store) => store.cart.cart);

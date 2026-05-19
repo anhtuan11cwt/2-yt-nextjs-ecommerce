@@ -4,6 +4,7 @@ import ProductModel from "@/models/product.model";
 import ProductVariantModel from "@/models/productVariant.model";
 import "@/models/media.model";
 
+// Kiểm tra tồn kho và điều chỉnh số lượng trước khi thanh toán
 export async function POST(req) {
   try {
     await connectDB();
@@ -37,6 +38,7 @@ export async function POST(req) {
 
       if (!variant || variant.quantity <= 0) continue;
 
+      // Giới hạn số lượng không vượt quá tồn kho thực tế
       const safeQuantity = Math.min(Number(item.quantity), variant.quantity);
 
       if (safeQuantity <= 0) continue;

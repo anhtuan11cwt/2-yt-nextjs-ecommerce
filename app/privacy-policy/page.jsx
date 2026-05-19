@@ -1,3 +1,4 @@
+// Trang chính sách bảo mật
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-5 my-20">

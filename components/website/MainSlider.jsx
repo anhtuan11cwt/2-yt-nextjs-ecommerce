@@ -9,6 +9,7 @@ import Slider2 from "@/public/assets/images/slider-2.png";
 import Slider3 from "@/public/assets/images/slider-3.png";
 import Slider4 from "@/public/assets/images/slider-4.png";
 
+// Dữ liệu slide hero trang chủ
 const sliderData = [
   { id: 1, image: Slider1 },
   { id: 2, image: Slider2 },
@@ -16,6 +17,7 @@ const sliderData = [
   { id: 4, image: Slider4 },
 ];
 
+// Nút chuyển slide tiếp theo
 function NextArrow({ onClick }) {
   return (
     <button
@@ -28,6 +30,7 @@ function NextArrow({ onClick }) {
   );
 }
 
+// Nút chuyển slide trước
 function PrevArrow({ onClick }) {
   return (
     <button
@@ -40,6 +43,7 @@ function PrevArrow({ onClick }) {
   );
 }
 
+// Carousel banner chính trang chủ (react-slick)
 export default function MainSlider() {
   const settings = {
     autoplay: true,

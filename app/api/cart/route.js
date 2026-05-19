@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import Cart from "@/models/cart.model";
 
+// Lấy giỏ hàng của user đã đăng nhập (populate variant + product + media)
 export async function GET() {
   try {
     await connectDB();
@@ -22,6 +23,7 @@ export async function GET() {
 
     const items = cart.items || [];
 
+    // Chuẩn hóa dữ liệu cho Redux store phía client
     const formatted = items.map((item) => ({
       color: item.variant.color,
       image: item.variant.media?.[0]?.path || "",

@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/helpers/is-authenticated";
 import connectDB from "@/lib/dbConnection";
 import Cart from "@/models/cart.model";
 
+// Xóa toàn bộ giỏ hàng của user trên server
 export async function DELETE() {
   try {
     await connectDB();

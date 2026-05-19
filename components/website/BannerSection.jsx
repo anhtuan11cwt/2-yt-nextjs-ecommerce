@@ -3,6 +3,7 @@ import Image from "next/image";
 import BannerOne from "@/public/assets/images/banner1.png";
 import BannerTwo from "@/public/assets/images/banner2.png";
 
+// Hai banner quảng cáo dưới slider trang chủ
 export default function BannerSection() {
   return (
     <section className="px-4 pb-10 pt-5 sm:px-32 sm:pt-20">

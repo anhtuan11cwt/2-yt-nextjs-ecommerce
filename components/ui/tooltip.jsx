@@ -4,6 +4,7 @@ import { Tooltip as TooltipPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
+// Component Tooltip (shadcn/ui)
 function TooltipProvider({ delayDuration = 0, ...props }) {
   return (
     <TooltipPrimitive.Provider

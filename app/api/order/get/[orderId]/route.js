@@ -6,6 +6,7 @@ import OrderModel from "@/models/order.model";
 import ProductModel from "@/models/product.model";
 import ProductVariantModel from "@/models/productVariant.model";
 
+// Lấy chi tiết đơn hàng theo ID (kèm product + variant + media)
 export async function GET(_request, { params }) {
   try {
     await connectDB();

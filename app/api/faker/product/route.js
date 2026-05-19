@@ -9,6 +9,7 @@ import ProductVariantModel from "@/models/productVariant.model";
 const COLORS = ["Đen", "Trắng", "Xanh dương", "Đỏ"];
 const SIZES = ["S", "M", "L", "XL", "XXL"];
 
+// Tạo dữ liệu sản phẩm/biến thể giả bằng Faker (dev/seed)
 export async function POST() {
   try {
     await connectDB();

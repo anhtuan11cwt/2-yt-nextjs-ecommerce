@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
+// Form nhập và áp dụng mã giảm giá
 const CouponForm = ({
   subtotal,
   setCouponDiscount,

@@ -5,6 +5,7 @@ import Features from "@/components/website/features";
 import MainSlider from "@/components/website/MainSlider";
 import Testimonial from "@/components/website/testimonial";
 
+// Trang chủ — slider, sản phẩm nổi bật, testimonial
 export default function Home() {
   return (
     <>

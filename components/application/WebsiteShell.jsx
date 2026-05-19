@@ -7,6 +7,7 @@ import Header from "@/components/application/website/header";
 const AUTH_PATHS = ["/login", "/register", "/reset-password"];
 const ADMIN_PATHS = ["/admin"];
 
+// Layout website: ẩn header/footer ở trang auth và admin
 export default function WebsiteShell({ children }) {
   const pathname = usePathname();
   const isAuthPage = AUTH_PATHS.some(

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Schema Zod xác thực form thanh toán (địa chỉ giao hàng)
 export const checkoutSchema = z.object({
   city: z.string().min(2, "Vui lòng nhập quận/huyện"),
   email: z.string().email("Email không hợp lệ"),

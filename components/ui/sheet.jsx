@@ -5,6 +5,7 @@ import { Dialog as SheetPrimitive } from "radix-ui";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Component Sheet (shadcn/ui) — panel trượt
 function Sheet({ ...props }) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }

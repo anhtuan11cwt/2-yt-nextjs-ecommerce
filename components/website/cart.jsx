@@ -22,6 +22,7 @@ import {
 const CLOUDINARY_BASE_URL =
   "https://res.cloudinary.com/deef71c3q/image/upload/";
 
+// Giỏ hàng dạng Sheet slide từ header
 const WebsiteCart = () => {
   const dispatch = useDispatch();
 

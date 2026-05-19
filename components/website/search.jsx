@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoCloseOutline, IoSearchOutline } from "react-icons/io5";
 
+// Modal tìm kiếm sản phẩm — điều hướng sang /shop?q=
 const Search = () => {
   const router = useRouter();
 
